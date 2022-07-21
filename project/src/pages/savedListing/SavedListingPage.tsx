@@ -2,7 +2,7 @@ import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
 import CheckListSavedListing from '../../components/lists/CheckListSavedListing';
 
-function SavedListing ():JSX.Element {
+function SavedListingPage ():JSX.Element {
   return (
     <>
       <div style={{display: 'none'}}>
@@ -29,4 +29,4 @@ function SavedListing ():JSX.Element {
 }
 
 
-export default SavedListing;
+export default SavedListingPage;
