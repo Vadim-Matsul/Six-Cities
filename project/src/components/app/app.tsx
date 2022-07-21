@@ -1,6 +1,7 @@
 import HousingPage from '../../pages/housing/HousingPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoutes } from '../../const';
+import { AppRoutes, AuthorizationStatus } from '../../const';
+import PrivateRoute from '../private-route/private-route';
 import LoginPage from '../../pages/login/LoginPage';
 import BookMarksPage from '../../pages/bookmarks/BookMarksPage';
 import HousingNoLogedPage from '../../pages/housing/HousingNoLogedPage';
@@ -31,7 +32,13 @@ function App(): JSX.Element {
         />
         <Route
           path = { AppRoutes.Main }
-          element = { <MainPage/> }
+          element = {
+            <PrivateRoute
+              authorizationStatus = { AuthorizationStatus.NoAuth }
+            >
+              <MainPage />
+            </PrivateRoute>
+          }
         />
         <Route
           path = { AppRoutes.Places }

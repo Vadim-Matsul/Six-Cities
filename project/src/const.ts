@@ -8,3 +8,9 @@ export enum AppRoutes {
   Save = '/savedhomes',
   Error = '*'
 }
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NOAUTH',
+  UnKnown = 'UNKNOWN'
+}
