@@ -9,51 +9,55 @@ import MainPage from '../../pages/main/MainPage';
 import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
+import { ClassesComponent } from '../classes-component/ClassesComponent';
 
 function App(): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path = { AppRoutes.BookMarks }
-          element = { <BookMarksPage/> }
-        />
-        <Route
-          path = { AppRoutes.HouseNoAuth }
-          element = { <HousingNoLogedPage/> }
-        />
-        <Route
-          path = { AppRoutes.HouseAuth }
-          element = { <HousingPage/> }
-        />
-        <Route
-          path = { AppRoutes.NoLoged }
-          element = { <LoginPage/> }
-        />
-        <Route
-          path = { AppRoutes.Main }
-          element = {
-            <PrivateRoute
-              authorizationStatus = { AuthorizationStatus.NoAuth }
-            >
-              <MainPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path = { AppRoutes.Places }
-          element = { <PlacesToStayPage/> }
-        />
-        <Route
-          path = { AppRoutes.Save }
-          element = { <SavedListingPage/> }
-        />
-        <Route
-          path = { AppRoutes.Error }
-          element = { <Error /> }
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <ClassesComponent />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path = { AppRoutes.BookMarks }
+            element = { <BookMarksPage/> }
+          />
+          <Route
+            path = { AppRoutes.HouseNoAuth }
+            element = { <HousingNoLogedPage/> }
+          />
+          <Route
+            path = { AppRoutes.HouseAuth }
+            element = { <HousingPage/> }
+          />
+          <Route
+            path = { AppRoutes.NoLoged }
+            element = { <LoginPage/> }
+          />
+          <Route
+            path = { AppRoutes.Main }
+            element = {
+              <PrivateRoute
+                authorizationStatus = { AuthorizationStatus.NoAuth }
+              >
+                <MainPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path = { AppRoutes.Places }
+            element = { <PlacesToStayPage/> }
+          />
+          <Route
+            path = { AppRoutes.Save }
+            element = { <SavedListingPage/> }
+          />
+          <Route
+            path = { AppRoutes.Error }
+            element = { <Error /> }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

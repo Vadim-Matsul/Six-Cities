@@ -6,13 +6,12 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute (props:PrivateRouteProps):JSX.Element {
-  console.log(props);
   const { authorizationStatus, children } = props;
 
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children
-      : <Navigate to={AppRoutes.NoLoged}/>
+      : <Navigate to={AppRoutes.NoLoged} />
   );
 }
 
