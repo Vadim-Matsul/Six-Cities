@@ -34,12 +34,14 @@ export class ClassesComponent extends PureComponent <TProps, TState> {
     setInterval(this.timer, 1000);
     return undefined;
   }
+
   newTest () {
     this.setState((prevState, props) => ({
-      date: prevState.date + 'fulfilled test'
+      date: `${prevState.date} 'fulfilled test'`
     }), () => console.log(this.state.date)
-    )
+    );
   }
+
   render(): ReactNode {
     return (
       <div>

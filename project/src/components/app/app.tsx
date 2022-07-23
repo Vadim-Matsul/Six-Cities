@@ -1,23 +1,21 @@
-import HousingPage from '../../pages/housing/HousingPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import LoginPage from '../../pages/login/LoginPage';
 import BookMarksPage from '../../pages/bookmarks/BookMarksPage';
+import HousingPage from '../../pages/housing/HousingPage';
 import HousingNoLogedPage from '../../pages/housing/HousingNoLogedPage';
 import MainPage from '../../pages/main/MainPage';
 import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
-import { ClassesComponent } from '../classes-component/ClassesComponent';
-import { ShowTextClassComponent } from '../classes-component/ShowTextClassComponent';
-import { ClassCompAndFuncCompRenderCollapse } from '../classes-component/ClassCompAndFuncComp_RenderCollapse';
+import React from 'react';
+import { ClassCompForm } from '../classes-component/ClassCompForm';
+
 function App(): JSX.Element {
   return (
-    <>
-      <ClassesComponent value = {'stringg'} />
-      <ShowTextClassComponent />
-      <ClassCompAndFuncCompRenderCollapse />
+    <React.Fragment>
+      <ClassCompForm />
       <BrowserRouter>
         <Routes>
           <Route
@@ -60,7 +58,7 @@ function App(): JSX.Element {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </React.Fragment>
   );
 }
 
