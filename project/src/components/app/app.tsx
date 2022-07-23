@@ -10,11 +10,14 @@ import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
 import { ClassesComponent } from '../classes-component/ClassesComponent';
-
+import { ShowTextClassComponent } from '../classes-component/ShowTextClassComponent';
+import { ClassCompAndFuncCompRenderCollapse } from '../classes-component/ClassCompAndFuncComp_RenderCollapse';
 function App(): JSX.Element {
   return (
     <>
-      <ClassesComponent value = {'string'} />
+      <ClassesComponent value = {'stringg'} />
+      <ShowTextClassComponent />
+      <ClassCompAndFuncCompRenderCollapse />
       <BrowserRouter>
         <Routes>
           <Route
