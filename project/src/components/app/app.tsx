@@ -14,7 +14,7 @@ import { ClassesComponent } from '../classes-component/ClassesComponent';
 function App(): JSX.Element {
   return (
     <>
-      <ClassesComponent />
+      <ClassesComponent value = {'string'}  />
       <BrowserRouter>
         <Routes>
           <Route

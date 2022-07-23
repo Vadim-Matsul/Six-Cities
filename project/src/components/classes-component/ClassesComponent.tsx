@@ -1,24 +1,33 @@
-import { PureComponent } from 'react';
+import { PureComponent, ReactNode } from "react";
 
-export class ClassesComponent extends PureComponent {
-  constructor (props:any) {
-    super (props);
+type TProps = {
+  [key: string]:string
+}
+type TState = {
+  date: string
+}
+
+export class ClassesComponent extends PureComponent <TProps, TState> {
+  constructor (props: TProps){
+    super (props)
     this.state = {
+      date: '00:00:00'
+    }
+    this.timer = this.timer.bind(this)
+  }
+
+  timer(){
+    this.setState ({
       date: new Date().toLocaleTimeString()
-    };
+    }) 
+    setInterval(this.timer, 1000)
   }
 
-  timer (){
-    this.setState({
-      date: new Date().toLocaleTimeString() 
-    })
-  }
-
-  render() {
-    setInterval(this.timer.bind(this), 1000)
+  render(): ReactNode {
     return (
       <div>
-        <label>Текущее время: {this.state.date}</label>
+        <h2>Сейчас: {this.state.date}</h2>
+        <button onClick={() => this.timer()}>Start Timer</button>
       </div>
     );
   }
