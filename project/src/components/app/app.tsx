@@ -10,13 +10,17 @@ import MainPage from '../../pages/main/MainPage';
 import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
-import IncDecFuncComponent from '../test-component/IncDecFuncComponent';
+import { OfferPlaces } from '../../types/OfferPlaces';
 
+type AppProps = {
+  offerstate: OfferPlaces
+}
 
-function App(): JSX.Element {
+function App( props: AppProps ): JSX.Element {
+  console.log(props.offerstate);
+
   return (
     <>
-      <IncDecFuncComponent />
       <BrowserRouter>
         <Routes>
           <Route
