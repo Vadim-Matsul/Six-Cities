@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
@@ -9,13 +10,13 @@ import MainPage from '../../pages/main/MainPage';
 import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
-import React from 'react';
-import { ClassCompForm } from '../classes-component/ClassCompForm';
+import IncDecFuncComponent from '../test-component/IncDecFuncComponent';
+
 
 function App(): JSX.Element {
   return (
-    <React.Fragment>
-      <ClassCompForm />
+    <>
+      <IncDecFuncComponent />
       <BrowserRouter>
         <Routes>
           <Route
@@ -58,7 +59,7 @@ function App(): JSX.Element {
           />
         </Routes>
       </BrowserRouter>
-    </React.Fragment>
+    </>
   );
 }
 
