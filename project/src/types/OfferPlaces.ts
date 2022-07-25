@@ -10,6 +10,7 @@ export type OfferHouse = {
   cost: string
   title: string
   estate: string
+  raiting: string
 }
 
 export type Reviews = {

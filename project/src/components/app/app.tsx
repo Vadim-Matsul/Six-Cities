@@ -10,15 +10,16 @@ import MainPage from '../../pages/main/MainPage';
 import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
-import { OfferPlaces } from '../../types/OfferPlaces';
+import { OfferCity, OfferPlaces } from '../../types/OfferPlaces';
 
 type AppProps = {
   offerstate: OfferPlaces
 }
 
 function App( props: AppProps ): JSX.Element {
-  console.log(props.offerstate);
-
+  const {offerstate} = props
+  const [offercityAmster] = offerstate
+  
   return (
     <>
       <BrowserRouter>
@@ -43,9 +44,9 @@ function App( props: AppProps ): JSX.Element {
             path = { AppRoutes.Main }
             element = {
               <PrivateRoute
-                authorizationStatus = { AuthorizationStatus.NoAuth }
+                authorizationStatus = { AuthorizationStatus.Auth }
               >
-                <MainPage />
+                <MainPage offerstate = {offercityAmster as OfferCity }/>
               </PrivateRoute>
             }
           />

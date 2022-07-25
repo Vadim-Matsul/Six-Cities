@@ -1,8 +1,16 @@
 import Header from '../../components/header/Header';
 import LocationList from '../../components/locations/LocationList';
 import CardMain from '../../components/cards/CardMain';
+import { OfferCity, OfferHouse, OfferPlaces } from '../../types/OfferPlaces';
 
-function MainPage ():JSX.Element {
+type MainConfig = {
+  offerstate: OfferCity
+}
+
+function MainPage (props: MainConfig ):JSX.Element {
+  const {offerstate} = props
+  const {offers, place} = offerstate
+  
   return (
     <>
       <div style={{display: 'none'}}>
@@ -22,7 +30,7 @@ function MainPage ():JSX.Element {
             <div className='cities__places-container container'>
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
-                <b className='places__found'>312 places to stay in Amsterdam</b>
+                <b className='places__found'>312 places to stay in {place}</b>
                 <form className='places__sorting' action='#' method='get'>
                   <span className='places__sorting-caption'>Sort by</span>
                   <span className='places__sorting-type' tabIndex = {0}>
@@ -38,13 +46,7 @@ function MainPage ():JSX.Element {
                     <li className='places__option' tabIndex = {0}>Top rated first</li>
                   </ul>
                 </form>
-                <div className='cities__places-list places__list tabs__content'>
-                  <CardMain />
-                  <CardMain />
-                  <CardMain />
-                  <CardMain />
-                  <CardMain />
-                </div>
+                  <CardMain cardInfo = { offers as OfferHouse[] }/>
               </section>
               <div className='cities__right-section'>
                 <section className='cities__map map'></section>
