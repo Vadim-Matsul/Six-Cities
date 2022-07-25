@@ -1,16 +1,17 @@
 import Header from '../../components/header/Header';
 import LocationList from '../../components/locations/LocationList';
-import CardMain from '../../components/cards/CardMain';
-import { OfferCity, OfferHouse, OfferPlaces } from '../../types/OfferPlaces';
+import OfferList from '../../components/offerList/OfferList';
+import { OfferCity, OfferHouse } from '../../types/OfferPlaces';
+
 
 type MainConfig = {
   offerstate: OfferCity
 }
 
 function MainPage (props: MainConfig ):JSX.Element {
-  const {offerstate} = props
-  const {offers, place} = offerstate
-  
+  const {offerstate} = props;
+  const {offers, place} = offerstate;
+
   return (
     <>
       <div style={{display: 'none'}}>
@@ -46,7 +47,7 @@ function MainPage (props: MainConfig ):JSX.Element {
                     <li className='places__option' tabIndex = {0}>Top rated first</li>
                   </ul>
                 </form>
-                  <CardMain cardInfo = { offers as OfferHouse[] }/>
+                <OfferList cardInfo = { offers as OfferHouse[] } />
               </section>
               <div className='cities__right-section'>
                 <section className='cities__map map'></section>
