@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import CardHousingPage from '../../components/cards/CardHousingPage';
 import Header from '../../components/header/Header';
 import HouseCapacity from '../../components/houseProperties/HouseCapacity';
@@ -5,9 +6,24 @@ import HouseOwner from '../../components/houseProperties/HouseOwner';
 import HouseProperties from '../../components/houseProperties/HouseProperties';
 import ImageHousing from '../../components/images/ImageHousing';
 import Reviwer from '../../components/reviews/Reviewer';
-import 
+import { OfferState } from '../../mocks/OfferState';
+import { OfferHouse } from '../../types/OfferPlaces';
 
 function HousingPage ():JSX.Element {
+  const urlInfo = useParams();
+  const {city, id = 0} = urlInfo;
+  const OurPlace:any[] = [];
+
+  OfferState.map( (offer) => {
+    if(offer.type === 'offer'){
+      if(offer.place === city){
+        OurPlace.push(offer);
+      }
+    }
+  });
+
+  const OurObj:OfferHouse = OurPlace[0].offers[id];
+
   return (
     <>
       <div style={{display: 'none'}}>
@@ -20,22 +36,18 @@ function HousingPage ():JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                <ImageHousing />
-                <ImageHousing />
-                <ImageHousing />
-                <ImageHousing />
-                <ImageHousing />
-                <ImageHousing />
+                <ImageHousing src = {OurObj.src}/>
               </div>
             </div>
             <div className='property__container container'>
               <div className='property__wrapper'>
-                <div className='property__mark'>
-                  <span>Premium</span>
-                </div>
+                { OurObj.special &&
+                  <div className='property__mark'>
+                    <span>Premium</span>
+                  </div> }
                 <div className='property__name-wrapper'>
                   <h1 className='property__name'>
-                    Beautiful &amp; luxurious studio at great location
+                    {OurObj.title}
                   </h1>
                   <button className='property__bookmark-button button' type='button'>
                     <svg className='property__bookmark-icon' width='31' height='33'>
@@ -46,14 +58,14 @@ function HousingPage ():JSX.Element {
                 </div>
                 <div className='property__rating rating'>
                   <div className='property__stars rating__stars'>
-                    <span style={{width: '80%'}}></span>
+                    <span style={{width: `${OurObj.raiting}`}}></span>
                     <span className='visually-hidden'>Rating</span>
                   </div>
-                  <span className='property__rating-value rating__value'>4.8</span>
+                  {/* <span className='property__rating-value rating__value'>4.8</span> */}
                 </div>
                 <HouseCapacity entire='Apartment' bedrooms='3 Bedrooms' adults='Max 4 adults'/>
                 <div className='property__price'>
-                  <b className='property__price-value'>&euro;120</b>
+                  <b className='property__price-value'>&euro;{OurObj.cost}</b>
                   <span className='property__price-text'>&nbsp;night</span>
                 </div>
                 <div className='property__inside'>

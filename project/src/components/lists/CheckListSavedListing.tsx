@@ -7,9 +7,8 @@ type CheckListSavedProps = {
 }
 
 function CheckListSavedListing (props:CheckListSavedProps):JSX.Element {
-  const {locationName, offers} = props
-  
-  
+  const {locationName, offers} = props;
+
 
   return (
     <li className='favorites__locations-items'>
@@ -22,15 +21,16 @@ function CheckListSavedListing (props:CheckListSavedProps):JSX.Element {
       </div>
       <div className='favorites__places'>
         { offers.map( (offer, id) => {
-          const keyValue = `${offer.estate} + ${id}`
+          const keyValue = `${offer.estate} + ${id}`;
           if (offer.inBookmark){
             return (
               <CardSavedListing
                 key = { keyValue }
                 offerHouse = { offer as OfferHouse}
                 id = {id}
-              />)
-          } 
+                place = { locationName }
+              />);
+          }
         })}
       </div>
     </li>

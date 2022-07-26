@@ -12,14 +12,14 @@ export const OfferState:OfferPlaces = [
         title: 'Beautiful & luxurious apartment at great location',
         estate: 'Apartment',
         raiting: '80%',
-        inBookmark: false
+        inBookmark: true
       },
       {
         src: 'img/room.jpg',
         cost: '80',
         title: 'Wood and stone place',
         estate: 'Private Room',
-        raiting: '80%', 
+        raiting: '80%',
         inBookmark: false
       },
       {

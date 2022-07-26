@@ -47,12 +47,12 @@ function OfferList (props: OfferListProps):JSX.Element {
                 />
               );})}
           </div>
-    </section>
-    <div className='cities__right-section'>
-      <section className='cities__map map'></section>
+        </section>
+        <div className='cities__right-section'>
+          <section className='cities__map map'></section>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
   );
 }
 

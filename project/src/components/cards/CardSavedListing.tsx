@@ -1,17 +1,18 @@
-import { OfferHouse } from "../../types/OfferPlaces";
-import { Link } from 'react-router-dom'
+import { OfferHouse } from '../../types/OfferPlaces';
+import { Link } from 'react-router-dom';
 
 type CardsavedListingProps = {
   offerHouse: OfferHouse
   id: number
+  place: string
 }
 
 function CardSavedListing (props: CardsavedListingProps):JSX.Element {
-  const {offerHouse, id} = props
-  
+  const {offerHouse, id, place} = props;
+
   return (
-    <article 
-      className='favorites__card place-card' 
+    <article
+      className='favorites__card place-card'
     >
       <div className='favorites__image-wrapper place-card__image-wrapper'>
         <a href='#'>
@@ -38,8 +39,8 @@ function CardSavedListing (props: CardsavedListingProps):JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name' >
-          <Link 
-            to={`/house-auth/:${id}`}
+          <Link
+            to={`/house-auth/${place}/${id}`}
           >
             {offerHouse.title}
           </Link>

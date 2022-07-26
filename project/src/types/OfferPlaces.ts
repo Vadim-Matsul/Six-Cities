@@ -16,6 +16,7 @@ export type OfferHouse = {
 
 export type Reviews = {
   type: string
+  place?: string
   body: ReviewsUser []
 }
 

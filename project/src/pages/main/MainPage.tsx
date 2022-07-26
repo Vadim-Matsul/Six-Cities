@@ -27,7 +27,7 @@ function MainPage (props: MainConfig ):JSX.Element {
               <LocationList />
             </section>
           </div>
-                <OfferList cardInfo = { offers as OfferHouse[] } place = { place }/>
+          <OfferList cardInfo = { offers as OfferHouse[] } place = { place }/>
         </main>
       </div>
     </>

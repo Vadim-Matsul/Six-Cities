@@ -1,7 +1,7 @@
 export enum AppRoutes {
   BookMarks ='/Bookmarks',
   HouseNoAuth = '/house-noauth/:id',
-  HouseAuth = '/house-auth/:id',
+  HouseAuth = '/house-auth/:city/:id',
   NoLoged = '/login',
   Main = '/',
   Places = '/places/:id',

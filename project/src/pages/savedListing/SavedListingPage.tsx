@@ -9,10 +9,9 @@ type SavedListingPageProps = {
 }
 
 function SavedListingPage (props: SavedListingPageProps):JSX.Element {
-  const {offercityAmster, offercityCologne} = props
-  
-  
-    
+  const {offercityAmster, offercityCologne} = props;
+
+
   return (
     <>
       <div style={{display: 'none'}}>
@@ -26,11 +25,11 @@ function SavedListingPage (props: SavedListingPageProps):JSX.Element {
             <section className='favorites'>
               <h1 className='favorites__title'>Saved listing</h1>
               <ul className='favorites__list'>
-                <CheckListSavedListing 
+                <CheckListSavedListing
                   locationName = {offercityAmster.place}
                   offers = {offercityAmster.offers as OfferHouse[]}
                 />
-                <CheckListSavedListing 
+                <CheckListSavedListing
                   locationName = {offercityCologne.place}
                   offers = {offercityCologne.offers as OfferHouse[]}
                 />

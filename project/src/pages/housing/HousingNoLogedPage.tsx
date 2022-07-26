@@ -1,6 +1,6 @@
 import Header from '../../components/header/Header';
 import HouseProperties from '../../components/houseProperties/HouseProperties';
-import ImageHousing from '../../components/images/ImageHousing';
+// import ImageHousing from '../../components/images/ImageHousing';
 import HouseCapacity from '../../components/houseProperties/HouseCapacity';
 import HouseOwner from '../../components/houseProperties/HouseOwner';
 import CardHousingPage from '../../components/cards/CardHousingPage';
@@ -18,14 +18,14 @@ function HousingNoLogedPage ():JSX.Element {
         <main className='page__main page__main--property'>
           <section className='property'>
             <div className='property__gallery-container container'>
-              <div className='property__gallery'>
+              {/* <div className='property__gallery'>
                 <ImageHousing />
                 <ImageHousing />
                 <ImageHousing />
                 <ImageHousing />
                 <ImageHousing />
                 <ImageHousing />
-              </div>
+              </div> */}
             </div>
             <div className='property__container container'>
               <div className='property__wrapper'>

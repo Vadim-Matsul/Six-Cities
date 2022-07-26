@@ -1,7 +1,13 @@
-function ImageHousing ():JSX.Element {
+
+type ImageHousingProps = {
+  src: string
+}
+
+function ImageHousing (props: ImageHousingProps):JSX.Element {
+
   return (
     <div className="property__image-wrapper">
-      <img className="property__image" src="img/room.jpg" alt="Photo studio"/>
+      <img className="property__image" src={props.src} alt="Photo studio"/>
     </div>
   );
 }

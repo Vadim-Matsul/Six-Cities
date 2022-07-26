@@ -17,9 +17,9 @@ type AppProps = {
 }
 
 function App( props: AppProps ): JSX.Element {
-  const {offerstate} = props
-  const [offercityAmster, offercityCologne] = offerstate
-  
+  const {offerstate} = props;
+  const [offercityAmster, offercityCologne] = offerstate;
+
   return (
     <>
       <BrowserRouter>
@@ -56,10 +56,12 @@ function App( props: AppProps ): JSX.Element {
           />
           <Route
             path = { AppRoutes.Save }
-            element = { <SavedListingPage 
-                          offercityAmster = {offercityAmster as OfferCity} 
-                          offercityCologne = {offercityCologne as OfferCity}
-                        /> }
+            element = {
+              <SavedListingPage
+                offercityAmster = {offercityAmster as OfferCity}
+                offercityCologne = {offercityCologne as OfferCity}
+              />
+            }
           />
           <Route
             path = { AppRoutes.Error }
