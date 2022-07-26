@@ -11,6 +11,7 @@ import PlacesToStayPage from '../../pages/placesToStay/PlacesToStayPage';
 import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
 import { OfferCity, OfferPlaces } from '../../types/OfferPlaces';
+import FormCreateRef from '../test-component/FormCreateRef';
 
 type AppProps = {
   offerstate: OfferPlaces
@@ -22,6 +23,7 @@ function App( props: AppProps ): JSX.Element {
 
   return (
     <>
+      <FormCreateRef email='something@mail.ru'/>
       <BrowserRouter>
         <Routes>
           <Route
