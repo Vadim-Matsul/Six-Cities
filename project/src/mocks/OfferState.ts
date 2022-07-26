@@ -11,21 +11,24 @@ export const OfferState:OfferPlaces = [
         cost: '120',
         title: 'Beautiful & luxurious apartment at great location',
         estate: 'Apartment',
-        raiting: '80%'
+        raiting: '80%',
+        inBookmark: false
       },
       {
         src: 'img/room.jpg',
         cost: '80',
         title: 'Wood and stone place',
         estate: 'Private Room',
-        raiting: '80%'
+        raiting: '80%', 
+        inBookmark: false
       },
       {
         src: 'img/apartment-02.jpg',
         cost: '132',
         title: 'Canal View Prinsengracht',
         estate: 'Apartment',
-        raiting: '80%'
+        raiting: '80%',
+        inBookmark: true
       },
       {
         special: 'Premium',
@@ -33,7 +36,8 @@ export const OfferState:OfferPlaces = [
         cost: '180',
         title: 'Nice, cozy, warm big bed apartment',
         estate: 'Apartment',
-        raiting: '100%'
+        raiting: '100%',
+        inBookmark: true
       },
     ]
   },{
@@ -45,7 +49,8 @@ export const OfferState:OfferPlaces = [
         cost: '180',
         title: 'White castle',
         estate: 'Apartment',
-        raiting: '80%'
+        raiting: '80%',
+        inBookmark: true
       }
     ]
   },{

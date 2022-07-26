@@ -2,18 +2,16 @@ import { OfferHouse } from '../../types/OfferPlaces';
 
 type CardMainProps = {
   offer: OfferHouse
-  key: string
   onMouseMove: () => void
   onMouseLeave: () => void
 }
 
 function CardMain (props: CardMainProps):JSX.Element {
-  const {offer, key, onMouseMove, onMouseLeave} = props;
+  const {offer, onMouseMove, onMouseLeave} = props;
 
   return (
     <article
       className='cities__place-card place-card'
-      key={ key }
       onMouseMove = { onMouseMove }
       onMouseLeave = { onMouseLeave }
     >
@@ -25,7 +23,7 @@ function CardMain (props: CardMainProps):JSX.Element {
         <a href='#'>
           <img
             className='place-card__image'
-            src={`${offer.src}`} width='260' height='200' alt='Place image'
+            src={offer.src} width='260' height='200' alt='Place image'
           />
         </a>
       </div>
@@ -35,14 +33,16 @@ function CardMain (props: CardMainProps):JSX.Element {
             <b className='place-card__price-value'>&euro;{offer.cost}</b>
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
-          <button
-            className='place-card__bookmark-button button'
-            type='button'
+          <button  
+            className={ offer.inBookmark 
+                          ? "place-card__bookmark-button--active button" 
+                          : "place-card__bookmark-button button" } 
+                        type="button"
           >
-            <svg className='place-card__bookmark-icon' width='18' height='19'>
-              <use xlinkHref='#icon-bookmark'></use>
+            <svg className="place-card__bookmark-icon" width="18" height="19">
+              <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className='visually-hidden' >To bookmarks</span>
+            <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
         <div className='place-card__rating rating'>

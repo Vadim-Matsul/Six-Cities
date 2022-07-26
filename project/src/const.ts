@@ -9,6 +9,12 @@ export enum AppRoutes {
   Error = '*'
 }
 
+export enum MainRoutes {
+  Amsterdam = '/Amsterdam',
+  Cologne = '/Cologne',
+  Default = '*'
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NOAUTH',

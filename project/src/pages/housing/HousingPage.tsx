@@ -5,6 +5,8 @@ import HouseOwner from '../../components/houseProperties/HouseOwner';
 import HouseProperties from '../../components/houseProperties/HouseProperties';
 import ImageHousing from '../../components/images/ImageHousing';
 import Reviwer from '../../components/reviews/Reviewer';
+import 
+
 function HousingPage ():JSX.Element {
   return (
     <>

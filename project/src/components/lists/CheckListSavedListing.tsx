@@ -1,6 +1,16 @@
+import { OfferHouse } from '../../types/OfferPlaces';
 import CardSavedListing from '../cards/CardSavedListing';
 
-function CheckListSavedListing ({locationName}:{locationName:string}):JSX.Element {
+type CheckListSavedProps = {
+  locationName: string
+  offers: OfferHouse []
+}
+
+function CheckListSavedListing (props:CheckListSavedProps):JSX.Element {
+  const {locationName, offers} = props
+  
+  
+
   return (
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
@@ -11,8 +21,17 @@ function CheckListSavedListing ({locationName}:{locationName:string}):JSX.Elemen
         </div>
       </div>
       <div className='favorites__places'>
-        <CardSavedListing />
-        <CardSavedListing />
+        { offers.map( (offer, id) => {
+          const keyValue = `${offer.estate} + ${id}`
+          if (offer.inBookmark){
+            return (
+              <CardSavedListing
+                key = { keyValue }
+                offerHouse = { offer as OfferHouse}
+                id = {id}
+              />)
+          } 
+        })}
       </div>
     </li>
   );

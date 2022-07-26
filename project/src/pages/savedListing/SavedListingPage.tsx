@@ -1,8 +1,18 @@
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
 import CheckListSavedListing from '../../components/lists/CheckListSavedListing';
+import { OfferCity, OfferHouse } from '../../types/OfferPlaces';
 
-function SavedListingPage ():JSX.Element {
+type SavedListingPageProps = {
+  offercityAmster: OfferCity
+  offercityCologne: OfferCity
+}
+
+function SavedListingPage (props: SavedListingPageProps):JSX.Element {
+  const {offercityAmster, offercityCologne} = props
+  
+  
+    
   return (
     <>
       <div style={{display: 'none'}}>
@@ -16,8 +26,14 @@ function SavedListingPage ():JSX.Element {
             <section className='favorites'>
               <h1 className='favorites__title'>Saved listing</h1>
               <ul className='favorites__list'>
-                <CheckListSavedListing locationName = {'Amsterdam'}/>
-                <CheckListSavedListing locationName = {'Cologne'}/>
+                <CheckListSavedListing 
+                  locationName = {offercityAmster.place}
+                  offers = {offercityAmster.offers as OfferHouse[]}
+                />
+                <CheckListSavedListing 
+                  locationName = {offercityCologne.place}
+                  offers = {offercityCologne.offers as OfferHouse[]}
+                />
               </ul>
             </section>
           </div>

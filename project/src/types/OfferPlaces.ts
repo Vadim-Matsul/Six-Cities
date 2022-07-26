@@ -11,6 +11,7 @@ export type OfferHouse = {
   title: string
   estate: string
   raiting: string
+  inBookmark: boolean
 }
 
 export type Reviews = {
