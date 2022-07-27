@@ -25,6 +25,11 @@ function FormCreateRef (props: TProps):JSX.Element {
         name='email'
         defaultValue={props.email || 'null'}
       />
+      <input
+        type='text'
+        name='comment'
+        defaultValue={props.email || 'null'}
+      />
       <button type='submit'> submit </button>
     </form>
   );
