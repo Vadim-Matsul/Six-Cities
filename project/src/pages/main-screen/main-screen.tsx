@@ -5,12 +5,12 @@ type MainScreenProps = {
   cardsCount: number
 }
 
-function getArray (cardsCount: number): string[] {
-  const Array:string[] = [];
+function getListCards (cardsCount: number): string[] {
+  const listCards:string[] = [];
   for (let i = 0; i < cardsCount; i++){
-    Array.push( Math.random().toString() );
+    listCards.push( Math.random().toString() );
   }
-  return Array;
+  return listCards;
 }
 
 
@@ -104,7 +104,7 @@ function MainScreen ({cardsCount}: MainScreenProps):JSX.Element{
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                { getArray(cardsCount).map((card) => <OfferCard key = {card}/>) }
+                { getListCards(cardsCount).map((card) => <OfferCard key = {card}/>) }
               </div>
             </section>
             <div className='cities__right-section'>
