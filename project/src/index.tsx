@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { OfferState } from './mocks/OfferState';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const InputParametr = {
+  CARDS_COUNT: 5
+};
+
 root.render(
   <React.StrictMode>
-    <App offerstate = { OfferState }/>
+    <App cardsCount = { InputParametr.CARDS_COUNT }/>
   </React.StrictMode>,
 );
 
