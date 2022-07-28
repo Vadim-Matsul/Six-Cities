@@ -6,6 +6,8 @@ import AuthScreen from '../../pages/auth-screen/auth-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import PrivateRoute from '../private-route/Private-Route';
+import { AuthorizationStatus } from '../app/const';
 
 type AppProps = {
   cardsCount: number
@@ -17,7 +19,7 @@ function App ({cardsCount}:AppProps):JSX.Element{
       <Routes>
         <Route
           path = { AppRoute.Main }
-          element = { < MainScreen cardsCount={ cardsCount } /> }
+          element = { < MainScreen cardsCount={ cardsCount } />}
         />
         <Route
           path = { AppRoute.Auth }
@@ -25,7 +27,11 @@ function App ({cardsCount}:AppProps):JSX.Element{
         />
         <Route
           path = { AppRoute.Favorites }
-          element = { < FavoritesScreen /> }
+          element = {
+            <PrivateRoute authorizationStatus={ AuthorizationStatus.NoAuth}>
+              < FavoritesScreen />
+            </PrivateRoute>
+          }
         />
         <Route
           path = { AppRoute.Property }

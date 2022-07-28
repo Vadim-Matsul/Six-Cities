@@ -5,3 +5,9 @@ export enum AppRoute {
   Favorites = '/favorites',
   Error = '*'
 }
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NOAUTH',
+  UnKnown = 'UNKNOWN'
+}
