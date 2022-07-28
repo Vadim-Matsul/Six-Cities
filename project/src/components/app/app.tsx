@@ -12,6 +12,7 @@ import SavedListingPage from '../../pages/savedListing/SavedListingPage';
 import Error from '../../pages/error/Error';
 import { OfferCity, OfferPlaces } from '../../types/OfferPlaces';
 
+
 type AppProps = {
   offerstate: OfferPlaces
 }
