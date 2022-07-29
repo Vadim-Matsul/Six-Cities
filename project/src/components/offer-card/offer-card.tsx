@@ -4,14 +4,20 @@ import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 
 type OfferCardProps = {
   offer: Offer
+  ActiveCard: () => void
+  InActiveCard: () => void
 }
 
-function OfferCard ( { offer }:OfferCardProps ):JSX.Element {
+function OfferCard ( { offer, ActiveCard, InActiveCard }:OfferCardProps ):JSX.Element {
   const rating = getStars ( offer.rating )
   const offerType = capitalizeFirstLetter (offer.type)
   
   return (
-    <article className='cities__place-card place-card'>
+    <article 
+      className='cities__place-card place-card'
+      onMouseEnter={ActiveCard}
+      onMouseLeave={InActiveCard}
+    >
       <div 
         className='place-card__mark'
         hidden = {!offer.isPremium}
