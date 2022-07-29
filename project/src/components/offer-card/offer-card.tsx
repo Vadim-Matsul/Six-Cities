@@ -1,6 +1,6 @@
 import React from 'react';
 import { Offer } from '../../types/offers';
-import { getStars } from '../../utils/utils';
+import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 
 type OfferCardProps = {
   offer: Offer
@@ -8,7 +8,8 @@ type OfferCardProps = {
 
 function OfferCard ( { offer }:OfferCardProps ):JSX.Element {
   const rating = getStars ( offer.rating )
-
+  const offerType = capitalizeFirstLetter (offer.type)
+  
   return (
     <article className='cities__place-card place-card'>
       <div 
@@ -52,7 +53,7 @@ function OfferCard ( { offer }:OfferCardProps ):JSX.Element {
         <h2 className='place-card__name'>
           <a href='#'>{offer.title}</a>
         </h2>
-        <p className='place-card__type'>{offer.type}</p>
+        <p className='place-card__type'>{offerType}</p>
       </div>
     </article>
   );
