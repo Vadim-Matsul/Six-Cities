@@ -8,12 +8,15 @@ import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../app/const';
+import { Offers } from '../../types/offers';
 
 type AppProps = {
   cardsCount: number
+  offers: Offers
 }
 
-function App ({cardsCount}:AppProps):JSX.Element{
+function App ({cardsCount, offers}:AppProps):JSX.Element{
+
   return (
     <BrowserRouter>
       <Routes>
