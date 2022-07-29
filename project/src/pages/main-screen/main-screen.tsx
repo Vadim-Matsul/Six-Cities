@@ -1,21 +1,17 @@
 import React from 'react';
 import Logo from '../../components/logo/logo';
 import OfferCard from '../../components/offer-card/offer-card';
+import OfferList from '../../components/offer-list/offer-list';
+import { Offers } from '../../types/offers';
 
 type MainScreenProps = {
-  cardsCount: number
-}
-
-function getListCards (cardsCount: number): string[] {
-  const listCards:string[] = [];
-  for (let i = 0; i < cardsCount; i++){
-    listCards.push( Math.random().toString() );
-  }
-  return listCards;
+  offers: Offers
 }
 
 
-function MainScreen ({cardsCount}: MainScreenProps):JSX.Element{
+function MainScreen ({offers}: MainScreenProps):JSX.Element{
+  const cardsCount = offers.length
+
   return (
     <div className='page page--gray page--main'>
       <header className='header'>
@@ -86,7 +82,9 @@ function MainScreen ({cardsCount}: MainScreenProps):JSX.Element{
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>312 places to stay in Amsterdam</b>
+              <b className='places__found'>
+                {cardsCount} places to stay in Amsterdam
+              </b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={ 0 }>
@@ -102,9 +100,7 @@ function MainScreen ({cardsCount}: MainScreenProps):JSX.Element{
                   <li className='places__option' tabIndex={ 0 }>Top rated first</li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
-                { getListCards(cardsCount).map((card) => <OfferCard key = {card}/>) }
-              </div>
+              <OfferList offers = { offers }/>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'></section>
