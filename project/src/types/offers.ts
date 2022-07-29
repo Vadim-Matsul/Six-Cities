@@ -16,7 +16,7 @@ type Location = {
     zoom: number
 }
 
-type Offer = {
+export type Offer = {
   id: number,
   city: City,
   previewImage: string,
