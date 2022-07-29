@@ -11,3 +11,20 @@ export enum AuthorizationStatus {
   NoAuth = 'NOAUTH',
   UnKnown = 'UNKNOWN'
 }
+
+export enum CardPageClass {
+  Main = 'cities',
+  Property = 'near-places',
+  Favorites = 'favorites'
+}
+
+export const ImageSize = {
+  Big: {
+    height: 200,
+    width: 260
+  },
+  Small: {
+    height: 110,
+    width: 150
+  }
+}

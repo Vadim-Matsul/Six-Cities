@@ -1,24 +1,28 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import { Offers } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
+import { CardPageClass } from '../../const';
 
 type OfferListProps = {
   offers: Offers
+  cardClass: CardPageClass
 }
 
-function OfferList ( {offers}:OfferListProps ){
+function OfferList ( {offers, cardClass}:OfferListProps ):JSX.Element{
   const [ActiveCard, setActiveCard] = useState<number | null>(null);
+console.log(cardClass);
 
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <Fragment>
       { offers.map( (offer) => (
         <OfferCard
           offer = {offer}
           key={offer.id}
           ActiveCard = {() => setActiveCard( offer.id )}
           InActiveCard = {() => setActiveCard( null )}
+          cardClass = {cardClass}
         />))}
-    </div>
+    </Fragment>
   );
 }
 

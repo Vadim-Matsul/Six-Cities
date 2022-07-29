@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
+import {CardPageClass} from '../../const'
 
 type MainScreenProps = {
   offers: Offers
@@ -99,7 +100,12 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
                   <li className='places__option' tabIndex={ 0 }>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers = { offers }/>
+              <div className='cities__places-list places__list tabs__content'>
+                <OfferList 
+                  offers = { offers }
+                  cardClass = { CardPageClass.Main }
+                />
+              </div>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'></section>
