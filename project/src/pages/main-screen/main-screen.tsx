@@ -1,6 +1,5 @@
 import React from 'react';
 import Logo from '../../components/logo/logo';
-import OfferCard from '../../components/offer-card/offer-card';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
 
@@ -10,7 +9,7 @@ type MainScreenProps = {
 
 
 function MainScreen ({offers}: MainScreenProps):JSX.Element{
-  const cardsCount = offers.length
+  const cardsCount = offers.length;
 
   return (
     <div className='page page--gray page--main'>
