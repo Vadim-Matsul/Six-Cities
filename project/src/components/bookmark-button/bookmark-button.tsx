@@ -1,14 +1,14 @@
-import { BookMarkClass, PropertySize } from "../../const";
+import { BookMarkClass, PropertySize } from '../../const';
 
 type BookMarkButtonProps = {
   bookmarkClass: BookMarkClass
   isFavorite: boolean
 }
 
-function BookMarkButton ({bookmarkClass, isFavorite}:BookMarkButtonProps){
-    
-  const svgSize = bookmarkClass === BookMarkClass.OfferCard ? PropertySize.Small : PropertySize.Big
-  
+function BookMarkButton ({bookmarkClass, isFavorite}:BookMarkButtonProps):JSX.Element{
+
+  const svgSize = bookmarkClass === BookMarkClass.OfferCard ? PropertySize.Small : PropertySize.Big;
+
   return (
     <button
       className = {`${ bookmarkClass }__bookmark-button button ${ isFavorite ? `${ bookmarkClass }__bookmark-button--active` : '' }`}

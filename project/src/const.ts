@@ -32,7 +32,7 @@ export const PropertySize = {
     height: 18,
     width: 19
   }
-}
+};
 
 export const ImageSize = {
   Big: {
