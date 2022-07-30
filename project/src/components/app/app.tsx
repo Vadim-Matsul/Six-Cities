@@ -37,7 +37,7 @@ function App ({ offers }:AppProps):JSX.Element{
           }
         />
         <Route
-          path = { AppRoute.Property }
+          path = { `${AppRoute.Property}/:id` }
           element = { < PropertyScreen /> }
         />
         <Route
