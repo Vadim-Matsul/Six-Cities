@@ -5,18 +5,21 @@ import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import PropertyGood from '../../components/property-good/property-good';
 import PropertyImage from '../../components/property-image/property-image';
+import UserReview from '../../components/user-review/user-review';
 import { BookMarkClass, CardPageClass, ImagesSize } from '../../const';
 import { Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
 import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type PropertyScreenProps = {
   offers: Offers
   nearPlacesOffers: Offers
+  reviews: Reviews
 }
 
-function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX.Element{
- 
+function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenProps ):JSX.Element{
+
   const { id } = useParams();
   const numId = Number(id);
   const NanNumId = !numId;
@@ -24,12 +27,12 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
   const NanOffer = !offer;
 
   if (NanNumId || NanOffer){
-    return <NotFoundScreen />
+    return <NotFoundScreen />;
   }
 
-  const images:string[] = offer.images.slice(ImagesSize.START, ImagesSize.END)
-  const raiting = getStars( offer.rating )
-  const offerType = capitalizeFirstLetter(offer.type)
+  const images:string[] = offer.images.slice(ImagesSize.START, ImagesSize.END);
+  const raiting = getStars( offer.rating );
+  const offerType = capitalizeFirstLetter(offer.type);
 
   return (
     <div className='page'>
@@ -69,7 +72,7 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
           </div>
           <div className='property__container container'>
             <div className='property__wrapper'>
-              <div 
+              <div
                 className='property__mark'
                 hidden={!offer.isPremium}
               >
@@ -79,7 +82,7 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
                 <h1 className='property__name'>
                   { offer.title }
                 </h1>
-                <BookMarkButton 
+                <BookMarkButton
                   bookmarkClass={ BookMarkClass.Property }
                   isFavorite = { offer.isFavorite }
                 />
@@ -118,7 +121,7 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
                   <span className='property__user-name'>
                     {offer.host.name}
                   </span>
-                  <span 
+                  <span
                     className='property__user-status'
                     hidden={!offer.host.isPro}
                   >
@@ -132,33 +135,9 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
                 </div>
               </div>
               <section className='property__reviews reviews'>
-                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>1</span></h2>
+                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.length}</span></h2>
                 <ul className='reviews__list'>
-                  <li className='reviews__item'>
-                    <div className='reviews__user user'>
-                      <div className='reviews__avatar-wrapper user__avatar-wrapper'>
-                        <img className='reviews__avatar user__avatar' src='img/avatar-max.jpg' width='54' height='54'
-                          alt='Reviews avatar'
-                        />
-                      </div>
-                      <span className='reviews__user-name'>
-                        Max
-                      </span>
-                    </div>
-                    <div className='reviews__info'>
-                      <div className='reviews__rating rating'>
-                        <div className='reviews__stars rating__stars'>
-                          <span style={{ width: '80%' }}></span>
-                          <span className='visually-hidden'>Rating</span>
-                        </div>
-                      </div>
-                      <p className='reviews__text'>
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                        building is green and from 18th century.
-                      </p>
-                      <time className='reviews__time' dateTime='2019-04-24'>April 2019</time>
-                    </div>
-                  </li>
+                  <UserReview reviews={ reviews as Reviews } />
                 </ul>
                 <form className='reviews__form form' action='#' method='post'>
                   <label className='reviews__label form__label' htmlFor='review'>Your review</label>
@@ -219,7 +198,7 @@ function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              <OfferList 
+              <OfferList
                 cardClass={ CardPageClass.Property }
                 offers = {nearPlacesOffers}
               />

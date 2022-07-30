@@ -9,14 +9,16 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
 
 type AppProps = {
   offers: Offers
   nearPlacesOffers: Offers
   favoriteOffers: Offers
+  reviews: Reviews
 }
 
-function App ({ offers, nearPlacesOffers, favoriteOffers }:AppProps):JSX.Element{
+function App ({ offers, nearPlacesOffers, favoriteOffers, reviews}:AppProps):JSX.Element{
 
 
   return (
@@ -40,7 +42,13 @@ function App ({ offers, nearPlacesOffers, favoriteOffers }:AppProps):JSX.Element
         />
         <Route
           path = { `${AppRoute.Property}/:id` }
-          element = { < PropertyScreen offers={offers} nearPlacesOffers={nearPlacesOffers} /> }
+          element = {
+            < PropertyScreen
+              offers={offers}
+              nearPlacesOffers={nearPlacesOffers}
+              reviews = { reviews as Reviews}
+            />
+          }
         />
         <Route
           path = { AppRoute.Error }

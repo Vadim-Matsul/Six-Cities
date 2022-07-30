@@ -24,4 +24,4 @@ export const reviews = [
     comment: 'I stayed here for one night and it was an unpleasant experience.',
     date: '2019-10-10T22:50:36.939Z'
   }
-]
+];

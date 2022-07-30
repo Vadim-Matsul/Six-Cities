@@ -1,4 +1,4 @@
-type  PropertyImageProps = {
+type PropertyImageProps = {
   src: string
 }
 

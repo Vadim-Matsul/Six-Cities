@@ -22,10 +22,15 @@ export enum BookMarkClass {
   Property = 'property',
 
 }
-export enum ImagesSize  {
+
+export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December'] as const;
+
+export enum ImagesSize {
   START = 0,
   END = 6
 }
+
 export const PropertySize = {
   Big: {
     height: 31,
@@ -35,7 +40,7 @@ export const PropertySize = {
     height: 18,
     width: 19
   }
-};
+} as const;
 
 export const ImageSize = {
   Big: {
@@ -46,4 +51,4 @@ export const ImageSize = {
     height: 110,
     width: 150
   }
-};
+} as const;
