@@ -43,7 +43,7 @@ export const offers = [
     host: {
       id: 25,
       name: 'Angelina',
-      isPro: true,
+      isPro: false,
       avatarUrl: 'img/avatar-angelina.jpg'
     },
     description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
@@ -96,7 +96,7 @@ export const offers = [
     host: {
       id: 25,
       name: 'Angelina',
-      isPro: true,
+      isPro: false,
       avatarUrl: 'img/avatar-angelina.jpg'
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
@@ -375,7 +375,7 @@ export const nearPlacesOffers = [
     ],
     title: 'Loft Studio in the Central Area',
     isFavorite: true,
-    isPremium: true,
+    isPremium: false,
     rating: 3.7,
     type: 'hotel',
     bedrooms: 3,

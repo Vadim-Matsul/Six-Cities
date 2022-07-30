@@ -22,7 +22,10 @@ export enum BookMarkClass {
   Property = 'property',
 
 }
-
+export enum ImagesSize  {
+  START = 0,
+  END = 6
+}
 export const PropertySize = {
   Big: {
     height: 31,
