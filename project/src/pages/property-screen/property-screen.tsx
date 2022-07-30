@@ -1,7 +1,13 @@
 import React from 'react';
 import Logo from '../../components/logo/logo';
+import { Offers } from '../../types/offers';
 
-function PropertyScreen ():JSX.Element{
+type PropertyScreenProps = {
+  offers: Offers
+  nearPlacesOffers: Offers
+}
+
+function PropertyScreen ( { offers, nearPlacesOffers }:PropertyScreenProps ):JSX.Element{
   return (
     <div className='page'>
       <header className='header'>

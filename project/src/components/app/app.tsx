@@ -12,9 +12,11 @@ import { Offers } from '../../types/offers';
 
 type AppProps = {
   offers: Offers
+  nearPlacesOffers: Offers
+  favoriteOffers: Offers
 }
 
-function App ({ offers }:AppProps):JSX.Element{
+function App ({ offers, nearPlacesOffers, favoriteOffers }:AppProps):JSX.Element{
 
 
   return (
@@ -32,13 +34,13 @@ function App ({ offers }:AppProps):JSX.Element{
           path = { AppRoute.Favorites }
           element = {
             <PrivateRoute authorizationStatus={ AuthorizationStatus.Auth}>
-              < FavoritesScreen offers = {offers}/>
+              < FavoritesScreen offers = {favoriteOffers}/>
             </PrivateRoute>
           }
         />
         <Route
           path = { `${AppRoute.Property}/:id` }
-          element = { < PropertyScreen /> }
+          element = { < PropertyScreen offers={offers} nearPlacesOffers={nearPlacesOffers} /> }
         />
         <Route
           path = { AppRoute.Error }
