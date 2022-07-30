@@ -16,6 +16,7 @@ type AppProps = {
 
 function App ({ offers }:AppProps):JSX.Element{
 
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +32,7 @@ function App ({ offers }:AppProps):JSX.Element{
           path = { AppRoute.Favorites }
           element = {
             <PrivateRoute authorizationStatus={ AuthorizationStatus.Auth}>
-              < FavoritesScreen  offers = {offers}/>
+              < FavoritesScreen offers = {offers}/>
             </PrivateRoute>
           }
         />

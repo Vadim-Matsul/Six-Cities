@@ -53,7 +53,7 @@ function FavoritesScreen (props:FavoritesPageProps):JSX.Element{
                   </div>
                 </div>
                 <div className='favorites__places'>
-                  <OfferList 
+                  <OfferList
                     offers={props.offers}
                     cardClass={CardPageClass.Favorites}
                   />

@@ -10,7 +10,6 @@ type OfferListProps = {
 
 function OfferList ( {offers, cardClass}:OfferListProps ):JSX.Element{
   const [ActiveCard, setActiveCard] = useState<number | null>(null);
-console.log(cardClass);
 
   return (
     <Fragment>

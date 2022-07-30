@@ -27,4 +27,4 @@ export const ImageSize = {
     height: 110,
     width: 150
   }
-}
+};

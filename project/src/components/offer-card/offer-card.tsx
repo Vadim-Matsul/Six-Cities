@@ -34,11 +34,11 @@ function OfferCard ( props:OfferCardProps ):JSX.Element {
       </div>
       <div className={`${cardClass}__image-wrapper place-card__image-wrapper`}>
         <a href='#'>
-          <img 
-            className='place-card__image' 
-            src={offer.previewImage} 
-            width={actualImageSize.width} 
-            height={actualImageSize.height} 
+          <img
+            className='place-card__image'
+            src={offer.previewImage}
+            width={actualImageSize.width}
+            height={actualImageSize.height}
             alt={offer.title}
           />
         </a>

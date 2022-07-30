@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
-import {CardPageClass} from '../../const'
+import {CardPageClass} from '../../const';
 
 type MainScreenProps = {
   offers: Offers
@@ -11,6 +11,7 @@ type MainScreenProps = {
 
 function MainScreen ({offers}: MainScreenProps):JSX.Element{
   const cardsCount = offers.length;
+
 
   return (
     <div className='page page--gray page--main'>
@@ -101,7 +102,7 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <OfferList 
+                <OfferList
                   offers = { offers }
                   cardClass = { CardPageClass.Main }
                 />
