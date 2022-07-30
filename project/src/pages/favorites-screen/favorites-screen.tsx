@@ -1,14 +1,13 @@
 import React from 'react';
+import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
 import Logo from '../../components/logo/logo';
-import OfferList from '../../components/offer-list/offer-list';
-import { CardPageClass } from '../../const';
 import { Offers } from '../../types/offers';
 
 type FavoritesPageProps = {
   offers: Offers
 }
 
-function FavoritesScreen (props:FavoritesPageProps):JSX.Element{
+function FavoritesScreen ({offers}:FavoritesPageProps):JSX.Element{
 
   return (
     <div className='page'>
@@ -44,21 +43,7 @@ function FavoritesScreen (props:FavoritesPageProps):JSX.Element{
           <section className='favorites'>
             <h1 className='favorites__title'>Saved listing</h1>
             <ul className='favorites__list'>
-              <li className='favorites__locations-items'>
-                <div className='favorites__locations locations locations--current'>
-                  <div className='locations__item'>
-                    <a className='locations__item-link' href='/'>
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className='favorites__places'>
-                  <OfferList
-                    offers={props.offers}
-                    cardClass={CardPageClass.Favorites}
-                  />
-                </div>
-              </li>
+              <FavoriteOffersList offers = {offers as Offers}/>
             </ul>
           </section>
         </div>
