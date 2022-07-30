@@ -17,6 +17,22 @@ export enum CardPageClass {
   Property = 'near-places',
   Favorites = 'favorites'
 }
+export enum BookMarkClass {
+  OfferCard = 'place-card',
+  Property = 'property',
+
+}
+
+export const PropertySize = {
+  Big: {
+    height: 31,
+    width: 33
+  },
+  Small: {
+    height: 18,
+    width: 19
+  }
+}
 
 export const ImageSize = {
   Big: {
