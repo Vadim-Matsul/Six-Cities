@@ -23,6 +23,31 @@ export enum BookMarkClass {
 
 }
 
+export const City = {
+  name: 'Amsterdam',
+  location:{
+    latitude: 52.37454,
+    longitude: 4.897976,
+    zoom: 13
+  }
+} as const;
+
+export const IconMarkerUrl = {
+  default: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+  current: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
+} as const;
+
+export const IconMarkerSize = {
+  Icon: {
+    x: 40,
+    y: 40
+  },
+  Anchor: {
+    x: 20,
+    y: 40
+  }
+} as const;
+
 export const Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
   'August', 'September', 'October', 'November', 'December'] as const;
 

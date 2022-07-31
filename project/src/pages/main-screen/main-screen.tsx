@@ -2,7 +2,8 @@ import React from 'react';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
-import {CardPageClass} from '../../const';
+import {CardPageClass, City} from '../../const';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   offers: Offers
@@ -109,7 +110,7 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
               </div>
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <Map offers={ offers } city={ City }/>
             </div>
           </div>
         </div>

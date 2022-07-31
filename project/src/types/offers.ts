@@ -1,16 +1,16 @@
-type City = {
+export type City = {
   name: string,
   location: Location
 }
 
-type Host = {
+export type Host = {
   id: number,
   name: string,
   isPro: boolean,
   avatarUrl: string
 }
 
-type Location = {
+export type Location = {
     latitude: number,
     longitude: number,
     zoom: number
