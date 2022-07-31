@@ -40,6 +40,7 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
   const raiting = getStars( offer.rating );
   const offerType = capitalizeFirstLetter(offer.type);
 
+
   return (
     <div className='page'>
       <header className='header'>
@@ -68,7 +69,6 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
           </div>
         </div>
       </header>
-
       <main className='page__main page__main--property'>
         <section className='property'>
           <div className='property__gallery-container container'>
@@ -93,6 +93,7 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
                   isFavorite = { offer.isFavorite }
                 />
               </div>
+
               <div className='property__rating rating'>
                 <div className='property__stars rating__stars'>
                   <span style={{ width: raiting }}></span>

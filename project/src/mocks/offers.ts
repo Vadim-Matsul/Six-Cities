@@ -48,8 +48,8 @@ export const offers = [
     },
     description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
-      latitude: 51.210402,
-      longitude: 6.798314,
+      latitude: 52.3909553943508,
+      longitude: 4.92930966640619,
       zoom: 16
     }
   },
@@ -101,8 +101,8 @@ export const offers = [
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
-      latitude: 48.843610000000005,
-      longitude: 2.338499,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     }
   },
@@ -112,8 +112,8 @@ export const offers = [
     city: {
       name: 'Hamburg',
       location: {
-        latitude: 53.550341,
-        longitude: 10.000654,
+        latitude: 53.551086,
+        longitude: 9.993682,
         zoom: 13
       }
     },
@@ -160,8 +160,8 @@ export const offers = [
     },
     description: 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
     location: {
-      latitude: 53.534341000000005,
-      longitude: 9.998654,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     }
   },
@@ -220,8 +220,8 @@ export const offers = [
     },
     description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
-      latitude: 50.934361,
-      longitude: 6.943974,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     }
   },
@@ -279,8 +279,8 @@ export const offers = [
     },
     description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
-      latitude: 50.934361,
-      longitude: 6.943974,
+      latitude: 52.389346,
+      longitude: 4.905060,
       zoom: 16
     }
   },
@@ -289,8 +289,8 @@ export const offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 50.938361,
-        longitude: 6.959974,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
@@ -338,8 +338,8 @@ export const offers = [
     },
     description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
-      latitude: 50.934361,
-      longitude: 6.943974,
+      latitude: 52.363479,
+      longitude: 4.892781,
       zoom: 16
     }
   },
