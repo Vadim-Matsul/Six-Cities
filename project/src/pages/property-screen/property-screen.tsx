@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BookMarkButton from '../../components/bookmark-button/bookmark-button';
+import InputRaiting from '../../components/input-raiting/input-raiting';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import PropertyGood from '../../components/property-good/property-good';
@@ -8,7 +9,7 @@ import PropertyImage from '../../components/property-image/property-image';
 import UserReview from '../../components/user-review/user-review';
 import { BookMarkClass, CardPageClass, ImagesSize } from '../../const';
 import { Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
+import { Reviews, ReviewState } from '../../types/reviews';
 import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
@@ -19,6 +20,11 @@ type PropertyScreenProps = {
 }
 
 function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenProps ):JSX.Element{
+
+  const [ reviewFormData, setReviewFormData ] = useState<ReviewState>({
+    raiting: null,
+    comment: ''
+  });
 
   const { id } = useParams();
   const numId = Number(id);
@@ -139,48 +145,32 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
                 <ul className='reviews__list'>
                   <UserReview reviews={ reviews as Reviews } />
                 </ul>
-                <form className='reviews__form form' action='#' method='post'>
+                <form className='reviews__form form' action='#' method='post' >
                   <label className='reviews__label form__label' htmlFor='review'>Your review</label>
-                  <div className='reviews__rating-form form__rating'>
-                    <input className='form__rating-input visually-hidden' name='rating' value='5' id='5-stars' type='radio' />
-                    <label htmlFor='5-stars' className='reviews__rating-label form__rating-label' title='perfect'>
-                      <svg className='form__star-image' width='37' height='33'>
-                        <use xlinkHref='#icon-star'></use>
-                      </svg>
-                    </label>
-
-                    <input className='form__rating-input visually-hidden' name='rating' value='4' id='4-stars' type='radio' />
-                    <label htmlFor='4-stars' className='reviews__rating-label form__rating-label' title='good'>
-                      <svg className='form__star-image' width='37' height='33'>
-                        <use xlinkHref='#icon-star'></use>
-                      </svg>
-                    </label>
-
-                    <input className='form__rating-input visually-hidden' name='rating' value='3' id='3-stars' type='radio' />
-                    <label htmlFor='3-stars' className='reviews__rating-label form__rating-label' title='not bad'>
-                      <svg className='form__star-image' width='37' height='33'>
-                        <use xlinkHref='#icon-star'></use>
-                      </svg>
-                    </label>
-
-                    <input className='form__rating-input visually-hidden' name='rating' value='2' id='2-stars' type='radio' />
-                    <label htmlFor='2-stars' className='reviews__rating-label form__rating-label' title='badly'>
-                      <svg className='form__star-image' width='37' height='33'>
-                        <use xlinkHref='#icon-star'></use>
-                      </svg>
-                    </label>
-
-                    <input className='form__rating-input visually-hidden' name='rating' value='1' id='1-star' type='radio' />
-                    <label htmlFor='1-star' className='reviews__rating-label form__rating-label' title='terribly'>
-                      <svg className='form__star-image' width='37' height='33'>
-                        <use xlinkHref='#icon-star'></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className='reviews__textarea form__textarea' id='review' name='review'
-                    placeholder='Tell how was your stay, what you like and what can be improved'
+                  <div
+                    className='reviews__rating-form form__rating'
+                    onChange={( {target}: ChangeEvent <HTMLInputElement> ):void => {
+                      setReviewFormData({
+                        ...reviewFormData,
+                        raiting: Number(target.value)
+                      });
+                    }}
                   >
-                  </textarea>
+                    <InputRaiting />
+                  </div>
+                  <textarea
+                    className='reviews__textarea form__textarea'
+                    onChange={( {target}:ChangeEvent <HTMLTextAreaElement> ):void =>{
+                      setReviewFormData({
+                        ...reviewFormData,
+                        comment: target.value
+                      });
+                    }}
+                    id='review'
+                    name='review'
+                    value={reviewFormData.comment}
+                    placeholder='Tell how was your stay, what you like and what can be improved'
+                  />
                   <div className='reviews__button-wrapper'>
                     <p className='reviews__help'>
                       To submit review please make sure to set <span className='reviews__star'>rating</span> and describe your

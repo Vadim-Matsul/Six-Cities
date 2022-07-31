@@ -14,3 +14,8 @@ type Review = {
 }
 
 export type Reviews = Review[]
+
+export type ReviewState = {
+  raiting: null | number,
+  comment: string
+}

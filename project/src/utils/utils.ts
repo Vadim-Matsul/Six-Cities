@@ -1,5 +1,5 @@
 import { Offer, Offers } from '../types/offers';
-import { months } from '../const';
+import { Months } from '../const';
 
 const RAITING_COUNT = 20;
 const FIRST_LETTER = 0;
@@ -34,5 +34,5 @@ export const getFormateDate = ( date: string):string => {
   const dateReview = new Date(date);
   const year = dateReview.getFullYear();
   const month = dateReview.getMonth();
-  return `${year} ${months[month]}`;
+  return `${year} ${Months[month]}`;
 };
