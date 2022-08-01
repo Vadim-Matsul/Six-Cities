@@ -1,37 +1,31 @@
-import { Map, TileLayer } from 'leaflet';
+import L, { Map, TileLayer } from 'leaflet';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { City } from '../types/offers';
 
+export default function useMap ( mapRef:MutableRefObject<HTMLElement | null>, city: City ):Map | null{
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City):Map | null{
-
-  const renderBoolean = useRef<boolean>(false);
   const [map, setMap] = useState<Map | null>(null);
-
+  const mapRendering = useRef<boolean>(false);
 
   useEffect(() => {
-    if ( useRef !== null && !renderBoolean.current){
+    if ( mapRef !== null && !mapRendering.current){
 
-      const mapCity = new Map(mapRef.current!,{
-        center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude
-        },
-        zoom: city.location.zoom
-      });
+      const localMap = L.map( mapRef.current! ).setView([city.location.latitude, city.location.longitude],city.location.zoom);
 
-      const layer = new TileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+      const Light = new TileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(localMap);
+
+      const Dark = new TileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       });
 
-      layer.addTo(mapCity);
-      setMap(mapCity);
-      renderBoolean.current = true;
+      L.control.layers( { 'Day':Light, 'Night':Dark } ).addTo(localMap);
+      setMap(localMap);
+      mapRendering.current = true;
     }
+
   },[mapRef, city]);
 
   return map;
 }
-
-
-export default useMap;

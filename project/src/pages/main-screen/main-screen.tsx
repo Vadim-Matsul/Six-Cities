@@ -110,7 +110,10 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
               </div>
             </section>
             <div className='cities__right-section'>
-              <Map offers={ offers } city={ City }/>
+              <Map
+                offers={ offers as Offers}
+                city={ City }
+              />
             </div>
           </div>
         </div>
