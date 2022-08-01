@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import { Fragment } from 'react';
 import { Offers } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
 import { CardPageClass } from '../../const';
@@ -6,10 +6,10 @@ import { CardPageClass } from '../../const';
 type OfferListProps = {
   offers: Offers
   cardClass: CardPageClass
+  returnId?: (id: number | undefined) => void
 }
 
-function OfferList ( {offers, cardClass}:OfferListProps ):JSX.Element{
-  const [ActiveCard, setActiveCard] = useState<number | null>(null);
+function OfferList ( {offers, cardClass, returnId }:OfferListProps ):JSX.Element{
 
   return (
     <Fragment>
@@ -17,9 +17,8 @@ function OfferList ( {offers, cardClass}:OfferListProps ):JSX.Element{
         <OfferCard
           offer = {offer}
           key={offer.id}
-          ActiveCard = {() => setActiveCard( offer.id )}
-          InActiveCard = {() => setActiveCard( null )}
           cardClass = {cardClass}
+          returnId= { returnId }
         />))}
     </Fragment>
   );

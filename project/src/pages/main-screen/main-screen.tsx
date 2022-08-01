@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
@@ -12,7 +12,11 @@ type MainScreenProps = {
 
 function MainScreen ({offers}: MainScreenProps):JSX.Element{
   const cardsCount = offers.length;
+  const [selectedOffer, setSelectedOffer] = useState<number | undefined>(undefined);
 
+  function returnSelectedIdOffer (id: number | undefined):void{
+    setSelectedOffer(id);
+  }
 
   return (
     <div className='page page--gray page--main'>
@@ -106,6 +110,7 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
                 <OfferList
                   offers = { offers }
                   cardClass = { CardPageClass.Main }
+                  returnId = { returnSelectedIdOffer }
                 />
               </div>
             </section>
@@ -113,6 +118,7 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
               <Map
                 offers={ offers as Offers}
                 city={ City }
+                selectedOffer = { selectedOffer }
               />
             </div>
           </div>

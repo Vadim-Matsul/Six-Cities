@@ -8,13 +8,12 @@ import BookMarkButton from '../bookmark-button/bookmark-button';
 
 type OfferCardProps = {
   offer: Offer
-  ActiveCard: () => void
-  InActiveCard: () => void
   cardClass: CardPageClass
+  returnId?: (id: number | undefined) => void
 }
 
 function OfferCard ( props:OfferCardProps ):JSX.Element {
-  const { offer, ActiveCard, InActiveCard, cardClass } = props;
+  const { offer, cardClass , returnId} = props;
 
   const rating = getStars ( offer.rating );
   const offerType = capitalizeFirstLetter (offer.type);
@@ -23,11 +22,14 @@ function OfferCard ( props:OfferCardProps ):JSX.Element {
   const classWrapper:boolean = cardClass === CardPageClass.Favorites;
   const actualImageSize = classWrapper ? ImageSize.Small : ImageSize.Big;
 
+  const returnIdFromCard = () => { returnId && returnId(offer.id); };
+  const returnUnFromCard = () => { returnId && returnId(undefined); };
+
   return (
     <article
       className= {`${cardClass}__card place-card`}
-      onMouseEnter={ActiveCard}
-      onMouseLeave={InActiveCard}
+      onMouseEnter={returnIdFromCard}
+      onMouseLeave={returnUnFromCard}
     >
       <div
         className='place-card__mark'
