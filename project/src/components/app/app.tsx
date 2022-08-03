@@ -10,16 +10,23 @@ import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 
 type AppProps = {
-  offers: Offers
   nearPlacesOffers: Offers
   favoriteOffers: Offers
   reviews: Reviews
 }
 
-function App ({ offers, nearPlacesOffers, favoriteOffers, reviews}:AppProps):JSX.Element{
+const mapStateToProps = ({offers}:State) => ({ offers });
 
+const connector = connect(mapStateToProps);
+type AppReduxProps = ConnectedProps <typeof connector>
+type ConnectedAppProps = AppProps & AppReduxProps
+
+function App ( props:ConnectedAppProps ):JSX.Element{
+  const { offers, nearPlacesOffers, favoriteOffers, reviews } = props;
 
   return (
     <BrowserRouter>
@@ -60,4 +67,4 @@ function App ({ offers, nearPlacesOffers, favoriteOffers, reviews}:AppProps):JSX
 }
 
 
-export default App;
+export default connector(App);

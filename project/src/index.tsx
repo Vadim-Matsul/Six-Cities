@@ -1,24 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { offers, nearPlacesOffers, favoriteOffers } from './mocks/offers';
+import { nearPlacesOffers, favoriteOffers } from './mocks/offers';
 import { Offers } from './types/offers';
 import { reviews } from './mocks/reviews';
 import { Reviews } from './types/reviews';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import reducer from './store/reducer/reducer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const store = configureStore({reducer});
 
 root.render(
   <React.StrictMode>
-    <App
-      offers = { offers as Offers }
-      nearPlacesOffers = { nearPlacesOffers as Offers }
-      favoriteOffers = { favoriteOffers as Offers }
-      reviews = { reviews as Reviews}
-    />
+    <Provider store={store}>
+      <App
+        nearPlacesOffers = { nearPlacesOffers as Offers }
+        favoriteOffers = { favoriteOffers as Offers }
+        reviews = { reviews as Reviews}
+      />
+    </Provider>
   </React.StrictMode>,
 );
 

@@ -37,16 +37,10 @@ export const IconMarkerUrl = {
   current: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
 } as const;
 
-export const IconMarkerSize = {
-  Icon: {
-    x: 40,
-    y: 40
-  },
-  Anchor: {
-    x: 20,
-    y: 0
-  }
-} as const;
+export const INITIAL_CURRENT_CITY = 'Paris';
+
+export const Sities = ['Paris', 'Cologne', 'Brussels',
+  'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
 
 export const Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
   'August', 'September', 'October', 'November', 'December'] as const;
@@ -63,6 +57,16 @@ export enum ImagesSize {
   START = 0,
   END = 6
 }
+export const IconMarkerSize = {
+  Icon: {
+    x: 40,
+    y: 40
+  },
+  Anchor: {
+    x: 20,
+    y: 0
+  }
+} as const;
 
 export const PropertySize = {
   Big: {
