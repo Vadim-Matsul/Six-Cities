@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
 import {CardPageClass, City} from '../../const';
+import { State } from '../../types/state';
 import Map from '../../components/map/map';
+import { connect, ConnectedProps} from 'react-redux';
 
 type MainScreenProps = {
   offers: Offers
 }
 
+const mapStateToProps = ({selectedOffer}:State) => ({selectedOffer});
+const connector = connect(mapStateToProps);
+type MainScreenReduxProps = ConnectedProps<typeof connector>
+type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps
 
-function MainScreen ({offers}: MainScreenProps):JSX.Element{
+
+function MainScreen ({offers, selectedOffer}: ConnectedMainScrennProps):JSX.Element{
   const cardsCount = offers.length;
-  const [selectedOffer, setSelectedOffer] = useState<number | undefined>(undefined);
-
-  function returnSelectedIdOffer (id: number | undefined):void{
-    setSelectedOffer(id);
-  }
 
   return (
     <div className='page page--gray page--main'>
@@ -89,7 +90,7 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
               <b className='places__found'>
-                {cardsCount} places to stay in Amsterdam
+                { cardsCount } places to stay in Amsterdam
               </b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
@@ -110,15 +111,14 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
                 <OfferList
                   offers = { offers }
                   cardClass = { CardPageClass.Main }
-                  returnId = { returnSelectedIdOffer }
                 />
               </div>
             </section>
             <div className='cities__right-section'>
               <Map
                 offers={ offers as Offers}
-                city={ City }
                 selectedOffer = { selectedOffer }
+                city={ City }
               />
             </div>
           </div>
@@ -129,4 +129,4 @@ function MainScreen ({offers}: MainScreenProps):JSX.Element{
 }
 
 
-export default MainScreen;
+export default connector(MainScreen);

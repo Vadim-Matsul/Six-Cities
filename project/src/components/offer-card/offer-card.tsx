@@ -5,31 +5,41 @@ import { BookMarkClass, CardPageClass, ImageSize } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import BookMarkButton from '../bookmark-button/bookmark-button';
+import { connect, ConnectedProps } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
+import { Actions } from '../../types/actions';
+import { ChangeSelectedOffer } from '../../store/actions/actions';
 
 type OfferCardProps = {
   offer: Offer
   cardClass: CardPageClass
-  returnId?: (id: number | undefined) => void
 }
+const mapDispatchToProps = (dispatcher: Dispatch<Actions>) => ({
+  onChangeSelectedOffer (id: number | null){
+    dispatcher(ChangeSelectedOffer(id));
+  }
+});
 
-function OfferCard ( props:OfferCardProps ):JSX.Element {
-  const { offer, cardClass , returnId} = props;
+const connector = connect(null, mapDispatchToProps);
+type OfferCardReduxProps = ConnectedProps<typeof connector>
+type ConnectedOfferCardProps = OfferCardProps & OfferCardReduxProps
+
+
+function OfferCard ( props: ConnectedOfferCardProps ):JSX.Element {
+  const { offer, cardClass, onChangeSelectedOffer } = props;
 
   const rating = getStars ( offer.rating );
   const offerType = capitalizeFirstLetter (offer.type);
 
-  // общее условие для карточек на страницах Main / Favotites / Property
   const classWrapper:boolean = cardClass === CardPageClass.Favorites;
   const actualImageSize = classWrapper ? ImageSize.Small : ImageSize.Big;
 
-  const returnIdFromCard = () => { returnId && returnId(offer.id); };
-  const returnUnFromCard = () => { returnId && returnId(undefined); };
 
   return (
     <article
       className= {`${cardClass}__card place-card`}
-      onMouseEnter={returnIdFromCard}
-      onMouseLeave={returnUnFromCard}
+      onMouseEnter={ () => onChangeSelectedOffer( offer.id ) }
+      onMouseLeave={ () => onChangeSelectedOffer( null ) }
     >
       <div
         className='place-card__mark'
@@ -77,4 +87,4 @@ function OfferCard ( props:OfferCardProps ):JSX.Element {
 }
 
 
-export default OfferCard;
+export default connector(OfferCard);
