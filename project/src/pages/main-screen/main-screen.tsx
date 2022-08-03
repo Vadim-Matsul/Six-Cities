@@ -1,11 +1,12 @@
 import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
-import { Offers } from '../../types/offers';
+import { Offer, Offers } from '../../types/offers';
 import {CardPageClass, City} from '../../const';
 import { State } from '../../types/state';
 import Map from '../../components/map/map';
 import { connect, ConnectedProps} from 'react-redux';
 import LocationList from '../../components/location-list/location-list';
+import NoPlacesScreen from '../no-places-screen/no-places-screen';
 
 type MainScreenProps = {
   offers: Offers
@@ -16,9 +17,12 @@ const connector = connect(mapStateToProps);
 type MainScreenReduxProps = ConnectedProps<typeof connector>
 type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps
 
+function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
+  return offers.filter((offer) => offer.city.name === uniqueCity );
+}
 
 function MainScreen ({offers, currentCity, selectedOffer}: ConnectedMainScrennProps):JSX.Element{
-  const cardsCount = offers.length;
+  const offersOfCity = getOffersOfCity(currentCity, offers);
 
   return (
     <div className='page page--gray page--main'>
@@ -52,37 +56,40 @@ function MainScreen ({offers, currentCity, selectedOffer}: ConnectedMainScrennPr
         <h1 className='visually-hidden'>Cities</h1>
         <LocationList uniqueCity={ currentCity }/>
         <div className='cities'>
-          <div className='cities__places-container container'>
-            <section className='cities__places places'>
-              <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>
-                { cardsCount } places to stay in Amsterdam
-              </b>
-              <form className='places__sorting' action='#' method='get'>
-                <span className='places__sorting-caption'>Sort by</span>
-                <span className='places__sorting-type' tabIndex={ 0 }>
-                  Popular
-                  <svg className='places__sorting-arrow' width='7' height='4'>
-                    <use xlinkHref='#icon-arrow-select'></use>
-                  </svg>
-                </span>
-                <ul className='places__options places__options--custom places__options--opened'>
-                  <li className='places__option places__option--active' tabIndex={ 0 }>Popular</li>
-                  <li className='places__option' tabIndex={ 0 }>Price: low to high</li>
-                  <li className='places__option' tabIndex={ 0 }>Price: high to low</li>
-                  <li className='places__option' tabIndex={ 0 }>Top rated first</li>
-                </ul>
-              </form>
-              <div className='cities__places-list places__list tabs__content'>
-                <OfferList
-                  offers = { offers }
-                  cardClass = { CardPageClass.Main }
-                />
-              </div>
-            </section>
+          <div className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}>
+            { offersOfCity.length
+              ?
+              <section className='cities__places places'>
+                <h2 className='visually-hidden'>Places</h2>
+                <b className='places__found'>
+                  { offersOfCity.length } places to stay in {currentCity}
+                </b>
+                <form className='places__sorting' action='#' method='get'>
+                  <span className='places__sorting-caption'>Sort by</span>
+                  <span className='places__sorting-type' tabIndex={ 0 }>
+                    Popular
+                    <svg className='places__sorting-arrow' width='7' height='4'>
+                      <use xlinkHref='#icon-arrow-select'></use>
+                    </svg>
+                  </span>
+                  <ul className='places__options places__options--custom places__options--opened'>
+                    <li className='places__option places__option--active' tabIndex={ 0 }>Popular</li>
+                    <li className='places__option' tabIndex={ 0 }>Price: low to high</li>
+                    <li className='places__option' tabIndex={ 0 }>Price: high to low</li>
+                    <li className='places__option' tabIndex={ 0 }>Top rated first</li>
+                  </ul>
+                </form>
+                <div className='cities__places-list places__list tabs__content'>
+                  <OfferList
+                    offers = { offersOfCity }
+                    cardClass = { CardPageClass.Main }
+                  />
+                </div>
+              </section>
+              : <NoPlacesScreen city={ currentCity }/> }
             <div className='cities__right-section'>
               <Map
-                offers={ offers as Offers}
+                offers={ offersOfCity as Offers}
                 selectedOffer = { selectedOffer }
                 city={ City }
               />

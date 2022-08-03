@@ -18,6 +18,7 @@ function Map (props: MapProps):JSX.Element{
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const Markers: Marker[] = [];
     if (map){
       { offers.forEach( (offer) => {
         const marker = new Marker( [offer.location.latitude, offer.location.longitude] ).bindPopup(`${offer.title}`);
@@ -29,8 +30,10 @@ function Map (props: MapProps):JSX.Element{
           iconAnchor: [IconMarkerSize.Anchor.x, IconMarkerSize.Anchor.y]
         });
         marker.setIcon(icon).addTo(map);
+        Markers.push(marker);
       });}
     }
+    return () => Markers.forEach((marker) => marker.remove());
   },[offers, map, selectedOffer]);
 
   return (
