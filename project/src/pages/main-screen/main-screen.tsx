@@ -7,6 +7,7 @@ import Map from '../../components/map/map';
 import { connect, ConnectedProps} from 'react-redux';
 import LocationList from '../../components/location-list/location-list';
 import NoPlacesScreen from '../no-places-screen/no-places-screen';
+import { useState } from 'react';
 
 type MainScreenProps = {
   offers: Offers
@@ -22,7 +23,23 @@ function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
 }
 
 function MainScreen ({offers, currentCity, selectedOffer}: ConnectedMainScrennProps):JSX.Element{
-  const offersOfCity = getOffersOfCity(currentCity, offers);
+  const [sort, setSort] = useState<keyof typeof offers[0] | boolean >(false);
+  const [sortValue, setSortValue] = useState<string>('Popular');
+  const [booleanSortFlag, setBooleanSortFlag] = useState<boolean>(false);
+
+  const changeSort = <T extends keyof typeof offers[0] | boolean>(sorting:T,value:string) => {
+    setSort(sorting);
+    setSortValue(value);
+    setBooleanSortFlag((prevState) => !prevState);
+  };
+
+  const offersOfCity = getOffersOfCity(currentCity, offers).sort((a,b) => (
+    sort
+      ? sort === 'price' || sort === 'rating'
+        ? b[sort] - a[sort]
+        : a['price'] - b['price']
+      : a['id'] - b['id']
+  ));
 
   return (
     <div className='page page--gray page--main'>
@@ -65,19 +82,25 @@ function MainScreen ({offers, currentCity, selectedOffer}: ConnectedMainScrennPr
                   { offersOfCity.length } places to stay in {currentCity}
                 </b>
                 <form className='places__sorting' action='#' method='get'>
-                  <span className='places__sorting-caption'>Sort by</span>
-                  <span className='places__sorting-type' tabIndex={ 0 }>
-                    Popular
-                    <svg className='places__sorting-arrow' width='7' height='4'>
-                      <use xlinkHref='#icon-arrow-select'></use>
+                  <span className='places__sorting-caption'>Sort by </span>
+                  <span
+                    className='places__sorting-type'
+                    tabIndex={ 0 }
+                    onClick={ () => setBooleanSortFlag((prevState) => !prevState) }
+                  >
+                    {sortValue}
+                    <svg className='places__sorting-arrow' width='7' height='4' >
+                      <use xlinkHref='#icon-arrow-select'/>
                     </svg>
                   </span>
-                  <ul className='places__options places__options--custom places__options--opened'>
-                    <li className='places__option places__option--active' tabIndex={ 0 }>Popular</li>
-                    <li className='places__option' tabIndex={ 0 }>Price: low to high</li>
-                    <li className='places__option' tabIndex={ 0 }>Price: high to low</li>
-                    <li className='places__option' tabIndex={ 0 }>Top rated first</li>
-                  </ul>
+                  <div hidden={!booleanSortFlag}>
+                    <ul className='places__options places__options--custom places__options--opened'>
+                      <li className='places__option places__option--active' tabIndex={ 0 } onClick={() => changeSort(false, 'Popular')}>Popular</li>
+                      <li className='places__option' tabIndex={ 0 } onClick={() => changeSort(true,'Price: low to high')}>Price: low to high</li>
+                      <li className='places__option' tabIndex={ 0 } onClick={() => changeSort('price', 'Price: high to low')}>Price: high to low</li>
+                      <li className='places__option' tabIndex={ 0 } onClick={() => changeSort('rating','Top rated first')}>Top rated first</li>
+                    </ul>
+                  </div>
                 </form>
                 <div className='cities__places-list places__list tabs__content'>
                   <OfferList

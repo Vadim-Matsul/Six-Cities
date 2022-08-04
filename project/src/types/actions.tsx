@@ -1,4 +1,4 @@
-import { Offer } from "./offers";
+import { Offer } from './offers';
 
 enum ActionsType {
   CurrentCity = 'CurrentCity',
@@ -21,7 +21,7 @@ type changeSelectedOffer = {
   payload: number | null
 }
 
-type Actions =  changeCurrentCity | changeOffersList | changeSelectedOffer 
+type Actions = changeCurrentCity | changeOffersList | changeSelectedOffer
 
 
 export {ActionsType};
