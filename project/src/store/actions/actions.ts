@@ -1,4 +1,9 @@
-import { ActionsType, changeCurrentCity, changeOffersList, changeSelectedOffer } from '../../types/actions';
+import {
+  ActionsType,
+  changeCurrentCity,
+  changeCurrentSort,
+  changeOffersList,
+  changeSelectedOffer } from '../../types/actions';
 import { Offers } from '../../types/offers';
 
 const ChangeCurrentCity = (city: string):changeCurrentCity => ({
@@ -16,4 +21,9 @@ const ChangeSelectedOffer = (id: number | null):changeSelectedOffer => ({
   payload: id
 });
 
-export {ChangeCurrentCity, ChangeOffersList, ChangeSelectedOffer};
+const ChangeCurrentSort = (currentSort: string):changeCurrentSort => ({
+  type: ActionsType.CurrentSort,
+  payload: currentSort
+});
+
+export {ChangeCurrentCity, ChangeOffersList, ChangeSelectedOffer, ChangeCurrentSort};

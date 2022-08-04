@@ -1,5 +1,5 @@
 import { Offer, Offers } from '../types/offers';
-import { Months } from '../const';
+import { Months, SortTypes } from '../const';
 
 const RAITING_COUNT = 20;
 const FIRST_LETTER = 0;
@@ -35,4 +35,11 @@ export const getFormateDate = ( date: string):string => {
   const year = dateReview.getFullYear();
   const month = dateReview.getMonth();
   return `${year} ${Months[month]}`;
+};
+
+export const SORT = {
+  [SortTypes.POPULAR]: (offers: Offers):Offer[] => offers.slice().sort(),
+  [SortTypes.PRICE_HIGH_TO_LOW]: (offers: Offers):Offer[] => offers.slice().sort( (a,b) => b['price'] - a['price'] ),
+  [SortTypes.PRICE_LOW_TO_HIGH]: (offers: Offers):Offer[] => offers.slice().sort( (a,b) => a['price'] - b['price'] ),
+  [SortTypes.TOP_RATED_FIRST]: (offers: Offers):Offer[] => offers.slice().sort((a,b) => b['rating'] - a['rating'])
 };
