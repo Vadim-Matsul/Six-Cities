@@ -9,12 +9,13 @@ import LocationList from '../../components/location-list/location-list';
 import NoPlacesScreen from '../no-places-screen/no-places-screen';
 import SortForm from '../../components/sort-form/sort-form';
 import { SORT } from '../../utils/utils';
+import useHighlighted from '../../hooks/useHighlighted';
 
 type MainScreenProps = {
   offers: Offers
 }
 
-const mapStateToProps = ({ currentCity, selectedOffer, currentSort }:State) => ({currentCity, selectedOffer, currentSort});
+const mapStateToProps = ({ currentCity, currentSort }:State) => ({currentCity, currentSort});
 const connector = connect(mapStateToProps);
 type MainScreenReduxProps = ConnectedProps<typeof connector>
 type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps
@@ -25,9 +26,10 @@ function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
 
 
 function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
-  const {offers, currentCity, selectedOffer, currentSort } = props;
+  const {offers, currentCity, currentSort } = props;
   const sortedOffers = SORT[currentSort](offers);
   const offersOfCity = getOffersOfCity(currentCity, sortedOffers);
+  const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
 
   return (
     <div className='page page--gray page--main'>
@@ -74,6 +76,7 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
                   <OfferList
                     offers = { offersOfCity }
                     cardClass = { CardPageClass.Main }
+                    setSelectedOffer = {setSelectedOffer}
                   />
                 </div>
               </section>

@@ -6,9 +6,10 @@ import { CardPageClass } from '../../const';
 type OfferListProps = {
   offers: Offers
   cardClass: CardPageClass
+  setSelectedOffer?: (id: number | null) => void
 }
 
-function OfferList ( {offers, cardClass }:OfferListProps ):JSX.Element{
+function OfferList ( {offers, cardClass, setSelectedOffer}:OfferListProps ):JSX.Element{
 
   return (
     <Fragment>
@@ -17,6 +18,7 @@ function OfferList ( {offers, cardClass }:OfferListProps ):JSX.Element{
           offer = {offer}
           key={offer.id}
           cardClass = {cardClass}
+          setSelectedOffer = { setSelectedOffer }
         />))}
     </Fragment>
   );

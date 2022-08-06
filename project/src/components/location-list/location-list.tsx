@@ -1,7 +1,7 @@
 import { Sities } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
-import { Actions } from '../../types/actions';
+import { Actions } from '../../store/actions/actions';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 
 type LocationListProps = {
