@@ -9,13 +9,20 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import reducer from './store/reducer/reducer';
 import { ToastContainer } from 'react-toastify';
+import { CreateApi } from './service/api/api';
+import thunk from 'redux-thunk';
+import { checkAuth, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const store = configureStore({reducer});
+const api = CreateApi();
+const store = configureStore({reducer, middleware:[thunk.withExtraArgument(api)]});
+
+(store.dispatch as ThunkDispatchResualt)( checkAuth() );
+(store.dispatch as ThunkDispatchResualt)( fetchOffers() );
 
 root.render(
   <React.StrictMode>

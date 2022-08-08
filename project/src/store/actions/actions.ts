@@ -1,8 +1,10 @@
+import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 enum ActionsType {
-  CurrentCity = 'CurrentCity',
-  OffersList = 'OffersList',
-  CurrentSort = 'CurrentSort'
+  CurrentCity = 'info/currentCity',
+  OffersList = 'data/offers',
+  CurrentSort = 'info/currentSort',
+  RequireAuth = 'status/auth',
 }
 
 const ChangeCurrentCity = (city: string) => ({
@@ -20,10 +22,23 @@ const ChangeCurrentSort = (currentSort: string) => ({
   payload: currentSort
 } as const );
 
+const RequireAuth = (status: AuthorizationStatus) => ({
+  type: ActionsType.RequireAuth,
+  payload: status
+} as const );
+
+
 type Actions =
   | ReturnType <typeof ChangeCurrentCity>
   | ReturnType <typeof ChangeOffersList>
   | ReturnType <typeof ChangeCurrentSort>
+  | ReturnType <typeof RequireAuth>
 
 export type { Actions };
-export {ChangeCurrentCity, ChangeOffersList, ChangeCurrentSort, ActionsType};
+export {
+  ChangeCurrentCity,
+  ChangeOffersList,
+  ChangeCurrentSort,
+  RequireAuth,
+  ActionsType
+};

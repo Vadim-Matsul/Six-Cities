@@ -15,28 +15,25 @@ export const CreateApi = ():AxiosInstance => {
   const api = axios.create({
     baseURL: BASE_URL,
     timeout: REQUEST_TIMEOUT
-  })
+  });
 
 
   api.interceptors.response.use(
     (response: AxiosResponse) => (response),
     (error:AxiosError) => {
       if (error.response?.status === Unauth.status){
-        toast.error(Unauth.message)
+        toast.error(Unauth.message);
       }
-      return Promise.reject(error)
-    })
+      return Promise.reject(error);
+    });
 
 
-    api.interceptors.request.use(
-      (config: AxiosRequestConfig) => {
-        const jwt = getToken()
-        if (jwt){
-          config.headers['x-token'] = jwt
-        }
-        return config
-      }
-    )
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const jwt = getToken();
+      jwt && ( config.headers['x-token'] = jwt );
+      return config;
+    });
 
-  return api
-}
+  return api;
+};
