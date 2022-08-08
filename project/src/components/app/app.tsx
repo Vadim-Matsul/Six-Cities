@@ -12,6 +12,7 @@ import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
+import { Loader } from '../loader/loader';
 
 type AppProps = {
   nearPlacesOffers: Offers
@@ -19,14 +20,18 @@ type AppProps = {
   reviews: Reviews
 }
 
-const mapStateToProps = ({offers}:State) => ({ offers });
+const mapStateToProps = ({offers, authStatus, loadStatus}:State) => ({ offers, authStatus, loadStatus });
 
 const connector = connect(mapStateToProps);
 type AppReduxProps = ConnectedProps <typeof connector>
 type ConnectedAppProps = AppProps & AppReduxProps
 
 function App ( props:ConnectedAppProps ):JSX.Element{
-  const { offers, nearPlacesOffers, favoriteOffers, reviews } = props;
+  const { offers, nearPlacesOffers, favoriteOffers, reviews, authStatus, loadStatus} = props;
+
+  if (authStatus === AuthorizationStatus.UnKnown || !loadStatus){
+    return <Loader />;
+  }
 
   return (
     <BrowserRouter>
