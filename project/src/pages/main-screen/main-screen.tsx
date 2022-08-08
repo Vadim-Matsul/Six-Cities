@@ -61,7 +61,7 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
 
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
-        <LocationList uniqueCity={ currentCity }/>
+        <LocationList uniqueCity={ currentCity } />
         <div className='cities'>
           <div className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}>
             { offersOfCity.length
@@ -71,7 +71,7 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
                 <b className='places__found'>
                   { offersOfCity.length } places to stay in {currentCity}
                 </b>
-                <SortForm currentSort={ currentSort }/>
+                <SortForm currentSort={ currentSort } currentCity = { currentCity }/>
                 <div className='cities__places-list places__list tabs__content'>
                   <OfferList
                     offers = { offersOfCity }

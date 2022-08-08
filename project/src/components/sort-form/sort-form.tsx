@@ -1,10 +1,11 @@
 import { SortTypes } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { Actions, ChangeCurrentSort } from '../../store/actions/actions';
 
 type SortFormProps = {
-  currentSort: string
+  currentSort: string,
+  currentCity: string
 }
 
 const mapDispatchToProps = (dispatcher: Dispatch<Actions>) => ({
@@ -17,9 +18,10 @@ type SortFormReduxProps = ConnectedProps<typeof connector>
 type ConnectedSortForm = SortFormProps & SortFormReduxProps
 
 
-function SortForm ({currentSort, onChangeCurrentSort}:ConnectedSortForm){
+function SortForm ({currentSort, currentCity, onChangeCurrentSort}:ConnectedSortForm){
   const [show, setShow] = useState<boolean>(false);
   const sortArray = Object.values(SortTypes);
+  useEffect(() => setShow(false),[currentCity]);
 
   return (
     <form className='places__sorting' action='#' method='get'>

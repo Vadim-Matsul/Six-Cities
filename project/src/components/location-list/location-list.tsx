@@ -5,7 +5,7 @@ import { Actions } from '../../store/actions/actions';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 
 type LocationListProps = {
-  uniqueCity: string
+  uniqueCity: string,
 }
 
 const mapDispatchToProps = (dispatcher: Dispatch<Actions>) => ({
