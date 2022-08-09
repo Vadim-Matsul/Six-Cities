@@ -13,13 +13,14 @@ import { CreateApi } from './service/api/api';
 import thunk from 'redux-thunk';
 import { checkAuth, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
+import { redirect } from './store/middlewares/redirect';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
 const api = CreateApi();
-const store = configureStore({reducer, middleware:[thunk.withExtraArgument(api)]});
+const store = configureStore({reducer, middleware:[thunk.withExtraArgument(api), redirect]});
 
 (store.dispatch as ThunkDispatchResualt)( checkAuth() );
 (store.dispatch as ThunkDispatchResualt)( fetchOffers() );

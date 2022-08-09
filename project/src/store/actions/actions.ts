@@ -1,10 +1,11 @@
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 enum ActionsType {
   CurrentCity = 'info/currentCity',
   OffersList = 'data/offers',
   CurrentSort = 'info/currentSort',
   RequireAuth = 'status/auth',
+  Redirect = 'redirect'
 }
 
 const ChangeCurrentCity = (city: string) => ({
@@ -27,12 +28,17 @@ const RequireAuth = (status: AuthorizationStatus) => ({
   payload: status
 } as const );
 
+const RedirectToPath = (url:AppRoute) => ({
+  type: ActionsType.Redirect,
+  payload: url
+} as const );
 
 type Actions =
   | ReturnType <typeof ChangeCurrentCity>
   | ReturnType <typeof ChangeOffersList>
   | ReturnType <typeof ChangeCurrentSort>
   | ReturnType <typeof RequireAuth>
+  | ReturnType <typeof RedirectToPath>
 
 export type { Actions };
 export {
@@ -40,5 +46,6 @@ export {
   ChangeOffersList,
   ChangeCurrentSort,
   RequireAuth,
+  RedirectToPath,
   ActionsType
 };

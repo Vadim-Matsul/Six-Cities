@@ -1,8 +1,8 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { Actions, ChangeOffersList, RequireAuth } from './actions';
-import { APIRoute, AuthorizationStatus } from '../../const';
+import { Actions, ChangeOffersList, RedirectToPath, RequireAuth } from './actions';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
 
@@ -29,6 +29,7 @@ const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
     const {data:{token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(RequireAuth(AuthorizationStatus.Auth));
+    dispatch(RedirectToPath(AppRoute.Main));
   };
 
 const logoutSession = ():ThunkActionResualt =>

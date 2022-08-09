@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { HistoryRouter } from '../history-router/history-router';
 import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import AuthScreen from '../../pages/auth-screen/auth-screen';
@@ -13,6 +14,7 @@ import { Reviews } from '../../types/reviews';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import { Loader } from '../loader/loader';
+import { browserHistory } from '../../browser-history';
 
 type AppProps = {
   nearPlacesOffers: Offers
@@ -34,7 +36,7 @@ function App ( props:ConnectedAppProps ):JSX.Element{
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={ browserHistory }>
       <Routes>
         <Route
           path = { AppRoute.Main }
@@ -67,7 +69,7 @@ function App ( props:ConnectedAppProps ):JSX.Element{
           element = { < NotFoundScreen /> }
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
