@@ -86,6 +86,7 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
                 offers={ offersOfCity as Offers}
                 selectedOffer = { selectedOffer }
                 city={ City }
+                currentCity={ currentCity }
               />
             </div>
           </div>

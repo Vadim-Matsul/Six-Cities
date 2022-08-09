@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import useMap from '../../hooks/useMap';
 import { useEffect, useRef } from 'react';
 import { City, Offer, Offers } from '../../types/offers';
@@ -9,6 +10,7 @@ type MapProps = {
   offers: Offers,
   city: City,
   selectedOffer: Offer | undefined
+  currentCity: string
 }
 
 
@@ -46,4 +48,8 @@ function Map (props: MapProps):JSX.Element{
 }
 
 
-export default Map;
+export default memo(Map,(prevProps, nextProps) => (
+  prevProps.offers.length === nextProps.offers.length
+  && prevProps.selectedOffer === nextProps.selectedOffer
+  && prevProps.currentCity === nextProps.currentCity
+));
