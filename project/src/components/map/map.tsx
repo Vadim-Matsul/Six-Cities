@@ -10,12 +10,12 @@ type MapProps = {
   offers: Offers,
   city: City,
   selectedOffer: Offer | undefined
-  currentCity: string
+  currentCity?: string
 }
 
 
 function Map (props: MapProps):JSX.Element{
-  const {offers, city, selectedOffer} = props;
+  const { offers, city, selectedOffer } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -37,6 +37,12 @@ function Map (props: MapProps):JSX.Element{
     }
     return () => Markers.forEach((marker) => marker.remove());
   },[offers, map, selectedOffer]);
+
+  useEffect(() => {
+    if (map){
+      map?.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  },[city]);
 
   return (
     <section

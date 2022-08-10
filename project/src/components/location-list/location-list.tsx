@@ -1,4 +1,4 @@
-import { Sities } from '../../const';
+import { GeoCity } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Actions } from '../../store/actions/actions';
@@ -19,7 +19,7 @@ type ConnectedLocationListProps = LocationListProps & LocationListReduxProps
 
 
 function LocationList ({uniqueCity, onChangeCurrentCity}:ConnectedLocationListProps){
-
+  const Sities = Object.keys(GeoCity);
   return (
     <div className='tabs'>
       <section className='locations container'>

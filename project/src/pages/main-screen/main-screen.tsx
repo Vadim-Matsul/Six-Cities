@@ -1,7 +1,6 @@
-import Logo from '../../components/logo/logo';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offer, Offers } from '../../types/offers';
-import {CardPageClass, City} from '../../const';
+import {CardPageClass, GeoCity} from '../../const';
 import { State } from '../../types/state';
 import Map from '../../components/map/map';
 import { connect, ConnectedProps} from 'react-redux';
@@ -10,6 +9,7 @@ import NoPlacesScreen from '../no-places-screen/no-places-screen';
 import SortForm from '../../components/sort-form/sort-form';
 import { SORT } from '../../utils/utils';
 import useHighlighted from '../../hooks/useHighlighted';
+import Header from '../../components/header/header';
 
 type MainScreenProps = {
   offers: Offers
@@ -30,35 +30,11 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
   const sortedOffers = SORT[currentSort](offers);
   const offersOfCity = getOffersOfCity(currentCity, sortedOffers);
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
+  const City = GeoCity[currentCity];
 
   return (
     <div className='page page--gray page--main'>
-      <header className='header'>
-        <div className='container'>
-          <div className='header__wrapper'>
-            <div className='header__left'>
-              <Logo />
-            </div>
-            <nav className='header__nav'>
-              <ul className='header__nav-list'>
-                <li className='header__nav-item user'>
-                  <a className='header__nav-link header__nav-link--profile' href='#'>
-                    <div className='header__avatar-wrapper user__avatar-wrapper'>
-                    </div>
-                    <span className='header__user-name user__name'>Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className='header__nav-item'>
-                  <a className='header__nav-link' href='#'>
-                    <span className='header__signout'>Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
         <LocationList uniqueCity={ currentCity } />
@@ -82,12 +58,15 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
               </section>
               : <NoPlacesScreen city={ currentCity }/> }
             <div className='cities__right-section'>
-              <Map
-                offers={ offersOfCity as Offers}
-                selectedOffer = { selectedOffer }
-                city={ City }
-                currentCity={ currentCity }
-              />
+              {offersOfCity.length
+                ?
+                <Map
+                  offers={ offersOfCity as Offers }
+                  selectedOffer = { selectedOffer }
+                  city={ City }
+                  currentCity={ currentCity }
+                />
+                : null}
             </div>
           </div>
         </div>
