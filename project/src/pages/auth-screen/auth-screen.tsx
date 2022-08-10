@@ -1,4 +1,4 @@
-import React, { FormEvent, RefObject, useRef } from 'react';
+import React, { ChangeEvent, FormEvent, RefObject, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import Logo from '../../components/logo/logo';
 import { AuthData, loginSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
@@ -18,6 +18,12 @@ function AuthScreen ():JSX.Element {
       };
       dispatch(loginSession(userData));
     }
+  }
+
+  function passwordValidate ({target}: ChangeEvent<HTMLInputElement>){
+    const validate = /\s/g.test(target.value) ? 'Пробелы не допускаются' : '' ;
+    target.setCustomValidity(validate);
+    target.reportValidity();
   }
 
   return (
@@ -61,6 +67,7 @@ function AuthScreen ():JSX.Element {
                   name='password'
                   placeholder='Password'
                   ref={ passwordRef }
+                  onChange={ (el) => passwordValidate(el) }
                   required
                 />
               </div>

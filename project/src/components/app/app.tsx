@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { HistoryRouter } from '../history-router/history-router';
 import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -44,7 +44,11 @@ function App ( props:ConnectedAppProps ):JSX.Element{
         />
         <Route
           path = { AppRoute.Auth }
-          element = { < AuthScreen /> }
+          element = {
+            authStatus === AuthorizationStatus.Auth
+              ? <Navigate to={ AppRoute.Main }/>
+              : < AuthScreen />
+          }
         />
         <Route
           path = { AppRoute.Favorites }
