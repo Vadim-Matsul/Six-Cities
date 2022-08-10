@@ -23,7 +23,6 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
   const classWrapper:boolean = cardClass === CardPageClass.Favorites;
   const actualImageSize = classWrapper ? ImageSize.Small : ImageSize.Big;
 
-
   return (
     <article
       className= {`${cardClass}__card place-card`}
@@ -76,4 +75,4 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
 }
 
 
-export default OfferCard;
+export default React.memo(OfferCard, (prev, next) => prev.offer === next.offer) ;

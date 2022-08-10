@@ -10,6 +10,7 @@ import SortForm from '../../components/sort-form/sort-form';
 import { SORT } from '../../utils/utils';
 import useHighlighted from '../../hooks/useHighlighted';
 import Header from '../../components/header/header';
+import { useMemo } from 'react';
 
 type MainScreenProps = {
   offers: Offers
@@ -27,8 +28,9 @@ function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
 
 function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
   const {offers, currentCity, currentSort } = props;
-  const sortedOffers = SORT[currentSort](offers);
-  const offersOfCity = getOffersOfCity(currentCity, sortedOffers);
+
+  const offersOfCity = useMemo(() => getOffersOfCity(currentCity, offers),[currentCity]);
+  const sortedOffers = SORT[currentSort](offersOfCity);
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];
 
@@ -50,7 +52,7 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
                 <SortForm currentSort={ currentSort } currentCity = { currentCity }/>
                 <div className='cities__places-list places__list tabs__content'>
                   <OfferList
-                    offers = { offersOfCity }
+                    offers = { sortedOffers }
                     cardClass = { CardPageClass.Main }
                     setSelectedOffer = {setSelectedOffer}
                   />
