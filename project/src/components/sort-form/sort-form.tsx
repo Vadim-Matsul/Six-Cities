@@ -1,26 +1,17 @@
 import { SortTypes } from '../../const';
-import { connect, ConnectedProps } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Dispatch } from 'redux';
 import { ChangeCurrentSort } from '../../store/actions/actions';
+import { useDispatch } from 'react-redux';
 
 type SortFormProps = {
   currentSort: string,
   currentCity: string
 }
 
-const mapDispatchToProps = (dispatcher: Dispatch) => ({
-  onChangeCurrentSort(sort: string){
-    dispatcher(ChangeCurrentSort(sort));
-  }
-});
-const connector = connect(null, mapDispatchToProps);
-type SortFormReduxProps = ConnectedProps<typeof connector>
-type ConnectedSortForm = SortFormProps & SortFormReduxProps
 
-
-function SortForm ({currentSort, currentCity, onChangeCurrentSort}:ConnectedSortForm){
+function SortForm ({ currentSort, currentCity }:SortFormProps){
   const [show, setShow] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const sortArray = Object.values(SortTypes);
   useEffect(() => setShow(false),[currentCity]);
 
@@ -43,7 +34,7 @@ function SortForm ({currentSort, currentCity, onChangeCurrentSort}:ConnectedSort
             key = { sort }
             tabIndex={ 0 }
             onClick={() => {
-              onChangeCurrentSort(sort);
+              dispatch(ChangeCurrentSort(sort));
               setShow((prevState) => !prevState);
             }}
           >{ sort }
@@ -55,4 +46,4 @@ function SortForm ({currentSort, currentCity, onChangeCurrentSort}:ConnectedSort
 }
 
 
-export default connector(SortForm);
+export default SortForm;

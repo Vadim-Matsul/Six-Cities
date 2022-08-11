@@ -11,12 +11,11 @@ import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
 import { getLoadStatus, getOffers } from '../../store/reducer/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
+import { useSelector } from 'react-redux';
 
 type AppProps = {
   nearPlacesOffers: Offers
@@ -24,17 +23,13 @@ type AppProps = {
   reviews: Reviews
 }
 
-const mapStateToProps = ( state:State ) => ({
-  offers: getOffers(state),
-  loadStatus: getLoadStatus(state),
-  authStatus: getAuthStatus(state) });
 
-const connector = connect(mapStateToProps);
-type AppReduxProps = ConnectedProps <typeof connector>
-type ConnectedAppProps = AppProps & AppReduxProps
+function App ( props:AppProps ):JSX.Element{
+  const { nearPlacesOffers, favoriteOffers, reviews } = props;
 
-function App ( props:ConnectedAppProps ):JSX.Element{
-  const { offers, nearPlacesOffers, favoriteOffers, reviews, authStatus, loadStatus} = props;
+  const offers = useSelector(getOffers);
+  const loadStatus = useSelector(getLoadStatus);
+  const authStatus = useSelector(getAuthStatus);
 
   if (authStatus === AuthorizationStatus.UnKnown || !loadStatus){
     return <Loader />;
@@ -83,4 +78,4 @@ function App ( props:ConnectedAppProps ):JSX.Element{
 }
 
 
-export default connector(App);
+export default App;

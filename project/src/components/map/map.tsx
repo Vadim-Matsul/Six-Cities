@@ -10,7 +10,6 @@ type MapProps = {
   offers: Offers,
   city: City,
   selectedOffer: Offer | undefined
-  currentCity?: string
 }
 
 
@@ -57,5 +56,5 @@ function Map (props: MapProps):JSX.Element{
 export default memo(Map,(prevProps, nextProps) => (
   prevProps.offers.length === nextProps.offers.length
   && prevProps.selectedOffer === nextProps.selectedOffer
-  && prevProps.currentCity === nextProps.currentCity
+  && prevProps.city === nextProps.city
 ));

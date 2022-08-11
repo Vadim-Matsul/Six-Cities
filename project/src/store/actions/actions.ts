@@ -10,11 +10,11 @@ enum ActionsType {
   Redirect = 'redirect'
 }
 
-const ChangeCurrentCity = createAction( ActionsType.CurrentCity, (city: string) => ({payload: city}) );
-const ChangeOffersList = createAction( ActionsType.OffersList, (offers: Offers) => ({payload: offers}) );
-const ChangeCurrentSort = createAction( ActionsType.CurrentSort, (sort: string) => ({payload: sort}) );
-const RequireAuth = createAction( ActionsType.RequireAuth, (status: AuthorizationStatus) => ({payload: status}) );
-const RedirectToPath = createAction( ActionsType.Redirect, (url: AppRoute) => ({payload: url}) );
+const ChangeCurrentCity = createAction< string >( ActionsType.CurrentCity );
+const ChangeOffersList = createAction< Offers >( ActionsType.OffersList );
+const ChangeCurrentSort = createAction< string >( ActionsType.CurrentSort );
+const RequireAuth = createAction< AuthorizationStatus >( ActionsType.RequireAuth );
+const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 
 export {
   ChangeCurrentCity,

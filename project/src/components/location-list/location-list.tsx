@@ -1,24 +1,17 @@
 import { GeoCity } from '../../const';
-import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from 'redux';
 import { ChangeCurrentCity } from '../../store/actions/actions';
+import { useDispatch } from 'react-redux';
 
 type LocationListProps = {
   uniqueCity: string,
 }
 
-const mapDispatchToProps = (dispatcher: Dispatch) => ({
-  onChangeCurrentCity(city: string){
-    dispatcher(ChangeCurrentCity(city));
-  }
-});
-const connector = connect(null, mapDispatchToProps);
-type LocationListReduxProps = ConnectedProps<typeof connector>
-type ConnectedLocationListProps = LocationListProps & LocationListReduxProps
 
-
-function LocationList ({uniqueCity, onChangeCurrentCity}:ConnectedLocationListProps){
+function LocationList ({ uniqueCity }:LocationListProps){
   const Sities = Object.keys(GeoCity);
+  const dispatch = useDispatch();
+
+
   return (
     <div className='tabs'>
       <section className='locations container'>
@@ -30,7 +23,7 @@ function LocationList ({uniqueCity, onChangeCurrentCity}:ConnectedLocationListPr
                 href='#'
                 onClick={(ev) => {
                   ev.preventDefault();
-                  onChangeCurrentCity(city);
+                  dispatch( ChangeCurrentCity(city) );
                 }}
               >
                 <span>{city}</span>
@@ -44,4 +37,4 @@ function LocationList ({uniqueCity, onChangeCurrentCity}:ConnectedLocationListPr
 }
 
 
-export default connector(LocationList);
+export default LocationList;

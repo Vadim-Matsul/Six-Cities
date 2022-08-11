@@ -1,9 +1,7 @@
 import OfferList from '../../components/offer-list/offer-list';
 import { Offer, Offers } from '../../types/offers';
 import {CardPageClass, GeoCity} from '../../const';
-import { State } from '../../types/state';
 import Map from '../../components/map/map';
-import { connect, ConnectedProps} from 'react-redux';
 import LocationList from '../../components/location-list/location-list';
 import NoPlacesScreen from '../no-places-screen/no-places-screen';
 import SortForm from '../../components/sort-form/sort-form';
@@ -12,26 +10,21 @@ import useHighlighted from '../../hooks/useHighlighted';
 import Header from '../../components/header/header';
 import { useMemo } from 'react';
 import { getCurrentCity, getCurrentSort } from '../../store/reducer/logic-reducer/selectors';
+import { useSelector } from 'react-redux';
 
 type MainScreenProps = {
   offers: Offers
 }
-
-const mapStateToProps = ( state:State ) => ({
-  currentCity: getCurrentCity(state),
-  currentSort: getCurrentSort(state) });
-
-const connector = connect(mapStateToProps);
-type MainScreenReduxProps = ConnectedProps<typeof connector>
-type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps
 
 function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
   return offers.filter((offer) => offer.city.name === uniqueCity );
 }
 
 
-function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
-  const {offers, currentCity, currentSort } = props;
+function MainScreen ({ offers }: MainScreenProps):JSX.Element{
+
+  const currentCity = useSelector( getCurrentCity );
+  const currentSort = useSelector( getCurrentSort );
 
   const offersOfCity = useMemo(() => getOffersOfCity(currentCity, offers),[currentCity]);
   const sortedOffers = SORT[currentSort](offersOfCity);
@@ -70,7 +63,6 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
                   offers={ offersOfCity as Offers }
                   selectedOffer = { selectedOffer }
                   city={ City }
-                  currentCity={ currentCity }
                 />
                 : null}
             </div>
@@ -82,4 +74,4 @@ function MainScreen (props: ConnectedMainScrennProps):JSX.Element{
 }
 
 
-export default connector(MainScreen);
+export default MainScreen;
