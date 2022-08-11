@@ -1,5 +1,7 @@
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
+import { createAction } from '@reduxjs/toolkit';
+
 enum ActionsType {
   CurrentCity = 'info/currentCity',
   OffersList = 'data/offers',
@@ -8,30 +10,11 @@ enum ActionsType {
   Redirect = 'redirect'
 }
 
-const ChangeCurrentCity = (city: string) => ({
-  type: ActionsType.CurrentCity,
-  payload: city
-} as const );
-
-const ChangeOffersList = (offers: Offers) => ({
-  type: ActionsType.OffersList,
-  payload: offers
-} as const );
-
-const ChangeCurrentSort = (currentSort: string) => ({
-  type: ActionsType.CurrentSort,
-  payload: currentSort
-} as const );
-
-const RequireAuth = (status: AuthorizationStatus) => ({
-  type: ActionsType.RequireAuth,
-  payload: status
-} as const );
-
-const RedirectToPath = (url:AppRoute) => ({
-  type: ActionsType.Redirect,
-  payload: url
-} as const );
+const ChangeCurrentCity = createAction( ActionsType.CurrentCity, (city: string) => ({payload: city}) );
+const ChangeOffersList = createAction( ActionsType.OffersList, (offers: Offers) => ({payload: offers}) );
+const ChangeCurrentSort = createAction( ActionsType.CurrentSort, (sort: string) => ({payload: sort}) );
+const RequireAuth = createAction( ActionsType.RequireAuth, (status: AuthorizationStatus) => ({payload: status}) );
+const RedirectToPath = createAction( ActionsType.Redirect, (url: AppRoute) => ({payload: url}) );
 
 type Actions =
   | ReturnType <typeof ChangeCurrentCity>

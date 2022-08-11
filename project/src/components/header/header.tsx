@@ -24,16 +24,18 @@ const Header = ({authStatus}:HeaderReduxProps):JSX.Element => {
           <nav className='header__nav'>
             <ul className='header__nav-list'>
               <li className='header__nav-item user'>
-                <Link className='header__nav-link header__nav-link--profile' to={AppRoute.Favorites}>
-                  <div className='header__avatar-wrapper user__avatar-wrapper'/>
+                <div className='header__nav-link header__nav-link--profile' >
+                  <Link to={AppRoute.Favorites}>
+                    <div className='header__avatar-wrapper user__avatar-wrapper'/>
+                  </Link>
                   {authStatus === AuthorizationStatus.Auth
                     ?
-                    <>
+                    <Link to={AppRoute.Favorites}>
                       <span className='header__user-name user__name'>Oliver.conner@gmail.com</span>
                       <span className='header__favorite-count'>0</span>
-                    </>
-                    : <span className='header__login'><Link to={AppRoute.Auth}>Sign in</Link></span>}
-                </Link>
+                    </Link>
+                    : <Link to={AppRoute.Auth}><span className='header__login'>Sign in</span></Link>}
+                </div>
               </li>
               {authStatus === AuthorizationStatus.Auth &&
                 <li className='header__nav-item'>
