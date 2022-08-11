@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
-import { Reviews } from '../../types/reviews';
-import { getFormateDate, getStars } from '../../utils/utils';
+import { Reviews } from '../../../types/reviews';
+import { getFormateDate, getStars } from '../../../utils/utils';
 
 type UserReviewProps = {
   reviews: Reviews

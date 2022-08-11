@@ -5,7 +5,7 @@ type User = {
   avatarUrl: string
 }
 
-type Review = {
+export type Review = {
   id: number,
   user: User,
   rating: number,

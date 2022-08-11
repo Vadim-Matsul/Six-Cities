@@ -11,7 +11,9 @@ export enum AppRoute {
 export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  GetNearOffers = '/hotels/:hotel_id/nearby',
+  GetReviews = '/comments/:hotel_id'
 }
 
 export enum AuthorizationStatus {

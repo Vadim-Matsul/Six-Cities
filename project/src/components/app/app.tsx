@@ -10,7 +10,6 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
 import { getLoadStatus, getOffers } from '../../store/reducer/data-reducer/selectors';
@@ -18,14 +17,12 @@ import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { useSelector } from 'react-redux';
 
 type AppProps = {
-  nearPlacesOffers: Offers
   favoriteOffers: Offers
-  reviews: Reviews
 }
 
 
 function App ( props:AppProps ):JSX.Element{
-  const { nearPlacesOffers, favoriteOffers, reviews } = props;
+  const { favoriteOffers } = props;
 
   const offers = useSelector(getOffers);
   const loadStatus = useSelector(getLoadStatus);
@@ -63,8 +60,6 @@ function App ( props:AppProps ):JSX.Element{
           element = {
             < PropertyScreen
               offers={offers}
-              nearPlacesOffers={nearPlacesOffers}
-              reviews = { reviews as Reviews}
             />
           }
         />

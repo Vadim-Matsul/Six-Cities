@@ -1,36 +1,44 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import BookMarkButton from '../../components/bookmark-button/bookmark-button';
 import Header from '../../components/header/header';
-import InputRaiting from '../../components/input-raiting/input-raiting';
 import OfferList from '../../components/offer-list/offer-list';
 import PropertyGood from '../../components/property-good/property-good';
 import PropertyImage from '../../components/property-image/property-image';
-import UserReview from '../../components/user-review/user-review';
-import { BookMarkClass, CardPageClass, ImagesSize } from '../../const';
+import UserReview from '../../components/review/user-review/user-review';
+import { AuthorizationStatus, BookMarkClass, CardPageClass, ImagesSize } from '../../const';
 import { Offers } from '../../types/offers';
-import { Reviews, ReviewState } from '../../types/reviews';
+import { Reviews } from '../../types/reviews';
 import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
+import { FormReview } from '../../components/review/form-review/form-review';
+import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
+
 
 type PropertyScreenProps = {
   offers: Offers
-  nearPlacesOffers: Offers
-  reviews: Reviews
 }
 
-function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenProps ):JSX.Element{
-
-  const [ reviewFormData, setReviewFormData ] = useState<ReviewState>({
-    raiting: null,
-    comment: ''
-  });
+function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
 
   const { id } = useParams();
   const numId = Number(id);
   const NanNumId = !numId;
   const offer = offers.find((item) => item.id === numId);
   const NanOffer = !offer;
+  const dispatch = useDispatch() as ThunkDispatchResualt;
+
+  useEffect(() => {
+    ( dispatch )( fetchNearOffers(numId) );
+    ( dispatch )( fetcnReviews(numId) );
+  },[numId]);
+
+  const nearOffers = useSelector( getNearOffers );
+  const reviews = useSelector( getReviews );
+  const authStatus = useSelector( getAuthStatus );
 
   if (NanNumId || NanOffer){
     return <NotFoundScreen />;
@@ -121,40 +129,9 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
                 <ul className='reviews__list'>
                   <UserReview reviews={ reviews as Reviews } />
                 </ul>
-                <form className='reviews__form form' action='#' method='post' >
-                  <label className='reviews__label form__label' htmlFor='review'>Your review</label>
-                  <div
-                    className='reviews__rating-form form__rating'
-                    onChange={( {target}: ChangeEvent <HTMLInputElement> ):void => {
-                      setReviewFormData({
-                        ...reviewFormData,
-                        raiting: Number(target.value)
-                      });
-                    }}
-                  >
-                    <InputRaiting />
-                  </div>
-                  <textarea
-                    className='reviews__textarea form__textarea'
-                    onChange={( {target}:ChangeEvent <HTMLTextAreaElement> ):void =>{
-                      setReviewFormData({
-                        ...reviewFormData,
-                        comment: target.value
-                      });
-                    }}
-                    id='review'
-                    name='review'
-                    value={reviewFormData.comment}
-                    placeholder='Tell how was your stay, what you like and what can be improved'
-                  />
-                  <div className='reviews__button-wrapper'>
-                    <p className='reviews__help'>
-                      To submit review please make sure to set <span className='reviews__star'>rating</span> and describe your
-                      stay with at least <b className='reviews__text-amount'>50 characters</b>.
-                    </p>
-                    <button className='reviews__submit form__submit button' type='submit' disabled>Submit</button>
-                  </div>
-                </form>
+                { authStatus === AuthorizationStatus.Auth
+                  ? <FormReview />
+                  : '' }
               </section>
             </div>
           </div>
@@ -166,7 +143,7 @@ function PropertyScreen ( { offers, nearPlacesOffers, reviews }:PropertyScreenPr
             <div className='near-places__list places__list'>
               <OfferList
                 cardClass={ CardPageClass.Property }
-                offers = {nearPlacesOffers}
+                offers = {nearOffers}
               />
             </div>
           </section>

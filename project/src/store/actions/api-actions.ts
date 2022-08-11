@@ -1,11 +1,13 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { ChangeOffersList, RedirectToPath, RequireAuth } from './actions';
+import { ChangeOffersList, FetchNearOffers, FetchReviews, RedirectToPath, RequireAuth } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
 import { Action } from 'redux';
+import {generatePath} from 'react-router-dom';
+import { Review } from '../../types/reviews';
 
 export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Action>
 export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >
@@ -15,6 +17,22 @@ const fetchOffers = ():ThunkActionResualt =>
   async (dispatch, _getState, api) => {
     const {data} = await api.get<Offers>(APIRoute.Offers);
     dispatch(ChangeOffersList(data));
+  };
+
+const fetchNearOffers = (id: number):ThunkActionResualt =>
+  async (dispatch, getState, api) => {
+    const {data} = await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`);
+    if (id !== getState().DATA.nearOffers.id){
+      dispatch( FetchNearOffers({id, data}) );
+    }
+  };
+
+const fetcnReviews = (id: number):ThunkActionResualt =>
+  async (dispatch, getState, api) => {
+    const {data} = await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`);
+    if (id !== getState().DATA.reviews.id){
+      dispatch( FetchReviews({id, data}) );
+    }
   };
 
 const checkAuth = ():ThunkActionResualt =>
@@ -44,5 +62,7 @@ export {
   fetchOffers,
   checkAuth,
   loginSession,
-  logoutSession
+  logoutSession,
+  fetchNearOffers,
+  fetcnReviews
 };
