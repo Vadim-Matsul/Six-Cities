@@ -15,6 +15,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
+import { getLoadStatus, getOffers } from '../../store/reducer/data-reducer/selectors';
+import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 
 type AppProps = {
   nearPlacesOffers: Offers
@@ -22,10 +24,10 @@ type AppProps = {
   reviews: Reviews
 }
 
-const mapStateToProps = ({DATA, USER}:State) => ({
-  offers: DATA.offers,
-  loadStatus: DATA.loadStatus,
-  authStatus: USER.authStatus });
+const mapStateToProps = ( state:State ) => ({
+  offers: getOffers(state),
+  loadStatus: getLoadStatus(state),
+  authStatus: getAuthStatus(state) });
 
 const connector = connect(mapStateToProps);
 type AppReduxProps = ConnectedProps <typeof connector>

@@ -3,7 +3,7 @@ import { DataReducer } from './data-reducer/data-reducer';
 import { LogicReducer } from './logic-reducer/logic-reducer';
 import { UserReducer } from './user-reducer/user-reducer';
 
-enum ReducerNode {
+export enum ReducerNode {
   Data = 'DATA',
   Logic = 'LOGIC',
   User = 'USER'

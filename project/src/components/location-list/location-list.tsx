@@ -1,14 +1,13 @@
 import { GeoCity } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from '@reduxjs/toolkit';
-import { Actions } from '../../store/actions/actions';
+import { Dispatch } from 'redux';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 
 type LocationListProps = {
   uniqueCity: string,
 }
 
-const mapDispatchToProps = (dispatcher: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatcher: Dispatch) => ({
   onChangeCurrentCity(city: string){
     dispatcher(ChangeCurrentCity(city));
   }

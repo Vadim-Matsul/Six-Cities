@@ -1,13 +1,14 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { Actions, ChangeOffersList, RedirectToPath, RequireAuth } from './actions';
+import { ChangeOffersList, RedirectToPath, RequireAuth } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
+import { Action } from 'redux';
 
-export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Actions>
-export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Actions >
+export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Action>
+export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >
 export type AuthData = { email: string, password: string }
 
 const fetchOffers = ():ThunkActionResualt =>

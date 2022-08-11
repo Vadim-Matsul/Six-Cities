@@ -1,14 +1,15 @@
 import { SortTypes } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch, useEffect, useState } from 'react';
-import { Actions, ChangeCurrentSort } from '../../store/actions/actions';
+import { useEffect, useState } from 'react';
+import { Dispatch } from 'redux';
+import { ChangeCurrentSort } from '../../store/actions/actions';
 
 type SortFormProps = {
   currentSort: string,
   currentCity: string
 }
 
-const mapDispatchToProps = (dispatcher: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatcher: Dispatch) => ({
   onChangeCurrentSort(sort: string){
     dispatcher(ChangeCurrentSort(sort));
   }

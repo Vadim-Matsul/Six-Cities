@@ -11,14 +11,16 @@ import { SORT } from '../../utils/utils';
 import useHighlighted from '../../hooks/useHighlighted';
 import Header from '../../components/header/header';
 import { useMemo } from 'react';
+import { getCurrentCity, getCurrentSort } from '../../store/reducer/logic-reducer/selectors';
 
 type MainScreenProps = {
   offers: Offers
 }
 
-const mapStateToProps = ({ LOGIC }:State) => ({
-  currentCity: LOGIC.currentCity,
-  currentSort: LOGIC.currentSort});
+const mapStateToProps = ( state:State ) => ({
+  currentCity: getCurrentCity(state),
+  currentSort: getCurrentSort(state) });
+
 const connector = connect(mapStateToProps);
 type MainScreenReduxProps = ConnectedProps<typeof connector>
 type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps

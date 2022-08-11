@@ -16,14 +16,6 @@ const ChangeCurrentSort = createAction( ActionsType.CurrentSort, (sort: string) 
 const RequireAuth = createAction( ActionsType.RequireAuth, (status: AuthorizationStatus) => ({payload: status}) );
 const RedirectToPath = createAction( ActionsType.Redirect, (url: AppRoute) => ({payload: url}) );
 
-type Actions =
-  | ReturnType <typeof ChangeCurrentCity>
-  | ReturnType <typeof ChangeOffersList>
-  | ReturnType <typeof ChangeCurrentSort>
-  | ReturnType <typeof RequireAuth>
-  | ReturnType <typeof RedirectToPath>
-
-export type { Actions };
 export {
   ChangeCurrentCity,
   ChangeOffersList,
