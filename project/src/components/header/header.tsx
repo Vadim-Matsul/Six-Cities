@@ -6,7 +6,7 @@ import Logo from '../logo/logo';
 import { useDispatch } from 'react-redux';
 import { logoutSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
 
-const mapStateToProps = ({authStatus}:State) => ({authStatus});
+const mapStateToProps = ({USER}:State) => ({authStatus: USER.authStatus});
 
 const connector = connect(mapStateToProps);
 type HeaderReduxProps = ConnectedProps<typeof connector>

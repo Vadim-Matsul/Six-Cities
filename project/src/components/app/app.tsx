@@ -22,7 +22,10 @@ type AppProps = {
   reviews: Reviews
 }
 
-const mapStateToProps = ({offers, authStatus, loadStatus}:State) => ({ offers, authStatus, loadStatus });
+const mapStateToProps = ({DATA, USER}:State) => ({
+  offers: DATA.offers,
+  loadStatus: DATA.loadStatus,
+  authStatus: USER.authStatus });
 
 const connector = connect(mapStateToProps);
 type AppReduxProps = ConnectedProps <typeof connector>

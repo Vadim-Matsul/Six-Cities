@@ -7,7 +7,7 @@ import { reviews } from './mocks/reviews';
 import { Reviews } from './types/reviews';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer/reducer';
+import { RootReducer } from './store/reducer/root-reducer';
 import { ToastContainer } from 'react-toastify';
 import { CreateApi } from './service/api/api';
 import thunk from 'redux-thunk';
@@ -20,7 +20,10 @@ const root = ReactDOM.createRoot(
 );
 
 const api = CreateApi();
-const store = configureStore({reducer, middleware:[thunk.withExtraArgument(api), redirect]});
+const store = configureStore({
+  reducer: RootReducer,
+  middleware: [thunk.withExtraArgument(api), redirect]
+});
 
 (store.dispatch as ThunkDispatchResualt)( checkAuth() );
 (store.dispatch as ThunkDispatchResualt)( fetchOffers() );

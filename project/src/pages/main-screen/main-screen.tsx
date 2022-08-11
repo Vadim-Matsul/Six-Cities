@@ -16,7 +16,9 @@ type MainScreenProps = {
   offers: Offers
 }
 
-const mapStateToProps = ({ currentCity, currentSort }:State) => ({currentCity, currentSort});
+const mapStateToProps = ({ LOGIC }:State) => ({
+  currentCity: LOGIC.currentCity,
+  currentSort: LOGIC.currentSort});
 const connector = connect(mapStateToProps);
 type MainScreenReduxProps = ConnectedProps<typeof connector>
 type ConnectedMainScrennProps = MainScreenProps & MainScreenReduxProps

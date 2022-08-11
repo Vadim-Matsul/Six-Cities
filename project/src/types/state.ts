@@ -1,12 +1,21 @@
 import { AuthorizationStatus } from "../const";
+import { RootReducerState } from "../store/reducer/root-reducer";
 import { Offer, Offers } from "./offers"
 
-type State = {
-  currentCity: string,
+type DataState = {
   offers: Offers,
-  currentSort: string,
-  authStatus: AuthorizationStatus,
   loadStatus: boolean
 }
 
-export type { State };
+type LogicState = {
+  currentCity: string,
+  currentSort: string,
+}
+
+type UserState = {
+  authStatus: AuthorizationStatus
+}
+
+type State = RootReducerState
+
+export type { State, DataState, LogicState, UserState };
