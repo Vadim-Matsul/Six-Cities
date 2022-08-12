@@ -1,7 +1,11 @@
 import { RaitingInputData } from '../../const';
 import { Fragment, ReactElement } from 'react';
 
-function InputRaiting ():ReactElement{
+type inputRaitingProps = {
+  flag: boolean
+}
+
+function InputRaiting ( {flag}:inputRaitingProps ):ReactElement{
 
   return (
     <>
@@ -14,13 +18,14 @@ function InputRaiting ():ReactElement{
             id = {`${option.value}-stars`}
             type = 'radio'
             key={option.value}
+            disabled={ flag }
           />
           <label
             className = 'reviews__rating-label form__rating-label'
             htmlFor = {`${option.value}-stars`}
             title = {option.title}
           >
-            <svg className = 'form__star-image' width='37' height='33'>
+            <svg className = 'form__star-image' width='37' height='33' >
               <use xlinkHref = '#icon-star'/>
             </svg>
           </label>

@@ -20,7 +20,7 @@ const ChangeCurrentSort = createAction< string >( ActionsType.CurrentSort );
 const RequireAuth = createAction< AuthorizationStatus >( ActionsType.RequireAuth );
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const FetchNearOffers = createAction< CombineDataState<Offer> >( ActionsType.NearOffers );
-const FetchReviews = createAction< CombineDataState<Review> >( ActionsType.Reviews );
+const ChangeReviewsState = createAction< CombineDataState<Review> >( ActionsType.Reviews );
 
 export {
   ChangeCurrentCity,
@@ -29,6 +29,6 @@ export {
   RequireAuth,
   RedirectToPath,
   FetchNearOffers,
-  FetchReviews,
+  ChangeReviewsState,
   ActionsType
 };

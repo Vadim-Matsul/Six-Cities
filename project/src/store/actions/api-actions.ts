@@ -1,13 +1,13 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { ChangeOffersList, FetchNearOffers, FetchReviews, RedirectToPath, RequireAuth } from './actions';
+import { ChangeOffersList, ChangeReviewsState, FetchNearOffers, RedirectToPath, RequireAuth } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
 import { Action } from 'redux';
 import {generatePath} from 'react-router-dom';
-import { Review } from '../../types/reviews';
+import { Review, ReviewState } from '../../types/reviews';
 
 export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Action>
 export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >
@@ -31,8 +31,15 @@ const fetcnReviews = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
     const {data} = await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`);
     if (id !== getState().DATA.reviews.id){
-      dispatch( FetchReviews({id, data}) );
+      dispatch( ChangeReviewsState({id, data}) );
     }
+  };
+
+const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
+  async (dispatch, getState, api) => {
+    await api.post< Review[] >( `${generatePath(APIRoute.PostReview, {'hotel_id' : id.toString()})}`,{ comment, rating } )
+      .then( ({data}) => dispatch( ChangeReviewsState({id, data}) ))
+      .catch((err) => Promise.reject(err));
   };
 
 const checkAuth = ():ThunkActionResualt =>
@@ -64,5 +71,6 @@ export {
   loginSession,
   logoutSession,
   fetchNearOffers,
-  fetcnReviews
+  fetcnReviews,
+  postReview
 };

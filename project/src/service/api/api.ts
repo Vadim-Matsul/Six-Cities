@@ -1,13 +1,21 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { getToken } from '../token/token';
+import { HTTPConfig } from '../../const';
 
 const BASE_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
-enum Unauth {
-  status = 401,
-  message = 'Не забудьте авторизоваться'
-}
+
+const HTTP = {
+  [HTTPConfig.UnAuth]: {
+    status: 401,
+    message: 'Не забудьте авторизоваться'
+  },
+  [HTTPConfig.BadRequest]: {
+    status: 400,
+    message: 'Ошибка в заполнении данных'
+  },
+};
 
 
 export const CreateApi = ():AxiosInstance => {
@@ -21,8 +29,9 @@ export const CreateApi = ():AxiosInstance => {
   api.interceptors.response.use(
     (response: AxiosResponse) => (response),
     (error:AxiosError) => {
-      if (error.response?.status === Unauth.status){
-        toast.error(Unauth.message);
+      const TextStatus = error.response!.statusText;
+      if (error.response?.status === HTTP[TextStatus].status){
+        toast.error(HTTP[TextStatus].message);
       }
       return Promise.reject(error);
     });

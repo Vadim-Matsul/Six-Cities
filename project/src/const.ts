@@ -13,7 +13,8 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   GetNearOffers = '/hotels/:hotel_id/nearby',
-  GetReviews = '/comments/:hotel_id'
+  GetReviews = '/comments/:hotel_id',
+  PostReview = '/comments/:hotel_id'
 }
 
 export enum AuthorizationStatus {
@@ -32,6 +33,11 @@ export enum BookMarkClass {
   Property = 'property',
 
 }
+
+export const HTTPConfig = {
+  UnAuth: 'Unauthorized',
+  BadRequest: 'Bad Request',
+};
 
 export const SortTypes = {
   POPULAR: 'Popular',

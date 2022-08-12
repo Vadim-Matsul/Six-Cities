@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataState } from '../../../types/state';
-import { ChangeOffersList, FetchNearOffers, FetchReviews } from '../../actions/actions';
+import { ChangeOffersList, FetchNearOffers, ChangeReviewsState } from '../../actions/actions';
 
 const initialState:DataState = {
   offers: [],
@@ -17,7 +17,7 @@ const DataReducer = createReducer( initialState, (builder) => {
     .addCase(FetchNearOffers, (state, action) => {
       state.nearOffers.id = action.payload.id;
       state.nearOffers.data = action.payload.data; })
-    .addCase(FetchReviews, (state, action) => {
+    .addCase(ChangeReviewsState, (state, action) => {
       state.reviews.id = action.payload.id;
       state.reviews.data = action.payload.data; });
 } );

@@ -130,7 +130,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
                   <UserReview reviews={ reviews as Reviews } />
                 </ul>
                 { authStatus === AuthorizationStatus.Auth
-                  ? <FormReview />
+                  ? <FormReview id={ numId }/>
                   : '' }
               </section>
             </div>

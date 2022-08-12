@@ -16,6 +16,7 @@ export type Review = {
 export type Reviews = Review[]
 
 export type ReviewState = {
-  raiting: null | number,
+  id: number,
+  rating: null | number,
   comment: string
 }
