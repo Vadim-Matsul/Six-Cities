@@ -17,6 +17,8 @@ import { getActualId, getNearOffers, getReviews, getActualStatus } from '../../s
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { Loader } from '../../components/loader/loader';
+import Map from '../../components/map/map';
+import useHighlighted from '../../hooks/useHighlighted';
 
 
 type PropertyScreenProps = {
@@ -45,6 +47,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const nearOffers = useSelector( getNearOffers );
   const reviews = useSelector( getReviews );
   const authStatus = useSelector( getAuthStatus );
+  const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers);
 
   if (NanNumId || NanOffer){
     return <NotFoundScreen />;
@@ -57,6 +60,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   if (nearStatus === FetchProgress.Pending || reviewStatus === FetchProgress.Pending){
     return <Loader />;
   }
+
 
   return (
     <div className='page'>
@@ -144,7 +148,12 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
               </section>
             </div>
           </div>
-          <section className='property__map map'></section>
+          <Map
+            offers={ nearOffers }
+            city={ offer.city }
+            selectedOffer={ selectedOffer }
+            thisClass= 'property__map map'
+          />
         </section>
         <div className='container'>
           <section className='near-places places'>
@@ -153,6 +162,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
               <OfferList
                 cardClass={ CardPageClass.Property }
                 offers = {nearOffers}
+                setSelectedOffer={ setSelectedOffer }
               />
             </div>
           </section>

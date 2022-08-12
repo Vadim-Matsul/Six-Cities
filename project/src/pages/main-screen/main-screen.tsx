@@ -63,6 +63,7 @@ function MainScreen ({ offers }: MainScreenProps):JSX.Element{
                   offers={ offersOfCity as Offers }
                   selectedOffer = { selectedOffer }
                   city={ City }
+                  thisClass = 'cities__map map'
                 />
                 : null}
             </div>

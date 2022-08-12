@@ -3,18 +3,20 @@ import useMap from '../../hooks/useMap';
 import { useEffect, useRef } from 'react';
 import { City, Offer, Offers } from '../../types/offers';
 import { Icon, Marker} from 'leaflet';
-import { IconMarkerSize, IconMarkerUrl } from '../../const';
+import { AppRoute, IconMarkerSize, IconMarkerUrl } from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { browserHistory } from '../../browser-history';
 
 type MapProps = {
   offers: Offers,
   city: City,
-  selectedOffer: Offer | undefined
+  selectedOffer: Offer | undefined,
+  thisClass: string
 }
 
 
 function Map (props: MapProps):JSX.Element{
-  const { offers, city, selectedOffer } = props;
+  const { offers, city, selectedOffer, thisClass } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -30,6 +32,7 @@ function Map (props: MapProps):JSX.Element{
           iconSize: [IconMarkerSize.Icon.x, IconMarkerSize.Icon.y],
           iconAnchor: [IconMarkerSize.Anchor.x, IconMarkerSize.Anchor.y]
         });
+        marker.on('click', () => browserHistory.push(`${AppRoute.Property}/${offer.id}`));
         marker.setIcon(icon).addTo(map);
         Markers.push(marker);
       });}
@@ -45,7 +48,7 @@ function Map (props: MapProps):JSX.Element{
 
   return (
     <section
-      className='cities__map map'
+      className={ thisClass }
       ref={ mapRef }
     >
     </section>
