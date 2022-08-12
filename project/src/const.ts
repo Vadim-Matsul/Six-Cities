@@ -28,10 +28,17 @@ export enum CardPageClass {
   Property = 'near-places',
   Favorites = 'favorites'
 }
+
 export enum BookMarkClass {
   OfferCard = 'place-card',
   Property = 'property',
 
+}
+
+export enum FetchProgress {
+  Pending = 'PENDING',
+  Fulfilled = 'FULFILLED',
+  Rejected = 'REJECTED'
 }
 
 export const HTTPConfig = {

@@ -6,16 +6,17 @@ import OfferList from '../../components/offer-list/offer-list';
 import PropertyGood from '../../components/property-good/property-good';
 import PropertyImage from '../../components/property-image/property-image';
 import UserReview from '../../components/review/user-review/user-review';
-import { AuthorizationStatus, BookMarkClass, CardPageClass, ImagesSize } from '../../const';
+import { AuthorizationStatus, BookMarkClass, CardPageClass, FetchProgress, ImagesSize } from '../../const';
 import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
+import { getActualId, getNearOffers, getReviews, getActualStatus } from '../../store/reducer/data-reducer/selectors';
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
+import { Loader } from '../../components/loader/loader';
 
 
 type PropertyScreenProps = {
@@ -31,9 +32,14 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const NanOffer = !offer;
   const dispatch = useDispatch() as ThunkDispatchResualt;
 
+  const [nearId, reviewId] = useSelector( getActualId );
+  const [nearStatus, reviewStatus] = useSelector( getActualStatus );
+
   useEffect(() => {
-    ( dispatch )( fetchNearOffers(numId) );
-    ( dispatch )( fetcnReviews(numId) );
+    if ( nearId !== numId && reviewId !== numId && !NanOffer){
+      ( dispatch )( fetchNearOffers(numId) );
+      ( dispatch )( fetcnReviews(numId) );
+    }
   },[numId]);
 
   const nearOffers = useSelector( getNearOffers );
@@ -48,6 +54,9 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const raiting = getStars( offer.rating );
   const offerType = capitalizeFirstLetter(offer.type);
 
+  if (nearStatus === FetchProgress.Pending || reviewStatus === FetchProgress.Pending){
+    return <Loader />;
+  }
 
   return (
     <div className='page'>

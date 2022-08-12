@@ -29,12 +29,14 @@ export const CreateApi = ():AxiosInstance => {
   api.interceptors.response.use(
     (response: AxiosResponse) => (response),
     (error:AxiosError) => {
-      const TextStatus = error.response!.statusText;
-      if (error.response?.status === HTTP[TextStatus].status){
-        toast.error(HTTP[TextStatus].message);
-      }
+      if (error.response){
+        const TextStatus = error.response.statusText ;
+        (error.response?.status === HTTP[TextStatus].status) && (
+          toast.error(HTTP[TextStatus].message)
+        );}
       return Promise.reject(error);
-    });
+    }
+  );
 
 
   api.interceptors.request.use(

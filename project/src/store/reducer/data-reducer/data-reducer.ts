@@ -1,12 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataState } from '../../../types/state';
-import { ChangeOffersList, FetchNearOffers, ChangeReviewsState } from '../../actions/actions';
+import { ChangeOffersList, FetchNearOffers, ChangeReviewsState, ToggleLoadStatusNear, ToggleLoadStatusReview } from '../../actions/actions';
 
 const initialState:DataState = {
   offers: [],
   nearOffers: {id: null, data: [] },
   reviews: {id: null, data: [] },
-  loadStatus: false
+  loadStatus: false,
+  loadNearOf: null,
+  loadReviews: null
 };
 
 const DataReducer = createReducer( initialState, (builder) => {
@@ -19,7 +21,11 @@ const DataReducer = createReducer( initialState, (builder) => {
       state.nearOffers.data = action.payload.data; })
     .addCase(ChangeReviewsState, (state, action) => {
       state.reviews.id = action.payload.id;
-      state.reviews.data = action.payload.data; });
+      state.reviews.data = action.payload.data; })
+    .addCase(ToggleLoadStatusNear, (state, action) => {
+      state.loadNearOf = action.payload; } )
+    .addCase(ToggleLoadStatusReview , (state, action) => {
+      state.loadReviews = action.payload; } );
 } );
 
 export { DataReducer };

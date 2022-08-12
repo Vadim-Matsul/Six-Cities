@@ -1,4 +1,4 @@
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { Offer, Offers } from '../../types/offers';
 import { createAction } from '@reduxjs/toolkit';
 import { CombineDataState } from '../../types/state';
@@ -11,7 +11,9 @@ enum ActionsType {
   Reviews = 'data/reviews',
   CurrentSort = 'info/currentSort',
   RequireAuth = 'status/auth',
-  Redirect = 'redirect'
+  Redirect = 'redirect',
+  ToggleNear = 'status/nearOffers',
+  ToggleReview = 'status/review'
 }
 
 const ChangeCurrentCity = createAction< string >( ActionsType.CurrentCity );
@@ -21,6 +23,8 @@ const RequireAuth = createAction< AuthorizationStatus >( ActionsType.RequireAuth
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const FetchNearOffers = createAction< CombineDataState<Offer> >( ActionsType.NearOffers );
 const ChangeReviewsState = createAction< CombineDataState<Review> >( ActionsType.Reviews );
+const ToggleLoadStatusNear = createAction< FetchProgress >( ActionsType.ToggleNear );
+const ToggleLoadStatusReview = createAction< FetchProgress >( ActionsType.ToggleReview );
 
 export {
   ChangeCurrentCity,
@@ -30,5 +34,7 @@ export {
   RedirectToPath,
   FetchNearOffers,
   ChangeReviewsState,
+  ToggleLoadStatusNear,
+  ToggleLoadStatusReview,
   ActionsType
 };
