@@ -42,7 +42,9 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
           });
         }}
       >
-        <InputRaiting flag={ booleanFlag }/>
+        <InputRaiting
+          flag={ booleanFlag }
+        />
       </div>
       <textarea
         className='reviews__textarea form__textarea'

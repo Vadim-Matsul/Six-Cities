@@ -2,10 +2,10 @@ import { RaitingInputData } from '../../const';
 import { Fragment, ReactElement } from 'react';
 
 type inputRaitingProps = {
-  flag: boolean
+  flag: boolean,
 }
 
-function InputRaiting ( {flag}:inputRaitingProps ):ReactElement{
+function InputRaiting ( { flag }:inputRaitingProps ):ReactElement{
 
   return (
     <>
@@ -21,7 +21,7 @@ function InputRaiting ( {flag}:inputRaitingProps ):ReactElement{
             disabled={ flag }
           />
           <label
-            className = 'reviews__rating-label form__rating-label'
+            className = {`reviews__rating-label ${flag ? '' : 'form__rating-label'}`}
             htmlFor = {`${option.value}-stars`}
             title = {option.title}
           >
