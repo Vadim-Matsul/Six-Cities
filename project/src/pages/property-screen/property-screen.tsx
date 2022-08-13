@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getActualId, getNearOffers, getReviews, getActualStatus } from '../../store/reducer/data-reducer/selectors';
+import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { Loader } from '../../components/loader/loader';
@@ -34,22 +34,21 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const NanOffer = !offer;
   const dispatch = useDispatch() as ThunkDispatchResualt;
 
-  const [nearId, reviewId] = useSelector( getActualId );
-  const [nearStatus, reviewStatus] = useSelector( getActualStatus );
+  const nearOffers = useSelector( getNearOffers );
+  const reviews = useSelector( getReviews );
 
   useEffect(() => {
-    if ( nearId !== numId && reviewId !== numId && !NanOffer){
+    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer){
       ( dispatch )( fetchNearOffers(numId) );
       ( dispatch )( fetcnReviews(numId) );
     }
-  },[numId]);
+  },[numId, offers]);
 
-  const nearOffers = useSelector( getNearOffers );
-  const reviews = useSelector( getReviews );
+
   const authStatus = useSelector( getAuthStatus );
-  const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers);
+  const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers.data);
 
-  if (NanNumId || NanOffer){
+  if (NanNumId || NanOffer ){
     return <NotFoundScreen />;
   }
 
@@ -57,7 +56,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const raiting = getStars( offer.rating );
   const offerType = capitalizeFirstLetter(offer.type);
 
-  if (nearStatus === FetchProgress.Pending || reviewStatus === FetchProgress.Pending){
+  if (nearOffers.loadStatus !== FetchProgress.Fulfilled && reviews.loadStatus !== FetchProgress.Fulfilled){
     return <Loader />;
   }
 
@@ -138,9 +137,9 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
                 </div>
               </div>
               <section className='property__reviews reviews'>
-                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.length}</span></h2>
+                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.data.length}</span></h2>
                 <ul className='reviews__list'>
-                  <UserReview reviews={ reviews as Reviews } />
+                  <UserReview reviews={ reviews.data as Reviews } />
                 </ul>
                 { authStatus === AuthorizationStatus.Auth
                   ? <FormReview id={ numId }/>
@@ -149,7 +148,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
             </div>
           </div>
           <Map
-            offers={ nearOffers }
+            offers={ nearOffers.data }
             city={ offer.city }
             selectedOffer={ selectedOffer }
             thisClass= 'property__map map'
@@ -161,7 +160,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
             <div className='near-places__list places__list'>
               <OfferList
                 cardClass={ CardPageClass.Property }
-                offers = {nearOffers}
+                offers = {nearOffers.data}
                 setSelectedOffer={ setSelectedOffer }
               />
             </div>

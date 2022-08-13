@@ -26,7 +26,7 @@ function MainScreen ({ offers }: MainScreenProps):JSX.Element{
   const currentCity = useSelector( getCurrentCity );
   const currentSort = useSelector( getCurrentSort );
 
-  const offersOfCity = useMemo(() => getOffersOfCity(currentCity, offers),[currentCity]);
+  const offersOfCity = useMemo(() => getOffersOfCity(currentCity, offers),[offers,currentCity]);
   const sortedOffers = SORT[currentSort](offersOfCity);
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];

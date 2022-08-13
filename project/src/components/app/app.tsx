@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { HistoryRouter } from '../history-router/history-router';
-import { AppRoute } from '../../const';
+import { AppRoute, FetchProgress } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import AuthScreen from '../../pages/auth-screen/auth-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -12,7 +12,7 @@ import { AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
-import { getLoadStatus, getOffers } from '../../store/reducer/data-reducer/selectors';
+import { getOffers } from '../../store/reducer/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { useSelector } from 'react-redux';
 
@@ -25,10 +25,9 @@ function App ( props:AppProps ):JSX.Element{
   const { favoriteOffers } = props;
 
   const offers = useSelector(getOffers);
-  const loadStatus = useSelector(getLoadStatus);
   const authStatus = useSelector(getAuthStatus);
 
-  if (authStatus === AuthorizationStatus.UnKnown || !loadStatus){
+  if (authStatus === AuthorizationStatus.UnKnown || offers.loadStatus !== FetchProgress.Fulfilled ){
     return <Loader />;
   }
 
@@ -37,7 +36,7 @@ function App ( props:AppProps ):JSX.Element{
       <Routes>
         <Route
           path = { AppRoute.Main }
-          element = { < MainScreen offers = {offers}/>}
+          element = { < MainScreen offers = {offers.data}/>}
         />
         <Route
           path = { AppRoute.Auth }
@@ -59,7 +58,7 @@ function App ( props:AppProps ):JSX.Element{
           path = { `${AppRoute.Property}/:id` }
           element = {
             < PropertyScreen
-              offers={offers}
+              offers={offers.data}
             />
           }
         />

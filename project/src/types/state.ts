@@ -5,17 +5,15 @@ import { Review, Reviews } from './reviews';
 import { FetchProgress } from '../const';
 
 type CombineDataState<Type> = {
-  id: number | null,
-  data: Type[] 
+  id?: number | null,
+  data: Type[],
+  loadStatus: FetchProgress
 }
 
 type DataState = {
-  offers: Offers,
+  offers: CombineDataState<Offer>,
   nearOffers: CombineDataState<Offer>,
   reviews: CombineDataState<Review>,
-  loadStatus: boolean,
-  loadNearOf: FetchProgress | null,
-  loadReviews: FetchProgress | null
 }
 
 type LogicState = {

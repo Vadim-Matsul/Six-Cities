@@ -38,7 +38,8 @@ export enum BookMarkClass {
 export enum FetchProgress {
   Pending = 'PENDING',
   Fulfilled = 'FULFILLED',
-  Rejected = 'REJECTED'
+  Rejected = 'REJECTED',
+  Idle = 'IDLE'
 }
 
 export const HTTPConfig = {

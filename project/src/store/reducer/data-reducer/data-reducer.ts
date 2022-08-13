@@ -1,31 +1,24 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { FetchProgress } from '../../../const';
 import { DataState } from '../../../types/state';
-import { ChangeOffersList, FetchNearOffers, ChangeReviewsState, ToggleLoadStatusNear, ToggleLoadStatusReview } from '../../actions/actions';
+import { ChangeOffers, ChangeNearOffers, ChangeReviews } from '../../actions/actions';
 
 const initialState:DataState = {
-  offers: [],
-  nearOffers: {id: null, data: [] },
-  reviews: {id: null, data: [] },
-  loadStatus: false,
-  loadNearOf: null,
-  loadReviews: null
+  offers: { data: [], loadStatus: FetchProgress.Idle },
+  nearOffers: {id: null, data: [], loadStatus: FetchProgress.Idle },
+  reviews: {id: null, data: [], loadStatus: FetchProgress.Idle },
 };
 
 const DataReducer = createReducer( initialState, (builder) => {
   builder
-    .addCase(ChangeOffersList, (state, action) => {
-      state.offers = action.payload;
-      state.loadStatus = true; })
-    .addCase(FetchNearOffers, (state, action) => {
-      state.nearOffers.id = action.payload.id;
-      state.nearOffers.data = action.payload.data; })
-    .addCase(ChangeReviewsState, (state, action) => {
-      state.reviews.id = action.payload.id;
-      state.reviews.data = action.payload.data; })
-    .addCase(ToggleLoadStatusNear, (state, action) => {
-      state.loadNearOf = action.payload; } )
-    .addCase(ToggleLoadStatusReview , (state, action) => {
-      state.loadReviews = action.payload; } );
+    .addCase(ChangeOffers, (s, a) => {
+      s.offers = { data: a.payload.data, loadStatus: a.payload.loadStatus}; })
+
+    .addCase(ChangeNearOffers, (s, a) => {
+      s.nearOffers = { id: a.payload.id, data: a.payload.data, loadStatus: a.payload.loadStatus}; })
+
+    .addCase(ChangeReviews, (s, a) => {
+      s.reviews = { id: a.payload.id, data: a.payload.data, loadStatus: a.payload.loadStatus }; });
 } );
 
 export { DataReducer };

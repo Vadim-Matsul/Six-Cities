@@ -1,11 +1,10 @@
 import { Offer } from '../../../types/offers';
 import { Review } from '../../../types/reviews';
-import { State } from '../../../types/state';
+import { CombineDataState, State } from '../../../types/state';
 import { ReducerNode } from '../root-reducer';
 
-export const getOffers = (state: State):Offer[] => state[ReducerNode.Data].offers ;
-export const getLoadStatus = (state: State):boolean => state[ReducerNode.Data].loadStatus ;
-export const getNearOffers = (state: State):Offer[] => state[ReducerNode.Data].nearOffers.data ;
-export const getReviews = (state: State):Review[] => state[ReducerNode.Data].reviews.data ;
-export const getActualId = (state: State) => [ state[ReducerNode.Data].nearOffers.id, state[ReducerNode.Data].reviews.id ] ;
-export const getActualStatus = (state: State) => [ state[ReducerNode.Data].loadNearOf, state[ReducerNode.Data].loadReviews ] ;
+export const getOffers = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].offers ;
+export const getNearOffers = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].nearOffers ;
+export const getReviews = (state: State):CombineDataState< Review > => state[ReducerNode.Data].reviews ;
+export const getActualId = (state: State) => [state[ReducerNode.Data].nearOffers.id, state[ReducerNode.Data].reviews.id ] ;
+export const getActualStatus = (state: State) => [state[ReducerNode.Data].nearOffers.loadStatus, state[ReducerNode.Data].reviews.loadStatus ] ;

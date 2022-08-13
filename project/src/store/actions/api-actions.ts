@@ -1,7 +1,7 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { ChangeOffersList, ChangeReviewsState, FetchNearOffers, RedirectToPath, RequireAuth, ToggleLoadStatusNear, ToggleLoadStatusReview } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
@@ -14,52 +14,57 @@ export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, Axios
 export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >
 export type AuthData = { email: string, password: string }
 
+const { Fulfilled, Rejected, Pending } = FetchProgress;
+
 const fetchOffers = ():ThunkActionResualt =>
   async (dispatch, _getState, api) => {
+    dispatch( ChangeOffers({data: [], loadStatus: Pending}) );
     await api.get<Offers>(APIRoute.Offers)
       .then(({data}) => {
-        dispatch(ChangeOffersList(data));
+        dispatch(ChangeOffers({data, loadStatus: Fulfilled}));
       })
       .catch((err: Error) => toast.warn(err.message) );
   };
 
 const fetchNearOffers = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    dispatch( ToggleLoadStatusNear(FetchProgress.Pending) );
-    await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
-      .then(({data}) => {
-        if (id !== getState().DATA.nearOffers.id){
-          dispatch( FetchNearOffers({id, data}) );
-          dispatch( ToggleLoadStatusNear(FetchProgress.Fulfilled) );
-        }
-      })
-      .catch((err) => {
-        toast.warn(err.message);
-        dispatch( ToggleLoadStatusNear(FetchProgress.Rejected) );
-      });
+    if (id !== getState().DATA.nearOffers.id){
+      dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
+      await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
+        .then(({data}) => {
+          dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) );
+        })
+        .catch((err) => {
+          toast.warn(err.message);
+          dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Rejected}));
+        });
+    }
   };
 
 const fetcnReviews = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    dispatch( ToggleLoadStatusReview(FetchProgress.Pending) );
-    await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
-      .then(({data}) => {
-        if (id !== getState().DATA.reviews.id){
-          dispatch( ChangeReviewsState({id, data}) );
-          dispatch( ToggleLoadStatusReview(FetchProgress.Fulfilled) );
-        }
-      })
-      .catch((err) => {
-        toast.warn(err.message);
-        dispatch( ToggleLoadStatusReview(FetchProgress.Rejected) );
-      });
+    if (id !== getState().DATA.reviews.id){
+      dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
+      await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
+        .then(({data}) => {
+          dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
+        })
+        .catch((err) => {
+          toast.warn(err.message);
+          dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
+        });
+    }
   };
 
 const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
   async (dispatch, getState, api) => {
+    dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
     await api.post< Review[] >( `${generatePath(APIRoute.PostReview, {'hotel_id' : id.toString()})}`,{ comment, rating } )
-      .then( ({data}) => dispatch( ChangeReviewsState({id, data}) ))
-      .catch((err) => Promise.reject(err));
+      .then( ({data}) => dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) ))
+      .catch((err) => {
+        dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
+        Promise.reject(err);
+      });
   };
 
 const checkAuth = ():ThunkActionResualt =>
