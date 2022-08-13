@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
+import { getFavorites, getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { Loader } from '../../components/loader/loader';
@@ -36,13 +36,14 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
 
   const nearOffers = useSelector( getNearOffers );
   const reviews = useSelector( getReviews );
+  const favorites = useSelector( getFavorites );
 
   useEffect(() => {
-    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer){
+    if ( favorites.loadStatus === FetchProgress.Pending || nearOffers.id !== numId && reviews.id !== numId && !NanOffer ){
       ( dispatch )( fetchNearOffers(numId) );
       ( dispatch )( fetcnReviews(numId) );
     }
-  },[numId, offers]);
+  },[numId, offers, favorites.loadStatus]);
 
 
   const authStatus = useSelector( getAuthStatus );
@@ -86,6 +87,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
                 <BookMarkButton
                   bookmarkClass={ BookMarkClass.Property }
                   isFavorite = { offer.isFavorite }
+                  id = { offer.id }
                 />
               </div>
 

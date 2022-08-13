@@ -5,6 +5,5 @@ import { ReducerNode } from '../root-reducer';
 
 export const getOffers = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].offers ;
 export const getNearOffers = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].nearOffers ;
+export const getFavorites = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].favorites ;
 export const getReviews = (state: State):CombineDataState< Review > => state[ReducerNode.Data].reviews ;
-export const getActualId = (state: State) => [state[ReducerNode.Data].nearOffers.id, state[ReducerNode.Data].reviews.id ] ;
-export const getActualStatus = (state: State) => [state[ReducerNode.Data].nearOffers.loadStatus, state[ReducerNode.Data].reviews.loadStatus ] ;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { HistoryRouter } from '../history-router/history-router';
 import { AppRoute, FetchProgress } from '../../const';
@@ -9,23 +9,25 @@ import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
-import { Offers } from '../../types/offers';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
-import { getOffers } from '../../store/reducer/data-reducer/selectors';
+import { getFavorites, getOffers } from '../../store/reducer/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
-import { useSelector } from 'react-redux';
-
-type AppProps = {
-  favoriteOffers: Offers
-}
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
 
 
-function App ( props:AppProps ):JSX.Element{
-  const { favoriteOffers } = props;
+function App ( ):JSX.Element{
 
+  const dispatch = useDispatch() as ThunkDispatchResualt ;
+
+  const favoriteOffers = useSelector( getFavorites );
   const offers = useSelector(getOffers);
   const authStatus = useSelector(getAuthStatus);
+
+  useEffect(() => {
+    favoriteOffers.loadStatus === FetchProgress.Idle && dispatch( fetchFavorites );
+  },[]);
 
   if (authStatus === AuthorizationStatus.UnKnown || offers.loadStatus !== FetchProgress.Fulfilled ){
     return <Loader />;
@@ -50,7 +52,7 @@ function App ( props:AppProps ):JSX.Element{
           path = { AppRoute.Favorites }
           element = {
             <PrivateRoute authorizationStatus={ authStatus }>
-              < FavoritesScreen offers = {favoriteOffers}/>
+              < FavoritesScreen offers = {favoriteOffers.data}/>
             </PrivateRoute>
           }
         />

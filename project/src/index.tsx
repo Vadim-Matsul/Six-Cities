@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { favoriteOffers } from './mocks/offers';
-import { Offers } from './types/offers';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { RootReducer } from './store/reducer/root-reducer';
@@ -30,9 +28,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        favoriteOffers = { favoriteOffers as Offers }
-      />
+      <App/>
     </Provider>
   </React.StrictMode>,
 );

@@ -14,7 +14,9 @@ export enum APIRoute {
   Logout = '/logout',
   GetNearOffers = '/hotels/:hotel_id/nearby',
   GetReviews = '/comments/:hotel_id',
-  PostReview = '/comments/:hotel_id'
+  PostReview = '/comments/:hotel_id',
+  GetFavorites = '/favorite',
+  PostFavorite = '/favorite/:hotel_id/:status'
 }
 
 export enum AuthorizationStatus {
@@ -45,6 +47,11 @@ export enum FetchProgress {
 export const HTTPConfig = {
   UnAuth: 'Unauthorized',
   BadRequest: 'Bad Request',
+};
+
+export const FavoritesConfig = {
+  add: '1',
+  remove: '0'
 };
 
 export const SortTypes = {

@@ -12,6 +12,7 @@ type CombineDataState<Type> = {
 
 type DataState = {
   offers: CombineDataState<Offer>,
+  favorites: CombineDataState<Offer>,
   nearOffers: CombineDataState<Offer>,
   reviews: CombineDataState<Review>,
 }

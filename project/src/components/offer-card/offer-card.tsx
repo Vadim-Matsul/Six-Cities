@@ -55,6 +55,7 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
           <BookMarkButton
             bookmarkClass = { BookMarkClass.OfferCard }
             isFavorite = { offer.isFavorite }
+            id = { offer.id }
           />
         </div>
         <div className='place-card__rating rating'>

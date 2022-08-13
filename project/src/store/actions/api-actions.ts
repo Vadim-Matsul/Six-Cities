@@ -1,9 +1,9 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
-import { Offers } from '../../types/offers';
+import { Offer, Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
 import { Action } from 'redux';
 import {generatePath} from 'react-router-dom';
@@ -23,22 +23,20 @@ const fetchOffers = ():ThunkActionResualt =>
       .then(({data}) => {
         dispatch(ChangeOffers({data, loadStatus: Fulfilled}));
       })
-      .catch((err: Error) => toast.warn(err.message) );
+      .catch((err: Error) => toast.error(err.message) );
   };
 
 const fetchNearOffers = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    if (id !== getState().DATA.nearOffers.id){
-      dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
-      await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
-        .then(({data}) => {
-          dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) );
-        })
-        .catch((err) => {
-          toast.warn(err.message);
-          dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Rejected}));
-        });
-    }
+    dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
+    await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
+      .then(({data}) => {
+        dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) );
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Rejected}));
+      });
   };
 
 const fetcnReviews = (id: number):ThunkActionResualt =>
@@ -50,7 +48,7 @@ const fetcnReviews = (id: number):ThunkActionResualt =>
           dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
         })
         .catch((err) => {
-          toast.warn(err.message);
+          toast.error(err.message);
           dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
         });
     }
@@ -64,6 +62,34 @@ const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
       .catch((err) => {
         dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
         Promise.reject(err);
+      });
+  };
+
+const fetchFavorites = ():ThunkActionResualt =>
+  async (dispatch, getState, api) => {
+    dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }));
+    await api.get< Offers >(APIRoute.GetFavorites)
+      .then( ({data}) => dispatch(ChangeFavorites({data, loadStatus: Fulfilled })) )
+      .catch((err) => {
+        toast.error(err);
+        dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Rejected }));
+      });
+  };
+
+const postFavorites = (id: string, status: string):ThunkActionResualt =>
+  async (dispatch, getState, api) => {
+    dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }) );
+    await api.post< Offer >(`${generatePath(APIRoute.PostFavorite, {'hotel_id':id, 'status':status})}`)
+      .then(({data}) => {
+        const offers = getState().DATA.offers.data ;
+        const index = offers.findIndex((offer) => offer.id === data.id) ;
+        const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
+        dispatch( ChangeOffers({...getState().DATA.offers, data: actualArr}) ) ;
+        dispatch( ChangeFavorites({data:actualArr.filter((offer) => offer.isFavorite), loadStatus: Fulfilled}) ) ;
+      })
+      .catch((err) => {
+        toast.error(err);
+        dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Rejected }) );
       });
   };
 
@@ -92,6 +118,8 @@ const logoutSession = ():ThunkActionResualt =>
 
 export {
   fetchOffers,
+  fetchFavorites,
+  postFavorites,
   checkAuth,
   loginSession,
   logoutSession,
