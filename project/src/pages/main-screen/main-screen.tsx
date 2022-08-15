@@ -31,6 +31,7 @@ function MainScreen ({ offers }: MainScreenProps):JSX.Element{
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];
 
+
   return (
     <div className='page page--gray page--main'>
       <Header />

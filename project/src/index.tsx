@@ -7,7 +7,7 @@ import { RootReducer } from './store/reducer/root-reducer';
 import { ToastContainer } from 'react-toastify';
 import { CreateApi } from './service/api/api';
 import thunk from 'redux-thunk';
-import { checkAuth, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
+import { checkAuth, fetchFavorites, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import { redirect } from './store/middlewares/redirect';
 
@@ -23,6 +23,7 @@ const store = configureStore({
 
 (store.dispatch as ThunkDispatchResualt)( checkAuth() );
 (store.dispatch as ThunkDispatchResualt)( fetchOffers() );
+(store.dispatch as ThunkDispatchResualt)( fetchFavorites() );
 
 root.render(
   <React.StrictMode>

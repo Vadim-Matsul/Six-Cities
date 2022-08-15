@@ -35,15 +35,20 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const dispatch = useDispatch() as ThunkDispatchResualt;
 
   const nearOffers = useSelector( getNearOffers );
+
   const reviews = useSelector( getReviews );
   const favorites = useSelector( getFavorites );
 
   useEffect(() => {
-    if ( favorites.loadStatus === FetchProgress.Pending || nearOffers.id !== numId && reviews.id !== numId && !NanOffer ){
+    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer ){
       ( dispatch )( fetchNearOffers(numId) );
       ( dispatch )( fetcnReviews(numId) );
     }
-  },[numId, offers, favorites.loadStatus]);
+  },[numId, offers]);
+
+  useEffect(() => {
+    ( dispatch )( fetchNearOffers(numId) );
+  },[favorites.data]);
 
 
   const authStatus = useSelector( getAuthStatus );

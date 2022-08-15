@@ -37,6 +37,16 @@ export const getFormateDate = ( date: string):string => {
   return `${year} ${Months[month]}`;
 };
 
+export const clearSession = (offers: Offers):Offers => {
+  const notElected:Offers = [] ;
+  const actualOffers:Offers = JSON.parse( JSON.stringify(offers) ) ;
+  actualOffers.forEach((offer) => {
+    if ( offer.isFavorite ){ offer.isFavorite = false; }
+    notElected.push(offer);
+  });
+  return notElected ;
+};
+
 export const SORT = {
   [SortTypes.POPULAR]: (offers: Offers):Offer[] => offers.slice().sort(),
   [SortTypes.PRICE_HIGH_TO_LOW]: (offers: Offers):Offer[] => offers.slice().sort( (a,b) => b['price'] - a['price'] ),

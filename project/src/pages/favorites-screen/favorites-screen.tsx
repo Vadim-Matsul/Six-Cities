@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
 import Header from '../../components/header/header';
-import { Offers } from '../../types/offers';
 import EmptyFavoritesScreen from '../empty-favorites-screen/empty-favorites-screen';
+import { useSelector, useDispatch } from 'react-redux';
+import { getFavorites } from '../../store/reducer/data-reducer/selectors';
+import { FetchProgress } from '../../const';
+import { fetchFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { Loader } from '../../components/loader/loader';
 
-type FavoritesPageProps = {
-  offers: Offers
-}
 
-function FavoritesScreen ({offers}:FavoritesPageProps):JSX.Element{
+function FavoritesScreen ():JSX.Element{
+
+  const dispatch = useDispatch() as ThunkDispatchResualt;
+  const favorites = useSelector( getFavorites );
+
+  useEffect(() => {
+    if (favorites.loadStatus === FetchProgress.Idle){
+      dispatch( fetchFavorites() );
+    }
+  },[favorites.loadStatus]);
+
+  if (favorites.loadStatus !== FetchProgress.Fulfilled && !favorites.data ){
+    return <Loader />;
+  }
 
   return (
     <div
-      className={`page ${offers.length ? '' : 'page--favorites-empty'}`}
+      className={`page ${favorites.data.length ? '' : 'page--favorites-empty'}`}
     >
       <Header />
       <main
-        className={`page__main page__main--favorites ${offers.length ? '' : 'page__main--favorites-empty'}`}
+        className={`page__main page__main--favorites ${favorites.data.length ? '' : 'page__main--favorites-empty'}`}
       >
         <div className='page__favorites-container container'>
-          { offers.length
+          { favorites.data.length
             ?
             <section className='favorites'>
               <h1 className='favorites__title'>Saved listing</h1>
               <ul className='favorites__list'>
-                <FavoriteOffersList offers = {offers}/>
+                <FavoriteOffersList offers = {favorites.data}/>
               </ul>
             </section>
             : <EmptyFavoritesScreen /> };

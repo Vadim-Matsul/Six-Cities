@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { HistoryRouter } from '../history-router/history-router';
 import { AppRoute, FetchProgress } from '../../const';
@@ -11,23 +11,15 @@ import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Loader } from '../loader/loader';
 import { browserHistory } from '../../browser-history';
-import { getFavorites, getOffers } from '../../store/reducer/data-reducer/selectors';
+import { getOffers } from '../../store/reducer/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { useSelector } from 'react-redux';
 
 
 function App ( ):JSX.Element{
 
-  const dispatch = useDispatch() as ThunkDispatchResualt ;
-
-  const favoriteOffers = useSelector( getFavorites );
   const offers = useSelector(getOffers);
   const authStatus = useSelector(getAuthStatus);
-
-  useEffect(() => {
-    favoriteOffers.loadStatus === FetchProgress.Idle && dispatch( fetchFavorites );
-  },[]);
 
   if (authStatus === AuthorizationStatus.UnKnown || offers.loadStatus !== FetchProgress.Fulfilled ){
     return <Loader />;
@@ -52,7 +44,7 @@ function App ( ):JSX.Element{
           path = { AppRoute.Favorites }
           element = {
             <PrivateRoute authorizationStatus={ authStatus }>
-              < FavoritesScreen offers = {favoriteOffers.data}/>
+              < FavoritesScreen />
             </PrivateRoute>
           }
         />
