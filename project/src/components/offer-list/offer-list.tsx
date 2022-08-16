@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fragment } from 'react';
 import { Offers } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
@@ -25,4 +26,4 @@ function OfferList ( {offers, cardClass, setSelectedOffer}:OfferListProps ):JSX.
 }
 
 
-export default OfferList;
+export default React.memo(OfferList,(prevProps, nextProps) => prevProps.offers === nextProps.offers);

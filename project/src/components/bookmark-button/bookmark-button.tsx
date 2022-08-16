@@ -1,4 +1,4 @@
-import { AppRoute, AuthorizationStatus, BookMarkClass, FavoritesConfig, PropertySize } from '../../const';
+import { AppRoute, AuthorizationStatus, BookMarkClass, PropertySize } from '../../const';
 import { useDispatch, useSelector } from 'react-redux';
 import { postFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
@@ -23,8 +23,7 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
       type='button'
       onClick={ () => {
         authStatus === AuthorizationStatus.NoAuth && dispatch(RedirectToPath( AppRoute.Auth ));
-        const Status = isFavorite ? FavoritesConfig.remove : FavoritesConfig.add;
-        dispatch( postFavorites( id.toString(), Status ) );
+        dispatch( postFavorites( id.toString(), !isFavorite ) );
       }}
     >
       <svg className={`${ bookmarkClass }__bookmark-icon`} width={svgSize.width} height={svgSize.height}>

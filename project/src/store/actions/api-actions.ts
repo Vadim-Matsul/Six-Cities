@@ -2,7 +2,7 @@ import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from '../../types/state';
 import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites } from './actions';
-import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
+import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { Offer, Offers } from '../../types/offers';
 import { dropToken, saveToken, Token } from '../../service/token/token';
 import { Action } from 'redux';
@@ -83,13 +83,16 @@ const fetchFavorites = ():ThunkActionResualt =>
     }
   };
 
-const postFavorites = (id: string, status: string):ThunkActionResualt =>
+const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   async (dispatch, getState, api) => {
     if (getState().USER.authStatus === AuthorizationStatus.NoAuth){
       toast.info('Вам необходимо авторизоваться'); return;
     }
     dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }) );
-    await api.post< Offer >(`${generatePath(APIRoute.PostFavorite, {'hotel_id':id, 'status':status})}`)
+    await api.post< Offer >(`${generatePath(APIRoute.PostFavorite, {
+      'hotel_id':id,
+      'status': status ? FavoritesConfig.add : FavoritesConfig.remove
+    })}`)
       .then(({data}) => {
         const offers = getState().DATA.offers.data ;
         const index = offers.findIndex((offer) => offer.id === data.id) ;
