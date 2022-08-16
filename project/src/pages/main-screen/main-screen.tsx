@@ -1,33 +1,22 @@
 import OfferList from '../../components/offer-list/offer-list';
-import { Offer, Offers } from '../../types/offers';
+import { Offers } from '../../types/offers';
 import {CardPageClass, GeoCity} from '../../const';
 import Map from '../../components/map/map';
 import LocationList from '../../components/location-list/location-list';
 import NoPlacesScreen from '../no-places-screen/no-places-screen';
 import SortForm from '../../components/sort-form/sort-form';
-import { SORT } from '../../utils/utils';
 import useHighlighted from '../../hooks/useHighlighted';
 import Header from '../../components/header/header';
-import { useMemo } from 'react';
-import { getCurrentCity, getCurrentSort } from '../../store/reducer/logic-reducer/selectors';
+import { getCurrentCity, getCurrentSort, getSortedOffers } from '../../store/reducer/logic-reducer/selectors';
 import { useSelector } from 'react-redux';
 
-type MainScreenProps = {
-  offers: Offers
-}
 
-function getOffersOfCity (uniqueCity: string, offers: Offers): Offer[] {
-  return offers.filter((offer) => offer.city.name === uniqueCity );
-}
-
-
-function MainScreen ({ offers }: MainScreenProps):JSX.Element{
+function MainScreen ( ):JSX.Element{
 
   const currentCity = useSelector( getCurrentCity );
   const currentSort = useSelector( getCurrentSort );
 
-  const offersOfCity = useMemo(() => getOffersOfCity(currentCity, offers),[offers,currentCity]);
-  const sortedOffers = SORT[currentSort](offersOfCity);
+  const offersOfCity = useSelector( getSortedOffers );
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];
 
@@ -50,7 +39,7 @@ function MainScreen ({ offers }: MainScreenProps):JSX.Element{
                 <SortForm currentSort={ currentSort } currentCity = { currentCity }/>
                 <div className='cities__places-list places__list tabs__content'>
                   <OfferList
-                    offers = { sortedOffers }
+                    offers = { offersOfCity }
                     cardClass = { CardPageClass.Main }
                     setSelectedOffer = {setSelectedOffer}
                   />

@@ -30,7 +30,7 @@ function App ( ):JSX.Element{
       <Routes>
         <Route
           path = { AppRoute.Main }
-          element = { < MainScreen offers = {offers.data}/>}
+          element = { < MainScreen/>}
         />
         <Route
           path = { AppRoute.Auth }
