@@ -1,6 +1,8 @@
-import { BookMarkClass, FavoritesConfig, PropertySize } from '../../const';
-import { useDispatch } from 'react-redux';
+import { AppRoute, AuthorizationStatus, BookMarkClass, FavoritesConfig, PropertySize } from '../../const';
+import { useDispatch, useSelector } from 'react-redux';
 import { postFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
+import { RedirectToPath } from '../../store/actions/actions';
 
 type BookMarkButtonProps = {
   bookmarkClass: BookMarkClass
@@ -12,6 +14,7 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
 
   const dispatch = useDispatch() as ThunkDispatchResualt ;
 
+  const authStatus = useSelector( getAuthStatus );
   const svgSize = bookmarkClass === BookMarkClass.OfferCard ? PropertySize.Small : PropertySize.Big;
 
   return (
@@ -19,6 +22,7 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
       className = {`${ bookmarkClass }__bookmark-button button ${ isFavorite ? `${ bookmarkClass }__bookmark-button--active` : '' }`}
       type='button'
       onClick={ () => {
+        authStatus === AuthorizationStatus.NoAuth && dispatch(RedirectToPath( AppRoute.Auth ));
         const Status = isFavorite ? FavoritesConfig.remove : FavoritesConfig.add;
         dispatch( postFavorites( id.toString(), Status ) );
       }}

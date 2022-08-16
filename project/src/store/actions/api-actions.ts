@@ -29,10 +29,10 @@ const fetchOffers = ():ThunkActionResualt =>
 
 const fetchNearOffers = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
+    getState().DATA.nearOffers.loadStatus !== Pending && dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
     await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
       .then(({data}) => {
-        if (data){
+        if (data && getState().DATA.nearOffers.loadStatus !== Fulfilled ){
           dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) );
         }
       })
@@ -45,10 +45,10 @@ const fetchNearOffers = (id: number):ThunkActionResualt =>
 const fetcnReviews = (id: number):ThunkActionResualt =>
   async (dispatch, getState, api) => {
     if (id !== getState().DATA.reviews.id){
-      dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
+      getState().DATA.reviews.loadStatus !== Pending && dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
       await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
         .then(({data}) => {
-          dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
+          getState().DATA.reviews.loadStatus !== Fulfilled && dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
         })
         .catch((err) => {
           toast.error(err.message);
@@ -71,9 +71,11 @@ const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
 const fetchFavorites = ():ThunkActionResualt =>
   async (dispatch, getState, api) => {
     if (getState().USER.authStatus === AuthorizationStatus.Auth ){
-      dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }));
+      getState().DATA.favorites.loadStatus !== Pending && dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }));
       await api.get< Offers >(APIRoute.GetFavorites)
-        .then( ({data}) => dispatch(ChangeFavorites({data, loadStatus: Fulfilled })) )
+        .then( ({data}) => {
+          getState().DATA.favorites.loadStatus !== Fulfilled && dispatch(ChangeFavorites({data, loadStatus: Fulfilled }));
+        })
         .catch((err) => {
           toast.error(err);
           dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Rejected }));

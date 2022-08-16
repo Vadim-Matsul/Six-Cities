@@ -1,13 +1,19 @@
 import React, { ChangeEvent, FormEvent, RefObject, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
+import { ChangeCurrentCity } from '../../store/actions/actions';
 import { AuthData, loginSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { getRandomCity } from '../../utils/utils';
 
 
 function AuthScreen ():JSX.Element {
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const loginRef:RefObject<HTMLInputElement> = useRef(null);
   const passwordRef:RefObject<HTMLInputElement> = useRef(null);
+
+  const randomCity = getRandomCity();
 
   function handlerSubmit (event: FormEvent<HTMLFormElement>){
     event.preventDefault();
@@ -76,9 +82,13 @@ function AuthScreen ():JSX.Element {
           </section>
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
-              <a className='locations__item-link' href='/'>
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className='locations__item-link'
+                to={ AppRoute.Main }
+                onClick={ () => dispatch(ChangeCurrentCity(randomCity)) }
+              >
+                <span>{ randomCity }</span>
+              </Link>
             </div>
           </section>
         </div>

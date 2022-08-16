@@ -1,5 +1,5 @@
 import { Offer, Offers } from '../types/offers';
-import { Months, SortTypes } from '../const';
+import { GeoCity, Months, SortTypes } from '../const';
 
 const RAITING_COUNT = 20;
 const FIRST_LETTER = 0;
@@ -45,6 +45,18 @@ export const clearSession = (offers: Offers):Offers => {
     notElected.push(offer);
   });
   return notElected ;
+};
+
+const getRandomNumber = (min:number, max:number):number => {
+  const lower = Math.ceil(Math.min(min,max));
+  const upper = Math.floor(Math.max(min,max));
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+};
+
+export const getRandomCity = ():string => {
+  const CitiesArr = Object.keys(GeoCity);
+  const integer = getRandomNumber(0, CitiesArr.length - 1);
+  return CitiesArr[integer];
 };
 
 export const SORT = {
