@@ -13,10 +13,11 @@ import { useSelector } from 'react-redux';
 
 function MainScreen ( ):JSX.Element{
 
+
   const currentCity = useSelector( getCurrentCity );
   const currentSort = useSelector( getCurrentSort );
-
   const offersOfCity = useSelector( getSortedOffers );
+
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];
 

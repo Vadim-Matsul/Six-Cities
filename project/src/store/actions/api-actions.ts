@@ -1,10 +1,10 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
-import { State } from '../../types/state';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites } from './actions';
+import { State, User } from '../../types/state';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { Offer, Offers } from '../../types/offers';
-import { dropToken, saveToken, Token } from '../../service/token/token';
+import { dropToken, saveToken } from '../../service/token/token';
 import { Action } from 'redux';
 import {generatePath} from 'react-router-dom';
 import { Review, ReviewState } from '../../types/reviews';
@@ -107,19 +107,25 @@ const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   };
 
 const checkAuth = ():ThunkActionResualt =>
-  async (dispatch, _getState, api) => {
+  async (dispatch, getState, api) => {
     await api.get(APIRoute.Login)
       .then(
-        () => dispatch(RequireAuth(AuthorizationStatus.Auth)),
-        () => dispatch(RequireAuth(AuthorizationStatus.NoAuth)) );
+        (response) => {
+          if (response && response.data && getState().USER.authStatus !== AuthorizationStatus.Auth){
+            dispatch(RequireAuth(AuthorizationStatus.Auth));
+            dispatch(SetUser(response.data) );
+          }
+        },
+        (err) => dispatch(RequireAuth(AuthorizationStatus.NoAuth)) );
   };
 
 const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
-    const {data:{token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<User>(APIRoute.Login, {email, password});
+    saveToken(data.token);
     dispatch(RequireAuth(AuthorizationStatus.Auth));
     dispatch(RedirectToPath(AppRoute.Main));
+    dispatch(SetUser(data));
   };
 
 const logoutSession = ():ThunkActionResualt =>
@@ -130,6 +136,7 @@ const logoutSession = ():ThunkActionResualt =>
     dispatch(ChangeOffers({data: notElectedArr, loadStatus: Fulfilled}) );
     dispatch(ChangeFavorites({data: [], loadStatus: Idle }) );
     dispatch(RequireAuth(AuthorizationStatus.NoAuth) );
+    dispatch(SetUser(null) );
   };
 
 export {

@@ -4,6 +4,15 @@ import { Offer, Offers } from './offers';
 import { Review, Reviews } from './reviews';
 import { FetchProgress } from '../const';
 
+type User = {
+  avatarUrl: string,
+  email: string,
+  id: number,
+  isPro: boolean,
+  name: string,
+  token: string
+}
+
 type CombineDataState<Type> = {
   id?: number | null,
   data: Type[],
@@ -23,9 +32,10 @@ type LogicState = {
 }
 
 type UserState = {
-  authStatus: AuthorizationStatus
+  authStatus: AuthorizationStatus,
+  user: User | null
 }
 
 type State = RootReducerState
 
-export type { State, DataState, LogicState, UserState, CombineDataState };
+export type { State, DataState, LogicState, UserState, CombineDataState, User };

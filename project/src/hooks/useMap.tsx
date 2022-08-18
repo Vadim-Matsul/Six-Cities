@@ -12,6 +12,8 @@ export default function useMap ( mapRef:MutableRefObject<HTMLElement | null>, ci
     if ( mapRef !== null && !mapRendering.current){
 
       const localMap = L.map( mapRef.current! ).setView([city.location.latitude, city.location.longitude],city.location.zoom);
+      const mapEnable = () => localMap.scrollWheelZoom.enable();
+      const mapDisable = () => localMap.scrollWheelZoom.disable();
 
       const Light = new TileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
         attribution: copyPaste
@@ -21,8 +23,8 @@ export default function useMap ( mapRef:MutableRefObject<HTMLElement | null>, ci
         attribution: copyPaste
       });
       localMap.scrollWheelZoom.disable();
-      localMap.addEventListener('click', () => localMap.scrollWheelZoom.enable() );
-      localMap.addEventListener('mouseout', () => localMap.scrollWheelZoom.disable() );
+      localMap.addEventListener('click', mapEnable );
+      localMap.addEventListener('mouseout', mapDisable );
 
       L.control.layers( { 'Day':Light, 'Night':Dark } ).addTo(localMap);
       setMap(localMap);
