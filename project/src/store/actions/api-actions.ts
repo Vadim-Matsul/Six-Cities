@@ -1,21 +1,23 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { AxiosInstance } from 'axios';
-import { State, User } from '../../types/state';
 import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
-import { Offer, Offers } from '../../types/offers';
 import { dropToken, saveToken } from '../../service/token/token';
-import { Action } from 'redux';
-import {generatePath} from 'react-router-dom';
 import { Review, ReviewState } from '../../types/reviews';
-import { toast } from 'react-toastify';
+import { Offer, Offers } from '../../types/offers';
 import { clearSession } from '../../utils/utils';
+import { State, User } from '../../types/state';
+import { generatePath } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { AxiosInstance } from 'axios';
+import { Action } from 'redux';
 
 export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Action>
 export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >
 export type AuthData = { email: string, password: string }
 
 const { Fulfilled, Rejected, Pending, Idle} = FetchProgress;
+const { Auth, NoAuth } = AuthorizationStatus;
+
 
 const fetchOffers = ():ThunkActionResualt =>
   async (dispatch, _getState, api) => {
@@ -70,7 +72,7 @@ const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
 
 const fetchFavorites = ():ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    if (getState().USER.authStatus === AuthorizationStatus.Auth ){
+    if (getState().USER.authStatus === Auth ){
       getState().DATA.favorites.loadStatus !== Pending && dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }));
       await api.get< Offers >(APIRoute.GetFavorites)
         .then( ({data}) => {
@@ -85,7 +87,7 @@ const fetchFavorites = ():ThunkActionResualt =>
 
 const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    if (getState().USER.authStatus === AuthorizationStatus.NoAuth){
+    if (getState().USER.authStatus === NoAuth){
       toast.info('Вам необходимо авторизоваться'); return;
     }
     dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }) );
@@ -111,31 +113,31 @@ const checkAuth = ():ThunkActionResualt =>
     await api.get(APIRoute.Login)
       .then(
         (response) => {
-          if (response && response.data && getState().USER.authStatus !== AuthorizationStatus.Auth){
-            dispatch(RequireAuth(AuthorizationStatus.Auth));
+          if (response && response.data && getState().USER.authStatus !== Auth){
+            dispatch(RequireAuth(Auth));
             dispatch(SetUser(response.data) );
           }
         },
-        (err) => dispatch(RequireAuth(AuthorizationStatus.NoAuth)) );
+        (err) => dispatch(RequireAuth(NoAuth)) );
   };
 
 const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
     const {data} = await api.post<User>(APIRoute.Login, {email, password});
     saveToken(data.token);
-    dispatch(RequireAuth(AuthorizationStatus.Auth));
+    dispatch(RequireAuth(Auth));
     dispatch(RedirectToPath(AppRoute.Main));
     dispatch(SetUser(data));
   };
 
-const logoutSession = ():ThunkActionResualt =>
+const logoutSession = ():ThunkActionResualt<void> =>
   async (dispatch, getState, api) => {
     await api.delete(APIRoute.Logout);
     dropToken();
     const notElectedArr = clearSession(getState().DATA.offers.data);
     dispatch(ChangeOffers({data: notElectedArr, loadStatus: Fulfilled}) );
     dispatch(ChangeFavorites({data: [], loadStatus: Idle }) );
-    dispatch(RequireAuth(AuthorizationStatus.NoAuth) );
+    dispatch(RequireAuth(NoAuth) );
     dispatch(SetUser(null) );
   };
 

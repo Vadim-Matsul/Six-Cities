@@ -1,5 +1,6 @@
 import { Offer, Offers } from "../types/offers";
 import  { internet, datatype, address, image, name, database, commerce } from 'faker';
+import { User } from "../types/state";
 
 export const makeFakeOffer = ():Offer => {
 return {
@@ -49,3 +50,12 @@ export const makeFakeOffers = ():Offers => {
 
   return offersArray;
 }
+
+export const makeFakeUser = ():User => ({
+  avatarUrl: internet.avatar(),
+  id: datatype.number(100),
+  isPro: datatype.boolean(),
+  name: internet.userName(),
+  email: internet.email(),
+  token: datatype.string()
+})

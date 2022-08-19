@@ -3,7 +3,7 @@ import { INITIAL_CURRENT_CITY, SortTypes } from '../../../const';
 import { LogicState } from '../../../types/state';
 import { ChangeCurrentCity, ChangeCurrentSort } from '../../actions/actions';
 
-const initialState:LogicState = {
+export const initialState:LogicState = {
   currentCity: INITIAL_CURRENT_CITY,
   currentSort: SortTypes.POPULAR
 };

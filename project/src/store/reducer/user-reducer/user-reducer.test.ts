@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../../../const';
-import { RequireAuth } from '../../actions/actions';
+import { makeFakeUser } from '../../../utils/mock';
+import { RequireAuth, SetUser } from '../../actions/actions';
 import { UserReducer, initialState } from './user-reducer';
 
 describe('Reducer: UserReducer', () => {
@@ -15,10 +16,39 @@ describe('Reducer: UserReducer', () => {
         .toEqual({...initialState, authStatus: AuthorizationStatus.NoAuth});
     });
 
-    it('should update authStatus to "UNKNOWN"',() => {
-      expect(UserReducer(initialState, RequireAuth(AuthorizationStatus.UnKnown)))
-        .toEqual({...initialState, authStatus: AuthorizationStatus.UnKnown});
+  });
+
+  describe('Reducer: user',() => {
+    it('the user field should be cleared',() => {
+      const fakeUser = makeFakeUser();
+      const userState = {
+        authStatus: AuthorizationStatus.Auth,
+        user: fakeUser
+      }
+      expect(UserReducer(userState, SetUser(null)))
+        .toEqual({...userState, user: null});
     });
+
+    it('the user field should be full',() => {
+      const fakeUser = makeFakeUser();
+      const userState = {
+        authStatus: AuthorizationStatus.NoAuth,
+        user: null
+      }
+      expect(UserReducer(userState, SetUser(fakeUser)))
+        .toEqual({...userState, user: fakeUser})
+    });
+
+  });
+
+  describe('Reducer: UnKnown',() => {
+
+    it('UserReducer state hasn`t changed by reason of unknown action',() => {
+      const UNKNOWN_ACTION = { type:'UNKNOWN_ACTION' };
+      expect(UserReducer(void 0, UNKNOWN_ACTION))
+        .toEqual({...initialState})        
+    });
+
   });
 
 });
