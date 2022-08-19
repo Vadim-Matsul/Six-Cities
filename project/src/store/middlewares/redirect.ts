@@ -1,5 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import { browserHistory } from '../../browser-history';
+import browserHistory from '../../browser-history';
 import { State } from '../../types/state';
 import { ActionsType } from '../actions/actions';
 import { Dispatch } from 'redux';

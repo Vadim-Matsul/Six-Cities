@@ -5,7 +5,7 @@ import { City, Offer, Offers } from '../../types/offers';
 import { Icon, Marker} from 'leaflet';
 import { AppRoute, IconMarkerSize, IconMarkerUrl } from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { browserHistory } from '../../browser-history';
+import browserHistory from '../../browser-history';
 
 type MapProps = {
   offers: Offers,

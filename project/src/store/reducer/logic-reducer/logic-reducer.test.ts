@@ -17,6 +17,8 @@ describe('Reducer: LogicReducer', () => {
       const UNKNOWN_ACTION = { type:'UNKNOWN_ACTION' };
       expect(LogicReducer(void 0, UNKNOWN_ACTION))
         .toEqual({...initialState});
+      expect(LogicReducer(initialState, UNKNOWN_ACTION))
+        .toEqual({...initialState});
     });
 
 });

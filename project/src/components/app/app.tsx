@@ -10,7 +10,7 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/Private-Route';
 import { AuthorizationStatus } from '../../const';
 import { Loader } from '../loader/loader';
-import { browserHistory } from '../../browser-history';
+import browserHistory from '../../browser-history';
 import { getOffers } from '../../store/reducer/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { useSelector } from 'react-redux';
