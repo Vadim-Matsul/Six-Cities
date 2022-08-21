@@ -26,7 +26,10 @@ const fetchOffers = ():ThunkActionResualt =>
       .then(({data}) => {
         dispatch(ChangeOffers({data, loadStatus: Fulfilled}));
       })
-      .catch((err: Error) => toast.error(err.message) );
+      .catch((err: Error) => {
+        toast.error(err.message)
+        dispatch(ChangeOffers({data: [], loadStatus: Rejected}));
+      });
   };
 
 const fetchNearOffers = (id: number):ThunkActionResualt =>
@@ -77,8 +80,8 @@ const fetchFavorites = ():ThunkActionResualt =>
       .then( ({data}) => {
         dispatch(ChangeFavorites({data, loadStatus: Fulfilled }));
       })
-      .catch((err) => {
-        toast.error(err);
+      .catch((err: Error) => {
+        toast.error(err.message);
         dispatch(ChangeFavorites({data: [], loadStatus: Rejected }));
       });
   };

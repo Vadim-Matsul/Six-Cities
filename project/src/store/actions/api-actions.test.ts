@@ -1,11 +1,11 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { CreateApi } from '../../service/api/api';
-import { checkAuth, fetchFavorites, ThunkDispatchResualt } from './api-actions';
+import { checkAuth, fetchFavorites, fetchOffers, ThunkDispatchResualt } from './api-actions';
 import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { makeFakeOffers, makeFakeUser } from '../../utils/mock';
-import { ChangeFavorites, RequireAuth, SetUser } from './actions';
+import { ChangeFavorites, ChangeOffers, RequireAuth, SetUser } from './actions';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 
@@ -83,6 +83,35 @@ describe("Middleware: Thunk", () => {
         ChangeFavorites({data: [], loadStatus: Rejected })
       ]);
 
+    });
+
+  });
+
+  describe('Async: fetchOffers', () => {
+
+    it ('should set offers data & change load-flag when server return 200', async () => {
+      const fakeOffers = makeFakeOffers();
+      fakeAPI
+        .onGet(APIRoute.Offers)
+        .reply(200, fakeOffers);
+      expect(store.getActions()).toEqual( [] );
+      await store.dispatch( fetchOffers() );
+      expect(store.getActions()).toEqual([
+        ChangeOffers({data: [], loadStatus: Pending}),
+        ChangeOffers({data: fakeOffers, loadStatus: Fulfilled})
+      ]);
+    });
+
+    it('should set load-flag to "Rejected" when server return 4**', async () => {
+      fakeAPI
+        .onGet(APIRoute.Offers)
+        .reply( 400 );
+      expect(store.getActions()).toEqual([]);
+      await store.dispatch( fetchOffers() );
+      expect(store.getActions()).toEqual([
+        ChangeOffers({data:[], loadStatus: Pending}),
+        ChangeOffers({data:[], loadStatus: Rejected})
+      ]);
     });
 
   });
