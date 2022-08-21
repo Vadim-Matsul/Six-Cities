@@ -71,18 +71,16 @@ const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
   };
 
 const fetchFavorites = ():ThunkActionResualt =>
-  async (dispatch, getState, api) => {
-    if (getState().USER.authStatus === Auth ){
-      getState().DATA.favorites.loadStatus !== Pending && dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }));
-      await api.get< Offers >(APIRoute.GetFavorites)
-        .then( ({data}) => {
-          getState().DATA.favorites.loadStatus !== Fulfilled && dispatch(ChangeFavorites({data, loadStatus: Fulfilled }));
-        })
-        .catch((err) => {
-          toast.error(err);
-          dispatch(ChangeFavorites({...getState().DATA.favorites, loadStatus: Rejected }));
-        });
-    }
+  async (dispatch, _getState, api) => {
+    dispatch(ChangeFavorites({data: [], loadStatus: Pending }));
+    await api.get< Offers >(APIRoute.GetFavorites)
+      .then( ({data}) => {
+        dispatch(ChangeFavorites({data, loadStatus: Fulfilled }));
+      })
+      .catch((err) => {
+        toast.error(err);
+        dispatch(ChangeFavorites({data: [], loadStatus: Rejected }));
+      });
   };
 
 const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
@@ -109,11 +107,11 @@ const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   };
 
 const checkAuth = ():ThunkActionResualt =>
-  async (dispatch, getState, api) => {
+  async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
       .then(
         (response) => {
-          if (response && response.data && getState().USER.authStatus !== Auth){
+          if (response && response.data){
             dispatch(RequireAuth(Auth));
             dispatch(SetUser(response.data) );
           }
@@ -143,12 +141,14 @@ const logoutSession = ():ThunkActionResualt<void> =>
 
 export {
   fetchOffers,
-  fetchFavorites,
   postFavorites,
   checkAuth,
   loginSession,
   logoutSession,
   fetchNearOffers,
+  fetchFavorites,
   fetcnReviews,
   postReview
 };
+
+

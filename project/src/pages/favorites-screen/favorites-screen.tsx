@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
 import Header from '../../components/header/header';
 import EmptyFavoritesScreen from '../empty-favorites-screen/empty-favorites-screen';
@@ -10,17 +10,18 @@ import { Loader } from '../../components/loader/loader';
 
 
 function FavoritesScreen ():JSX.Element{
-
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const favorites = useSelector( getFavorites );
+  const plug:MutableRefObject<boolean> = useRef(false);
 
   useEffect(() => {
-    if (favorites.loadStatus === FetchProgress.Idle){
+    if (!plug.current){
+      plug.current = true;
       dispatch( fetchFavorites() );
     }
-  },[favorites.loadStatus]);
+  },[]);
 
-  if (favorites.loadStatus !== FetchProgress.Fulfilled && !favorites.data ){
+  if (favorites.loadStatus !== FetchProgress.Fulfilled && !favorites.data.length ){
     return <Loader />;
   }
 
@@ -54,4 +55,4 @@ function FavoritesScreen ():JSX.Element{
 }
 
 
-export default FavoritesScreen;
+export default React.memo(FavoritesScreen, (prev, props) => prev === props);
