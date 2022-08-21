@@ -5,7 +5,7 @@ import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
 import { Offer, Offers } from '../../types/offers';
 import { clearSession } from '../../utils/utils';
-import { State, User } from '../../types/state';
+import { State, AuthUser } from '../../types/state';
 import { generatePath } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AxiosInstance } from 'axios';
@@ -43,19 +43,17 @@ const fetchNearOffers = (id: number):ThunkActionResualt =>
       });
   };
 
-const fetcnReviews = (id: number):ThunkActionResualt =>
-  async (dispatch, getState, api) => {
-    if (id !== getState().DATA.reviews.id){
-      getState().DATA.reviews.loadStatus !== Pending && dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
-      await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
-        .then(({data}) => {
-          getState().DATA.reviews.loadStatus !== Fulfilled && dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
-        })
-        .catch((err) => {
-          toast.error(err.message);
-          dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
-        });
-    }
+const fetchReviews = (id: number):ThunkActionResualt =>
+  async (dispatch, _getState, api) => {
+    dispatch(ChangeReviews({id, data:[], loadStatus: Pending}));
+    await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
+      .then(({data}) => {
+        dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        dispatch(ChangeReviews({id:null, data:[], loadStatus: Rejected}));
+      });
   };
 
 const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
@@ -120,7 +118,7 @@ const checkAuth = ():ThunkActionResualt =>
 
 const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.post<User>(APIRoute.Login, {email, password});
+    const {data} = await api.post<AuthUser>(APIRoute.Login, {email, password});
     saveToken(data.token);
     dispatch(RequireAuth(Auth));
     dispatch(RedirectToPath(AppRoute.Main));
@@ -146,7 +144,7 @@ export {
   logoutSession,
   fetchNearOffers,
   fetchFavorites,
-  fetcnReviews,
+  fetchReviews,
   postReview
 };
 

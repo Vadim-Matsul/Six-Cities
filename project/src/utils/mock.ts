@@ -1,6 +1,7 @@
 import { Offer, Offers } from "../types/offers";
-import  { internet, datatype, address, image, name, database, commerce } from 'faker';
-import { User } from "../types/state";
+import  { date, internet, datatype, address, image, name, database, commerce } from 'faker';
+import { AuthUser } from "../types/state";
+import { Review, Reviews } from "../types/reviews";
 
 export const makeFakeOffer = ():Offer => {
 return {
@@ -40,8 +41,8 @@ return {
 }
 
 export const makeFakeOffers = ():Offers => {
-  const counter = datatype.number({max:20, min:10})
-  const offersArray = []
+  const counter = datatype.number({max:20, min:10});
+  const offersArray = [];
 
   for (let i=0; i < counter; i++){
     let offer = makeFakeOffer()
@@ -51,11 +52,34 @@ export const makeFakeOffers = ():Offers => {
   return offersArray;
 }
 
-export const makeFakeUser = ():User => ({
+export const makeFakeUser = () => ({
   avatarUrl: internet.avatar(),
   id: datatype.number(100),
   isPro: datatype.boolean(),
-  name: internet.userName(),
+  name: internet.userName()
+})
+
+export const makeFakeAuthUser = ():AuthUser => ({
+  ...makeFakeUser(),
   email: internet.email(),
   token: datatype.string()
 })
+
+export const makeFakeReview = ():Review => ({
+  id: datatype.number(100),
+  user: makeFakeUser(),
+  rating: datatype.number({max:5, min:0.1}),
+  comment: name.title(),
+  date: `${datatype.number({max:2022, min:2018})} ${date.month()}`
+})
+
+export const makeFakeReviews = ():Reviews => {
+  const counter = datatype.number({max:5, min:1});
+  const reviewsArr = [];
+
+  for(let i = 0; i < counter; i++){
+    const review = makeFakeReview();
+    reviewsArr.push(review)
+  }
+  return reviewsArr;
+}

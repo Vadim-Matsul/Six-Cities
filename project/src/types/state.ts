@@ -1,15 +1,11 @@
 import { AuthorizationStatus } from '../const';
 import { RootReducerState } from '../store/reducer/root-reducer';
 import { Offer, Offers } from './offers';
-import { Review, Reviews } from './reviews';
+import { Review, Reviews, User } from './reviews';
 import { FetchProgress } from '../const';
 
-type User = {
-  avatarUrl: string,
+type AuthUser = User & {
   email: string,
-  id: number,
-  isPro: boolean,
-  name: string,
   token: string
 }
 
@@ -33,9 +29,9 @@ type LogicState = {
 
 type UserState = {
   authStatus: AuthorizationStatus,
-  user: User | null
+  user: AuthUser | null
 }
 
 type State = RootReducerState
 
-export type { State, DataState, LogicState, UserState, CombineDataState, User };
+export type { State, DataState, LogicState, UserState, CombineDataState, AuthUser };

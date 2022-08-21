@@ -1,7 +1,7 @@
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offer } from '../../types/offers';
 import { createAction } from '@reduxjs/toolkit';
-import { CombineDataState, User } from '../../types/state';
+import { CombineDataState, AuthUser } from '../../types/state';
 import { Review } from '../../types/reviews';
 
 enum ActionsType {
@@ -19,7 +19,7 @@ enum ActionsType {
 const ChangeCurrentCity = createAction< string >( ActionsType.CurrentCity );
 const ChangeCurrentSort = createAction< string >( ActionsType.CurrentSort );
 const RequireAuth = createAction< AuthorizationStatus >( ActionsType.RequireAuth );
-const SetUser = createAction< User | null >( ActionsType.SetUser );
+const SetUser = createAction< AuthUser | null >( ActionsType.SetUser );
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const ChangeOffers = createAction< CombineDataState<Offer> >( ActionsType.OffersList );
 const ChangeFavorites = createAction< CombineDataState<Offer> >( ActionsType.Favorites );

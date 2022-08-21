@@ -12,7 +12,7 @@ import { Reviews } from '../../types/reviews';
 import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { fetchNearOffers, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
@@ -45,7 +45,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
       nearPlug.current = true;
       reviewPlug.current = true;
       dispatch( fetchNearOffers(numId) );
-      dispatch( fetcnReviews(numId) );
+      dispatch( fetchReviews(numId) );
     }
   },[numId, offers]);
 

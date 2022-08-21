@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from '../../../const';
-import { makeFakeUser } from '../../../utils/mock';
+import { makeFakeAuthUser } from '../../../utils/mock';
 import { RequireAuth, SetUser } from '../../actions/actions';
 import { UserReducer, initialState } from './user-reducer';
 
@@ -20,7 +20,7 @@ describe('Reducer: UserReducer', () => {
 
   describe('Reducer: user',() => {
     it('the user field should be cleared',() => {
-      const fakeUser = makeFakeUser();
+      const fakeUser = makeFakeAuthUser();
       const userState = {
         authStatus: AuthorizationStatus.Auth,
         user: fakeUser
@@ -30,7 +30,7 @@ describe('Reducer: UserReducer', () => {
     });
 
     it('the user field should be full',() => {
-      const fakeUser = makeFakeUser();
+      const fakeUser = makeFakeAuthUser();
       const userState = {
         authStatus: AuthorizationStatus.NoAuth,
         user: null

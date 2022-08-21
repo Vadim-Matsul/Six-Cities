@@ -1,11 +1,11 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { CreateApi } from '../../service/api/api';
-import { checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, ThunkDispatchResualt } from './api-actions';
+import { checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, fetchReviews, ThunkDispatchResualt } from './api-actions';
 import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AuthorizationStatus, FetchProgress } from '../../const';
-import { makeFakeOffers, makeFakeUser } from '../../utils/mock';
-import { ChangeFavorites, ChangeNearOffers, ChangeOffers, RequireAuth, SetUser } from './actions';
+import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
+import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RequireAuth, SetUser } from './actions';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { generatePath } from 'react-router-dom';
@@ -29,7 +29,7 @@ describe("Middleware: Thunk", () => {
   describe('Async: checkAuth', () => {
 
     it('should set auth-flag to "AUTH" & set user data when server return 200', async () => {
-      const fakeUser = makeFakeUser();
+      const fakeUser = makeFakeAuthUser();
       fakeAPI
         .onGet( APIRoute.Login )
         .reply(200, fakeUser);
@@ -139,12 +139,45 @@ describe("Middleware: Thunk", () => {
       const actualFakeUrl = generatePath( APIRoute.GetNearOffers,{'hotel_id':actualFakeId.toString()});
       fakeAPI
         .onGet(actualFakeUrl)
-        .reply(400);
+        .reply( 400 );
       expect(store.getActions()).toEqual([]);
       await store.dispatch( fetchNearOffers( actualFakeId ) );
       expect(store.getActions()).toEqual([
         ChangeNearOffers({id: actualFakeId, data:[], loadStatus: Pending}),
         ChangeNearOffers({id: null, data:[], loadStatus: Rejected}),
+      ]);
+    });
+
+  });
+
+  describe('Async: fetcnReviews', () => {
+
+    it('should set id, review data & change load-flag when server return 200', async () => {
+      const fakeReviews = makeFakeReviews();
+      const actualFakeId = Math.ceil( Math.random() * 100 );
+      const actualFakeUrl = generatePath( APIRoute.GetReviews,{'hotel_id':actualFakeId.toString()});
+      fakeAPI
+        .onGet(actualFakeUrl)
+        .reply(200, fakeReviews);
+      expect(store.getActions()).toEqual( [] );
+      await store.dispatch( fetchReviews(actualFakeId) );
+      expect(store.getActions()).toEqual( [
+        ChangeReviews({id: actualFakeId, data:[], loadStatus: Pending}),
+        ChangeReviews({id: actualFakeId, data:fakeReviews, loadStatus: Fulfilled})
+      ]);
+    });
+
+    it('should reset id, data & change load-flag to "Rejected" when server return 4**', async () => {
+      const actualFakeId = Math.ceil( Math.random() * 100 );
+      const actualFakeUrl = generatePath( APIRoute.GetReviews,{'hotel_id':actualFakeId.toString()});
+      fakeAPI
+        .onGet(actualFakeUrl)
+        .reply( 400 );
+      expect(store.getActions()).toEqual([]);
+      await store.dispatch( fetchReviews(actualFakeId) );
+      expect(store.getActions()).toEqual([
+        ChangeReviews({id: actualFakeId, data:[], loadStatus: Pending}),
+        ChangeReviews({id: null, data:[], loadStatus: Rejected})
       ]);
     });
 
