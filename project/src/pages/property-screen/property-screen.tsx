@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import BookMarkButton from '../../components/bookmark-button/bookmark-button';
 import Header from '../../components/header/header';
@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, getStars } from '../../utils/utils';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNearOffers, fetcnReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getFavorites, getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
+import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
 import { FormReview } from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { Loader } from '../../components/loader/loader';
@@ -35,21 +35,19 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const dispatch = useDispatch() as ThunkDispatchResualt;
 
   const nearOffers = useSelector( getNearOffers );
-
   const reviews = useSelector( getReviews );
-  const favorites = useSelector( getFavorites );
+
+  const nearPlug:MutableRefObject<boolean> = useRef(false);
+  const reviewPlug:MutableRefObject<boolean> = useRef(false);
 
   useEffect(() => {
-    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer ){
-      ( dispatch )( fetchNearOffers(numId) );
-      ( dispatch )( fetcnReviews(numId) );
+    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current ){
+      nearPlug.current = true;
+      reviewPlug.current = true;
+      dispatch( fetchNearOffers(numId) );
+      dispatch( fetcnReviews(numId) );
     }
   },[numId, offers]);
-
-  useEffect(() => {
-    ( dispatch )( fetchNearOffers(numId) );
-  },[favorites.data]);
-
 
   const authStatus = useSelector( getAuthStatus );
   const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers.data);

@@ -27,23 +27,19 @@ const fetchOffers = ():ThunkActionResualt =>
         dispatch(ChangeOffers({data, loadStatus: Fulfilled}));
       })
       .catch((err: Error) => {
-        toast.error(err.message)
+        toast.error(err.message);
         dispatch(ChangeOffers({data: [], loadStatus: Rejected}));
       });
   };
 
 const fetchNearOffers = (id: number):ThunkActionResualt =>
-  async (dispatch, getState, api) => {
-    getState().DATA.nearOffers.loadStatus !== Pending && dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Pending}));
+  async (dispatch, _getState, api) => {
+    dispatch(ChangeNearOffers({id, data:[], loadStatus: Pending}));
     await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
-      .then(({data}) => {
-        if (data && getState().DATA.nearOffers.loadStatus !== Fulfilled ){
-          dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) );
-        }
-      })
-      .catch((err) => {
+      .then(({data}) => dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) ))
+      .catch((err:Error) => {
         toast.error(err.message);
-        dispatch(ChangeNearOffers({...getState().DATA.nearOffers, loadStatus: Rejected}));
+        dispatch(ChangeNearOffers({id:null, data:[], loadStatus: Rejected}));
       });
   };
 
