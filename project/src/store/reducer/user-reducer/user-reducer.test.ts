@@ -24,7 +24,7 @@ describe('Reducer: UserReducer', () => {
       const userState = {
         authStatus: AuthorizationStatus.Auth,
         user: fakeUser
-      }
+      };
       expect(UserReducer(userState, SetUser(null)))
         .toEqual({...userState, user: null});
     });
@@ -34,9 +34,9 @@ describe('Reducer: UserReducer', () => {
       const userState = {
         authStatus: AuthorizationStatus.NoAuth,
         user: null
-      }
+      };
       expect(UserReducer(userState, SetUser(fakeUser)))
-        .toEqual({...userState, user: fakeUser})
+        .toEqual({...userState, user: fakeUser});
     });
 
   });
@@ -46,7 +46,7 @@ describe('Reducer: UserReducer', () => {
     it('UserReducer state hasn`t changed by reason of unknown action',() => {
       const UNKNOWN_ACTION = { type:'UNKNOWN_ACTION' };
       expect(UserReducer(void 0, UNKNOWN_ACTION))
-        .toEqual({...initialState})        
+        .toEqual({...initialState});
     });
 
   });

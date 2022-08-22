@@ -57,13 +57,13 @@ const fetchReviews = (id: number):ThunkActionResualt =>
   };
 
 const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
-  async (dispatch, getState, api) => {
-    dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Pending}));
+  async (dispatch, _getState, api) => {
+    dispatch(ChangeReviews({id, data:[], loadStatus: Pending}));
     await api.post< Review[] >( `${generatePath(APIRoute.PostReview, {'hotel_id' : id.toString()})}`,{ comment, rating } )
       .then( ({data}) => dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) ))
       .catch((err) => {
-        dispatch(ChangeReviews({...getState().DATA.reviews, loadStatus: Rejected}));
-        Promise.reject(err);
+        toast.error(err);
+        dispatch(ChangeReviews({id:null, data:[], loadStatus: Rejected}));
       });
   };
 
@@ -121,8 +121,8 @@ const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
     const {data} = await api.post<AuthUser>(APIRoute.Login, {email, password});
     saveToken(data.token);
     dispatch(RequireAuth(Auth));
-    dispatch(RedirectToPath(AppRoute.Main));
     dispatch(SetUser(data));
+    dispatch(RedirectToPath(AppRoute.Main));
   };
 
 const logoutSession = ():ThunkActionResualt<void> =>

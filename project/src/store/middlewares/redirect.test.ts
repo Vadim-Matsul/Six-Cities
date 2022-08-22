@@ -9,7 +9,7 @@ const fakeBrowserHistory = {
   push(somePath:string){
     this.location.path = somePath;
   }
-}
+};
 
 const makeFakeStore = configureMockStore< State >( [redirect] ) ;
 const store = makeFakeStore() ;
@@ -19,7 +19,7 @@ describe('Middleware: redirect', () => {
 
   beforeEach(() => {
     fakeBrowserHistory.location.path = '' ;
-    store.clearActions()
+    store.clearActions();
   });
 
   it('store location should be changed to action path', () => {
