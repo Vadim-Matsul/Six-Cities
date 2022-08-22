@@ -4,7 +4,7 @@ import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress
 import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
 import { Offer, Offers } from '../../types/offers';
-import { clearSession } from '../../utils/utils';
+import { clearSession, getActualArr } from '../../utils/utils';
 import { State, AuthUser } from '../../types/state';
 import { generatePath } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -82,19 +82,14 @@ const fetchFavorites = ():ThunkActionResualt =>
 
 const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    if (getState().USER.authStatus === NoAuth){
-      toast.info('Вам необходимо авторизоваться'); return;
-    }
     dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }) );
     await api.post< Offer >(`${generatePath(APIRoute.PostFavorite, {
       'hotel_id':id,
       'status': status ? FavoritesConfig.add : FavoritesConfig.remove
     })}`)
       .then(({data}) => {
-        const offers = getState().DATA.offers.data ;
-        const index = offers.findIndex((offer) => offer.id === data.id) ;
-        const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
-        dispatch( ChangeOffers({...getState().DATA.offers, data: actualArr}) ) ;
+        const actualArr = getActualArr(getState().DATA.offers.data, data) ;
+        dispatch( ChangeOffers({ data: actualArr, loadStatus: Fulfilled}) ) ;
         dispatch( ChangeFavorites({data:actualArr.filter((offer) => offer.isFavorite), loadStatus: Fulfilled}) ) ;
       })
       .catch((err) => {
@@ -125,7 +120,7 @@ const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
     dispatch(RedirectToPath(AppRoute.Main));
   };
 
-const logoutSession = ():ThunkActionResualt<void> =>
+const logoutSession = ():ThunkActionResualt =>
   async (dispatch, getState, api) => {
     await api.delete(APIRoute.Logout);
     dropToken();

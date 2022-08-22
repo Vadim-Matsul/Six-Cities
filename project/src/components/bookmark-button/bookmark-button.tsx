@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { RedirectToPath } from '../../store/actions/actions';
+import { toast } from 'react-toastify';
 
 type BookMarkButtonProps = {
   bookmarkClass: BookMarkClass
@@ -22,7 +23,11 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
       className = {`${ bookmarkClass }__bookmark-button button ${ isFavorite ? `${ bookmarkClass }__bookmark-button--active` : '' }`}
       type='button'
       onClick={ () => {
-        authStatus === AuthorizationStatus.NoAuth && dispatch(RedirectToPath( AppRoute.Auth ));
+        if (authStatus === AuthorizationStatus.NoAuth) {
+          dispatch(RedirectToPath( AppRoute.Auth ));
+          toast.info('Вам необходимо авторизоваться');
+          return;
+        }
         dispatch( postFavorites( id.toString(), !isFavorite ) );
       }}
     >

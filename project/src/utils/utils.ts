@@ -47,6 +47,12 @@ export const clearSession = (offers: Offers):Offers => {
   return notElected ;
 };
 
+export const getActualArr = (offers: Offers, data: Offer):Offers => {
+  const index = offers.findIndex((offer) => offer.id === data.id) ;
+  const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
+  return actualArr;
+};
+
 const getRandomNumber = (min:number, max:number):number => {
   const lower = Math.ceil(Math.min(min,max));
   const upper = Math.floor(Math.max(min,max));

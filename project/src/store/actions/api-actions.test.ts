@@ -1,6 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { CreateApi } from '../../service/api/api';
-import { AuthData, checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, fetchReviews, loginSession, postReview, ThunkDispatchResualt } from './api-actions';
+import { AuthData, checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, fetchReviews, loginSession, logoutSession, postFavorites, postReview, ThunkDispatchResualt } from './api-actions';
 import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
@@ -10,6 +10,7 @@ import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { generatePath } from 'react-router-dom';
 import { ReviewState } from '../../types/reviews';
+import { clearSession, getActualArr } from '../../utils/utils';
 
 const api = CreateApi();
 const fakeAPI = new MockAdapter( api );
@@ -18,7 +19,7 @@ const makeFakeStore = configureMockStore< State, Action, ThunkDispatchResualt >(
 const store = makeFakeStore();
 
 const { Auth, NoAuth } = AuthorizationStatus;
-const { Fulfilled, Pending, Rejected } = FetchProgress;
+const { Fulfilled, Pending, Rejected, Idle } = FetchProgress;
 
 
 describe('Middleware: Thunk', () => {
@@ -240,6 +241,97 @@ describe('Middleware: Thunk', () => {
       expect(store.getActions()).toEqual([
         ChangeReviews({id: fakeOfferId, data: [], loadStatus: Pending}),
         ChangeReviews({id: null, data: [], loadStatus: Rejected})
+      ]);
+
+    });
+
+  });
+
+  describe('Async: logoutSession', () => {
+
+    it('should clear data favorite, change auth-flag to "UnAuth" & change isFavorite to false in actual offer data', async () => {
+      const offers = makeFakeOffers();
+      const offersWithoutIsFavoriteTrue = clearSession( offers );
+      Storage.prototype.removeItem = jest.fn();
+      const fakeStore = makeFakeStore({
+        DATA:{ offers:{ data: offers }
+        }});
+      fakeAPI
+        .onDelete(APIRoute.Logout)
+        .reply( 200 );
+
+      expect(fakeStore.getActions()).toEqual( [] );
+      await fakeStore.dispatch( logoutSession() );
+      expect(fakeStore.getActions()).toEqual([
+        ChangeOffers({data: offersWithoutIsFavoriteTrue, loadStatus: Fulfilled}),
+        ChangeFavorites({data: [], loadStatus: Idle}),
+        RequireAuth( NoAuth ),
+        SetUser(null)
+      ]);
+      expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+      expect(Storage.prototype.removeItem).toBeCalledWith('six-cities');
+    });
+
+  });
+
+  describe('Async: postFavorites', () => {
+
+    it('should get offer with actual isFavorite status and set it in favorites & change offer data when server return 200 ', async () => {
+      const fakeOffers = makeFakeOffers();
+      const isFavorite:boolean = fakeOffers[0].isFavorite;
+      const offerBackEnd = {...fakeOffers[0], isFavorite: !isFavorite};
+      const actualUrl = generatePath(APIRoute.PostFavorite, {
+        'hotel_id' : fakeOffers[0].id.toString(), 'status' : isFavorite ? '0' : '1'
+      });
+      const actualArr = getActualArr(fakeOffers, offerBackEnd);
+      const filteredActualArr = actualArr.filter((offer) => offer.isFavorite);
+      const fakeStore = makeFakeStore({
+        DATA:{
+          favorites: {
+            data: [],
+            loadStatus: Idle
+          },
+          offers:{
+            data: fakeOffers,
+            loadStatus: Fulfilled
+          }
+        }
+      });
+      fakeAPI
+        .onPost(actualUrl)
+        .reply(200, offerBackEnd);
+
+      expect(fakeStore.getActions()).toEqual([]);
+      await fakeStore.dispatch( postFavorites(fakeOffers[0].id.toString(), !isFavorite) );
+      expect(fakeStore.getActions()).toEqual([
+        ChangeFavorites({data: [], loadStatus: Pending}),
+        ChangeOffers({data: actualArr, loadStatus: Fulfilled}),
+        ChangeFavorites({data: filteredActualArr, loadStatus: Fulfilled})
+      ]);
+    });
+
+    it('should set auth-flag in favorites data to "Rejected" when server return 4**', async () => {
+      const someId = Math.round( Math.random() );
+      const someBoolean = !!someId ;
+      const actualUrl = generatePath(APIRoute.PostFavorite, {
+        'hotel_id' : someId.toString(), 'status' : someBoolean ? '0' : '1'
+      });
+      const fakeStore = makeFakeStore({
+        DATA:{
+          favorites: {
+            data: [],
+            loadStatus: Idle
+          }}
+      });
+      fakeAPI
+        .onGet(actualUrl)
+        .reply( 400 );
+
+      expect(fakeStore.getActions()).toEqual([]);
+      await fakeStore.dispatch( postFavorites(someId.toString(), !someBoolean) );
+      expect(fakeStore.getActions()).toEqual([
+        ChangeFavorites({data:[], loadStatus: Pending }),
+        ChangeFavorites({data:[], loadStatus: Rejected })
       ]);
 
     });
