@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FormEvent, RefObject, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import AuthScreenCity from '../../components/auth-screen-city/auth-screen-city';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 import { AuthData, loginSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getRandomCity } from '../../utils/utils';
@@ -14,6 +13,7 @@ function AuthScreen ():JSX.Element {
   const passwordRef:RefObject<HTMLInputElement> = useRef(null);
 
   const randomCity = getRandomCity();
+  const changeCity = () => dispatch(ChangeCurrentCity(randomCity));
 
   function handlerSubmit (event: FormEvent<HTMLFormElement>){
     event.preventDefault();
@@ -63,6 +63,7 @@ function AuthScreen ():JSX.Element {
                   placeholder='Email'
                   ref={ loginRef }
                   required
+                  data-testid = 'login'
                 />
               </div>
               <div className='login__input-wrapper form__input-wrapper'>
@@ -75,22 +76,21 @@ function AuthScreen ():JSX.Element {
                   ref={ passwordRef }
                   onChange={ (el) => passwordValidate(el) }
                   required
+                  data-testid = 'password'
                 />
               </div>
-              <button className='login__submit form__submit button' type='submit'>Sign in</button>
+              <button
+                className='login__submit form__submit button'
+                type='submit'
+                data-testid = 'auth-button'
+              >Sign in
+              </button>
             </form>
           </section>
-          <section className='locations locations--login locations--current'>
-            <div className='locations__item'>
-              <Link
-                className='locations__item-link'
-                to={ AppRoute.Main }
-                onClick={ () => dispatch(ChangeCurrentCity(randomCity)) }
-              >
-                <span>{ randomCity }</span>
-              </Link>
-            </div>
-          </section>
+          <AuthScreenCity
+            onClick={ changeCity }
+            randomCity={ randomCity }
+          />
         </div>
       </main>
     </div>
