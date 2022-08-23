@@ -36,8 +36,6 @@ describe('Component: Logo', () => {
         </Routes>
       </HistoryRouter>
     );
-      // query если не находит el отдает null
-      // get если не находит выбрасывает ошибку
     expect( screen.queryByText(/This is Main Screen/i) ).not.toBeInTheDocument();
     await userEvent.click( screen.getByRole('link') );
     expect (screen.getByText(/This is Main Screen/i) ).toBeInTheDocument();
