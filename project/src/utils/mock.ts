@@ -3,6 +3,8 @@ import { date, internet, datatype, address, image, name, database, commerce } fr
 import { AuthUser } from '../types/state';
 import { Review, Reviews } from '../types/reviews';
 
+const makeFakeString = () => `unique${datatype.number(1000)}${datatype.number(1000)}`;
+
 export const makeFakeOffer = ():Offer => ({
   id: datatype.number(100),
   city: {
@@ -14,7 +16,7 @@ export const makeFakeOffer = ():Offer => ({
     }
   },
   previewImage: image.imageUrl(),
-  images: new Array(7).fill(image.imageUrl()),
+  images: new Array(7).fill(null).map(() => makeFakeString()),
   title: name.title(),
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),
@@ -23,7 +25,7 @@ export const makeFakeOffer = ():Offer => ({
   bedrooms: datatype.number({max:8, min:2}),
   maxAdults: datatype.number({max:8, min:3}),
   price: Number(commerce.price(100,1000) ),
-  goods: new Array(7).fill(datatype.string()),
+  goods: new Array(7).fill(null).map(() => makeFakeString()),
   host: {
     id: datatype.number(100),
     name: name.firstName(),

@@ -31,6 +31,7 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
         }
         dispatch( postFavorites( id.toString(), !isFavorite ) );
       }}
+      data-testid='BookMarkButton'
     >
       <svg className={`${ bookmarkClass }__bookmark-icon`} width={svgSize.width} height={svgSize.height}>
         <use xlinkHref='#icon-bookmark'></use>

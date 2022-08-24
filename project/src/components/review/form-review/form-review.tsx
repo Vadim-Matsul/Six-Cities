@@ -31,6 +31,7 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
       action='#'
       method='post'
       onSubmit={ handlerSubmitForm }
+      data-testid='FormReview'
     >
       <label className='reviews__label form__label' htmlFor='review'>Your review</label>
       <div
@@ -60,6 +61,7 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
         maxLength={150}
         placeholder='Tell how was your stay, what you like and what can be improved'
         disabled={ booleanFlag }
+        data-testid='FormReview-textarea'
       />
       <div className='reviews__button-wrapper'>
         <p className='reviews__help'>

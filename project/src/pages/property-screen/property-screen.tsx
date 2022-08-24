@@ -142,35 +142,46 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
                 </div>
               </div>
               <section className='property__reviews reviews'>
-                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.data.length}</span></h2>
-                <ul className='reviews__list'>
-                  <UserReview reviews={ reviews.data as Reviews } />
-                </ul>
-                { authStatus === AuthorizationStatus.Auth
+                { reviews.data.length
+                  ?
+                  <>
+                    <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.data.length}</span></h2>
+                    <ul className='reviews__list'>
+                      <UserReview reviews={ reviews.data as Reviews } />
+                    </ul>
+                  </>
+                  : null }
+                { authStatus === AuthorizationStatus.Auth && reviews.data.length
                   ? <FormReview id={ numId }/>
-                  : '' }
+                  : null }
               </section>
             </div>
           </div>
-          <Map
-            offers={ nearOffers.data }
-            city={ offer.city }
-            selectedOffer={ selectedOffer }
-            thisClass= 'property__map map'
-          />
+          { nearOffers.data.length
+            ?
+            <Map
+              offers={ nearOffers.data }
+              city={ offer.city }
+              selectedOffer={ selectedOffer }
+              thisClass= 'property__map map'
+            />
+            : null }
         </section>
-        <div className='container'>
-          <section className='near-places places'>
-            <h2 className='near-places__title'>Other places in the neighbourhood</h2>
-            <div className='near-places__list places__list'>
-              <OfferList
-                cardClass={ CardPageClass.Property }
-                offers = {nearOffers.data}
-                setSelectedOffer={ setSelectedOffer }
-              />
-            </div>
-          </section>
-        </div>
+        { nearOffers.data.length
+          ?
+          <div className='container'>
+            <section className='near-places places'>
+              <h2 className='near-places__title'>Other places in the neighbourhood</h2>
+              <div className='near-places__list places__list'>
+                <OfferList
+                  cardClass={ CardPageClass.Property }
+                  offers = {nearOffers.data}
+                  setSelectedOffer={ setSelectedOffer }
+                />
+              </div>
+            </section>
+          </div>
+          : null }
       </main>
     </div>
   );

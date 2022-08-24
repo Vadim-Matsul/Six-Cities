@@ -276,7 +276,7 @@ describe('Middleware: Thunk', () => {
 
   describe('Async: postFavorites', () => {
 
-    it('should get offer with actual isFavorite status and set it in favorites & change offer data when server return 200 ', async () => {
+    it('should get offer with actual isFavorite status and set it in favorites & change offer data when server return 200', async () => {
       const fakeOffers = makeFakeOffers();
       const isFavorite:boolean = fakeOffers[0].isFavorite;
       const offerBackEnd = {...fakeOffers[0], isFavorite: !isFavorite};

@@ -26,7 +26,7 @@ describe('Component: BookMarkButton', () => {
         />
       </Provider>
     );
-    expect(screen.getByText(/To bookmarks/i)).toBeInTheDocument();
+    expect(screen.getByTestId('BookMarkButton')).toBeInTheDocument();
   });
 
 });
