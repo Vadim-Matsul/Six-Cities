@@ -1,18 +1,14 @@
-import { connect, ConnectedProps } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
-import { State } from '../../types/state';
 import Logo from '../logo/logo';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 
-const mapStateToProps = ({USER}:State) => ({authStatus: USER.authStatus});
 
-const connector = connect(mapStateToProps);
-type HeaderReduxProps = ConnectedProps<typeof connector>
-
-const Header = ({authStatus}:HeaderReduxProps):JSX.Element => {
+const Header = ():JSX.Element => {
   const dispatch = useDispatch() as ThunkDispatchResualt;
+  const authStatus = useSelector( getAuthStatus );
 
   return (
     <header className='header'>
@@ -30,24 +26,32 @@ const Header = ({authStatus}:HeaderReduxProps):JSX.Element => {
                   </Link>
                   {authStatus === AuthorizationStatus.Auth
                     ?
-                    <Link to={AppRoute.Favorites}>
+                    <Link
+                      to={AppRoute.Favorites}
+                      data-testid='header-favorites'
+                    >
                       <span className='header__user-name user__name'>Oliver.conner@gmail.com</span>
                       <span className='header__favorite-count'>0</span>
                     </Link>
-                    : <Link to={AppRoute.Auth}><span className='header__login'>Sign in</span></Link>}
+                    :
+                    <Link
+                      to={AppRoute.Auth}
+                      data-testid='header-auth'
+                    ><span className='header__login'>Sign in</span>
+                    </Link>}
                 </div>
               </li>
               {authStatus === AuthorizationStatus.Auth &&
-                <li className='header__nav-item'>
+                <li
+                  className='header__nav-item'
+                >
+                  <div onClick={() => dispatch(logoutSession())} />
                   <Link
                     className='header__nav-link'
                     to={AppRoute.Main}
+                    data-testid='header-main'
                   >
-                    <span
-                      className='header__signout'
-                      onClick={() => dispatch(logoutSession())}
-                    > Sign out
-                    </span>
+                    <span className='header__signout'> Sign out </span>
                   </Link>
                 </li>}
             </ul>
@@ -59,4 +63,4 @@ const Header = ({authStatus}:HeaderReduxProps):JSX.Element => {
 };
 
 
-export default connector(Header);
+export default Header;

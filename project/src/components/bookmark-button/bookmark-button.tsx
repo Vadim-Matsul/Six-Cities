@@ -17,13 +17,14 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
 
   const authStatus = useSelector( getAuthStatus );
   const svgSize = bookmarkClass === BookMarkClass.OfferCard ? PropertySize.Small : PropertySize.Big;
+  const shouldPost = authStatus === AuthorizationStatus.NoAuth;
 
   return (
     <button
       className = {`${ bookmarkClass }__bookmark-button button ${ isFavorite ? `${ bookmarkClass }__bookmark-button--active` : '' }`}
       type='button'
       onClick={ () => {
-        if (authStatus === AuthorizationStatus.NoAuth) {
+        if (shouldPost) {
           dispatch(RedirectToPath( AppRoute.Auth ));
           toast.info('Вам необходимо авторизоваться');
           return;

@@ -22,6 +22,7 @@ function FavoriteOffersList ({offers}:FavoriteOffersListProps):JSX.Element{
           <li
             className='favorites__locations-items'
             key = {keyValue}
+            data-testid='FavoriteOffersList'
           >
             <FavoritesCity city = { city }/>
             <div className='favorites__places'>

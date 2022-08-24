@@ -36,7 +36,7 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
         <span>Premium</span>
       </div>
       <div className={`${cardClass}__image-wrapper place-card__image-wrapper`}>
-        <a style={{pointerEvents: 'none'}}>
+        <span style={{pointerEvents: 'none'}}>
           <img
             className='place-card__image'
             src={offer.previewImage}
@@ -44,7 +44,7 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
             height={actualImageSize.height}
             alt={offer.title}
           />
-        </a>
+        </span>
       </div>
       <div className={`place-card__info ${classWrapper ? 'favorites__card-info' : ''}`}>
         <div className='place-card__price-wrapper'>
@@ -65,7 +65,10 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link to = {`${AppRoute.Property}/${offer.id}`}>
+          <Link
+            to = {`${AppRoute.Property}/${offer.id}`}
+            data-testid='OfferCard-title'
+          >
             { offer.title }
           </Link>
         </h2>
