@@ -3,10 +3,10 @@ import { date, internet, datatype, address, image, name, database, commerce } fr
 import { AuthUser } from '../types/state';
 import { Review, Reviews } from '../types/reviews';
 
-const makeFakeString = () => `unique${datatype.number(1000)}${datatype.number(1000)}`;
+export const makeFakeString = () => `unique${datatype.number(1000)}${datatype.number(1000)}`;
 
 export const makeFakeOffer = ():Offer => ({
-  id: datatype.number(100),
+  id: datatype.number(1000),
   city: {
     name: address.cityName(),
     location: {
@@ -27,7 +27,7 @@ export const makeFakeOffer = ():Offer => ({
   price: Number(commerce.price(100,1000) ),
   goods: new Array(7).fill(null).map(() => makeFakeString()),
   host: {
-    id: datatype.number(100),
+    id: datatype.number(1000),
     name: name.firstName(),
     isPro: datatype.boolean(),
     avatarUrl: internet.avatar()

@@ -28,6 +28,7 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
       className= {`${cardClass}__card place-card`}
       onMouseEnter={ () => setSelectedOffer && setSelectedOffer( offer.id ) }
       onMouseLeave={ () => setSelectedOffer && setSelectedOffer( null ) }
+      data-testid='OfferCard'
     >
       <div
         className='place-card__mark'
@@ -49,7 +50,11 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
       <div className={`place-card__info ${classWrapper ? 'favorites__card-info' : ''}`}>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
-            <b className='place-card__price-value'>&euro;{offer.price}</b>
+            <b
+              className='place-card__price-value'
+              data-testid='OfferCard-price'
+            >&euro;{offer.price}
+            </b>
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
           <BookMarkButton
@@ -61,7 +66,11 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
             <span style={{width: rating}}></span>
-            <span className='visually-hidden'>Rating</span>
+            <span
+              className='visually-hidden'
+              data-testid='OfferCard-rating'
+            >Rating {offer.rating}
+            </span>
           </div>
         </div>
         <h2 className='place-card__name'>

@@ -8,7 +8,7 @@ function PropertyImage ({src}:PropertyImageProps):JSX.Element {
       <img
         className='property__image'
         src= { src }
-        alt='Studio'
+        alt='Property Image'
       />
     </div>
   );

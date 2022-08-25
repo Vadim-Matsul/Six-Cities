@@ -17,17 +17,25 @@ function SortForm ({ currentSort, currentCity }:SortFormProps){
 
   return (
     <form className='places__sorting' action='#' method='get'>
-      <span className='places__sorting-caption'>Sort by </span>
+      <span
+        className='places__sorting-caption'
+        data-testid='SortForm-sortBy'
+      >Sort by
+      </span>
       <span
         className='places__sorting-type'
         tabIndex={ 0 }
         onClick={() => setShow((prevState) => !prevState)}
+        data-testid='SortForm-show'
       > {currentSort}
         <svg className='places__sorting-arrow' width='7' height='4' >
           <use xlinkHref='#icon-arrow-select'/>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${show ? 'places__options--opened' : ''}`}>
+      <ul
+        className={`places__options places__options--custom ${show ? 'places__options--opened' : ''}`}
+        data-testid='SortForm-items'
+      >
         {sortArray.map((sort) => (
           <li
             className={`places__option ${currentSort === sort ? 'places__option--active' : ''}`}
@@ -37,6 +45,7 @@ function SortForm ({ currentSort, currentCity }:SortFormProps){
               dispatch(ChangeCurrentSort(sort));
               setShow((prevState) => !prevState);
             }}
+            data-testid='SortForm-item'
           >{ sort }
           </li>
         ))}
