@@ -29,7 +29,10 @@ function MainScreen ( ):JSX.Element{
         <h1 className='visually-hidden'>Cities</h1>
         <LocationList uniqueCity={ currentCity } />
         <div className='cities'>
-          <div className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}>
+          <div
+            className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}
+            data-testid='MainScreen'  
+          >
             { offersOfCity.length
               ?
               <section className='cities__places places'>

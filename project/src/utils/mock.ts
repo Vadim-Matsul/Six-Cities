@@ -2,13 +2,14 @@ import { Offer, Offers } from '../types/offers';
 import { date, internet, datatype, address, image, name, database, commerce } from 'faker';
 import { AuthUser } from '../types/state';
 import { Review, Reviews } from '../types/reviews';
+import { GeoCity } from '../const';
 
 export const makeFakeString = () => `unique${datatype.number(1000)}${datatype.number(1000)}`;
 
 export const makeFakeOffer = ():Offer => ({
   id: datatype.number(1000),
   city: {
-    name: address.cityName(),
+    name: Object.keys(GeoCity)[datatype.number(Object.keys(GeoCity).length - 1)],
     location: {
       latitude: Number(address.latitude()),
       longitude: Number(address.longitude()),

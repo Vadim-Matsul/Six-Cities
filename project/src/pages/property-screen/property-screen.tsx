@@ -40,8 +40,10 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const nearPlug:MutableRefObject<boolean> = useRef(false);
   const reviewPlug:MutableRefObject<boolean> = useRef(false);
 
+  const shouldLoad = nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current
+
   useEffect(() => {
-    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current ){
+    if ( shouldLoad ){
       nearPlug.current = true;
       reviewPlug.current = true;
       dispatch( fetchNearOffers(numId) );

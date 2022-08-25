@@ -28,10 +28,12 @@ function FavoritesScreen ():JSX.Element{
   return (
     <div
       className={`page ${favorites.data.length ? '' : 'page--favorites-empty'}`}
+      data-testid='FavoritesScreen'
     >
       <Header />
       <main
         className={`page__main page__main--favorites ${favorites.data.length ? '' : 'page__main--favorites-empty'}`}
+        data-testid='FavoritesScreen-main'
       >
         <div className='page__favorites-container container'>
           { favorites.data.length

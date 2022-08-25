@@ -6,6 +6,8 @@ import { Icon, Marker} from 'leaflet';
 import { AppRoute, IconMarkerSize, IconMarkerUrl } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import browserHistory from '../../browser-history';
+import { useLocation } from 'react-router-dom';
+
 
 type MapProps = {
   offers: Offers,
@@ -19,12 +21,13 @@ function Map (props: MapProps):JSX.Element{
   const { offers, city, selectedOffer, thisClass } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const location = useLocation()
 
   useEffect(() => {
     const Markers: Marker[] = [];
     if (map){
       { offers.forEach( (offer) => {
-        const marker = new Marker( [offer.location.latitude, offer.location.longitude] ).bindPopup(`${offer.title}`);
+        const marker = new Marker( [offer.location.latitude, offer.location.longitude] );
         const icon = new Icon({
           iconUrl: selectedOffer && selectedOffer.id === offer.id
             ? IconMarkerUrl.current
@@ -38,11 +41,11 @@ function Map (props: MapProps):JSX.Element{
       });}
     }
     return () => Markers.forEach((marker) => marker.remove());
-  },[offers, map, selectedOffer]);
+  },[offers, map, selectedOffer, location]);
 
   useEffect(() => {
     if (map){
-      map?.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
   },[city]);
 
@@ -50,6 +53,7 @@ function Map (props: MapProps):JSX.Element{
     <section
       className={ thisClass }
       ref={ mapRef }
+      data-testid='Map'
     >
     </section>
   );

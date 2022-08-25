@@ -3,7 +3,7 @@ import { FetchProgress } from '../../../const';
 import { DataState } from '../../../types/state';
 import { ChangeOffers, ChangeNearOffers, ChangeReviews, ChangeFavorites } from '../../actions/actions';
 
-const initialState:DataState = {
+export const initialState:DataState = {
   offers: { data: [], loadStatus: FetchProgress.Idle },
   favorites: { data: [], loadStatus: FetchProgress.Idle },
   nearOffers: {id: null, data: [], loadStatus: FetchProgress.Idle },
