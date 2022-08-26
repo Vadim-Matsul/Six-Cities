@@ -6,16 +6,18 @@ import { GeoCity } from '../const';
 
 export const makeFakeString = () => `unique${datatype.number(1000)}${datatype.number(1000)}`;
 
+export const makeFakeCity = () => ({
+  name: Object.keys(GeoCity)[datatype.number(Object.keys(GeoCity).length - 1)],
+  location: {
+    latitude: Number(address.latitude()),
+    longitude: Number(address.longitude()),
+    zoom: datatype.number({max:16, min:1})
+  }
+});
+
 export const makeFakeOffer = ():Offer => ({
   id: datatype.number(1000),
-  city: {
-    name: Object.keys(GeoCity)[datatype.number(Object.keys(GeoCity).length - 1)],
-    location: {
-      latitude: Number(address.latitude()),
-      longitude: Number(address.longitude()),
-      zoom: datatype.number({max:16, min:1})
-    }
-  },
+  city: makeFakeCity(),
   previewImage: image.imageUrl(),
   images: new Array(7).fill(null).map(() => makeFakeString()),
   title: name.title(),

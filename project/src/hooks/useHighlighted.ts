@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Offer, Offers } from '../types/offers';
+import { Offer } from '../types/offers';
 
-const useHighlighted = (offers: Offers): [Offer | undefined, (id: number | null) => void] => {
+const useHighlighted = (offers: Offer[]): [Offer | undefined, (id: number | null) => void] => {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const findSelectedOffer = (id: number | null) => {

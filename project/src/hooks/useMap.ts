@@ -9,7 +9,7 @@ export default function useMap ( mapRef:MutableRefObject<HTMLElement | null>, ci
   const copyPaste = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
   useEffect(() => {
-    if ( mapRef !== null && !mapRendering.current){
+    if ( mapRef.current !== null && !mapRendering.current){
 
       const localMap = L.map( mapRef.current! ).setView([city.location.latitude, city.location.longitude],city.location.zoom);
       const mapEnable = () => localMap.scrollWheelZoom.enable();
