@@ -88,9 +88,11 @@ const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
       'status': status ? FavoritesConfig.add : FavoritesConfig.remove
     })}`)
       .then(({data}) => {
-        const actualArr = getActualArr(getState().DATA.offers.data, data) ;
-        dispatch( ChangeOffers({ data: actualArr, loadStatus: Fulfilled}) ) ;
-        dispatch( ChangeFavorites({data:actualArr.filter((offer) => offer.isFavorite), loadStatus: Fulfilled}) ) ;
+        const actualOffersArr = getActualArr(getState().DATA.offers.data, data) ;
+        dispatch( ChangeOffers({ data: actualOffersArr, loadStatus: Fulfilled}) ) ;
+        dispatch( ChangeFavorites({data: actualOffersArr.filter((offer) => offer.isFavorite), loadStatus: Fulfilled}) ) ;
+        const actualNearOffersArr = getActualArr(getState().DATA.nearOffers.data, data);
+        dispatch( ChangeNearOffers({...getState().DATA.nearOffers, data: actualNearOffersArr}) );
       })
       .catch((err) => {
         toast.error(err);

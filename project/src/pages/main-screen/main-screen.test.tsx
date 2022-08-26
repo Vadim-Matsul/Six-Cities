@@ -1,19 +1,19 @@
-import { configureMockStore } from "@jedmao/redux-mock-store";
-import { createMemoryHistory } from "history";
-import { AuthorizationStatus, FetchProgress, SortTypes } from "../../const";
-import { Offers } from "../../types/offers";
-import { makeFakeOffers } from "../../utils/mock";
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { createMemoryHistory } from 'history';
+import { AuthorizationStatus, FetchProgress, SortTypes } from '../../const';
+import { Offers } from '../../types/offers';
+import { makeFakeOffers } from '../../utils/mock';
 import { render, screen } from '@testing-library/react';
-import { Provider } from "react-redux";
-import { HistoryRouter } from "../../components/history-router/history-router";
-import MainScreen from "./main-screen";
+import { Provider } from 'react-redux';
+import { HistoryRouter } from '../../components/history-router/history-router';
+import MainScreen from './main-screen';
 
 const fakeOffers = makeFakeOffers();
 
 const makeLayout = (offers: Offers | []) => ({
   DATA:{
-      offers: { data: offers, loadStatus: FetchProgress.Fulfilled },
-    },
+    offers: { data: offers, loadStatus: FetchProgress.Fulfilled },
+  },
   LOGIC:{
     currentCity: fakeOffers[0]['city']['name'],
     currentSort: SortTypes.POPULAR
@@ -27,7 +27,7 @@ const history = createMemoryHistory();
 
 
 describe('Component: MainScreen', () => {
-  
+
   it('successfully render when offers data is empty', () => {
     const store = makeFakeStore( makeLayout([]) );
     render(
@@ -43,7 +43,7 @@ describe('Component: MainScreen', () => {
     expect( screen.queryByTestId('Map') ).not.toBeInTheDocument();
   });
 
-  it('successfully render when offers data is full', () =>  {
+  it('successfully render when offers data is full', () => {
     const store = makeFakeStore( makeLayout(fakeOffers) );
     render(
       <Provider store={ store }>

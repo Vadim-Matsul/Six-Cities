@@ -47,10 +47,13 @@ export const clearSession = (offers: Offers):Offers => {
   return notElected ;
 };
 
-export const getActualArr = (offers: Offers, data: Offer):Offers => {
-  const index = offers.findIndex((offer) => offer.id === data.id) ;
-  const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
-  return actualArr;
+export const getActualArr = (offers: Offers, data: Offer):Offers | []=> {
+  if (offers.length){
+    const index = offers.findIndex((offer) => offer.id === data.id) ;
+    const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
+    return actualArr;
+  }
+  return [];
 };
 
 const getRandomNumber = (min:number, max:number):number => {

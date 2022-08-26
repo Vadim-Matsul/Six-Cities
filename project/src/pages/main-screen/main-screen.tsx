@@ -31,7 +31,7 @@ function MainScreen ( ):JSX.Element{
         <div className='cities'>
           <div
             className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}
-            data-testid='MainScreen'  
+            data-testid='MainScreen'
           >
             { offersOfCity.length
               ?

@@ -14,13 +14,13 @@ describe('Component: PrivateRoute', () => {
     render(
       <HistoryRouter history={history}>
         <Routes>
-          <Route 
+          <Route
             path={ AppRoute.Auth }
             element={ <h1> Public Route </h1> }
           />
-          <Route 
-            path='/private' 
-            element={ 
+          <Route
+            path='/private'
+            element={
               <PrivateRoute
                 authorizationStatus={ AuthorizationStatus.NoAuth }
               >
@@ -31,21 +31,21 @@ describe('Component: PrivateRoute', () => {
         </Routes>
       </HistoryRouter>);
 
-      expect( screen.getByText(/Public Route/i) ).toBeInTheDocument();
-      expect( screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
+    expect( screen.getByText(/Public Route/i) ).toBeInTheDocument();
+    expect( screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
   });
 
   it('should render component for private route when authStatus "Auth"', () => {
     render(
       <HistoryRouter history={history}>
         <Routes>
-          <Route 
+          <Route
             path={ AppRoute.Auth }
             element={ <h1> Public Route </h1> }
           />
-          <Route 
-            path='/private' 
-            element={ 
+          <Route
+            path='/private'
+            element={
               <PrivateRoute
                 authorizationStatus={ AuthorizationStatus.Auth }
               >
@@ -56,8 +56,8 @@ describe('Component: PrivateRoute', () => {
         </Routes>
       </HistoryRouter>);
 
-      expect( screen.getByText(/Private Route/i)).toBeInTheDocument();
-      expect( screen.queryByText(/Public Route/i) ).not.toBeInTheDocument();
+    expect( screen.getByText(/Private Route/i)).toBeInTheDocument();
+    expect( screen.queryByText(/Public Route/i) ).not.toBeInTheDocument();
   });
 
 });

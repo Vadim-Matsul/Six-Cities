@@ -276,7 +276,7 @@ describe('Middleware: Thunk', () => {
 
   describe('Async: postFavorites', () => {
 
-    it('should get offer with actual isFavorite status and set it in favorites & change offer data when server return 200', async () => {
+    it('should get offer with actual isFavorite status and set it in favorites, nearOffers & change offer data when server return 200', async () => {
       const fakeOffers = makeFakeOffers();
       const isFavorite:boolean = fakeOffers[0].isFavorite;
       const offerBackEnd = {...fakeOffers[0], isFavorite: !isFavorite};
@@ -284,6 +284,8 @@ describe('Middleware: Thunk', () => {
         'hotel_id' : fakeOffers[0].id.toString(), 'status' : isFavorite ? '0' : '1'
       });
       const actualArr = getActualArr(fakeOffers, offerBackEnd);
+      const fakeNearOffers = fakeOffers.slice(0,3);
+      const actualNearOffersArr = getActualArr(fakeNearOffers, offerBackEnd);
       const filteredActualArr = actualArr.filter((offer) => offer.isFavorite);
       const fakeStore = makeFakeStore({
         DATA:{
@@ -293,6 +295,11 @@ describe('Middleware: Thunk', () => {
           },
           offers:{
             data: fakeOffers,
+            loadStatus: Fulfilled
+          },
+          nearOffers:{
+            id: 57,
+            data: fakeNearOffers,
             loadStatus: Fulfilled
           }
         }
@@ -306,7 +313,8 @@ describe('Middleware: Thunk', () => {
       expect(fakeStore.getActions()).toEqual([
         ChangeFavorites({data: [], loadStatus: Pending}),
         ChangeOffers({data: actualArr, loadStatus: Fulfilled}),
-        ChangeFavorites({data: filteredActualArr, loadStatus: Fulfilled})
+        ChangeFavorites({data: filteredActualArr, loadStatus: Fulfilled}),
+        ChangeNearOffers({id: 57, data: actualNearOffersArr, loadStatus: Fulfilled})
       ]);
     });
 

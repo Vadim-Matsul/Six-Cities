@@ -21,7 +21,7 @@ function Map (props: MapProps):JSX.Element{
   const { offers, city, selectedOffer, thisClass } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     const Markers: Marker[] = [];

@@ -12,9 +12,9 @@ const fakeId = fakeOffers[0]['id'];
 describe('Reducer: DataReducer', () => {
 
   it('shouldn`t change state by reason of unknown action', () => {
-    const FakeAction = {type: "UnKnown", payload: {}};
+    const FakeAction = {type: 'UnKnown', payload: {}};
     expect( DataReducer( initialState, FakeAction))
-      .toEqual({...initialState})
+      .toEqual({...initialState});
   });
 
   describe('Action: ChangeOffers', () => {
@@ -58,10 +58,10 @@ describe('Reducer: DataReducer', () => {
         nearOffers: {
           id: fakeId,
           data: nearoffers,
-          loadStatus: FetchProgress.Fulfilled  
+          loadStatus: FetchProgress.Fulfilled
         }
       });
-      
+
     });
 
   });
@@ -76,7 +76,7 @@ describe('Reducer: DataReducer', () => {
         reviews: {
           id: fakeId,
           data: fakeReviews,
-          loadStatus: FetchProgress.Fulfilled            
+          loadStatus: FetchProgress.Fulfilled
         }
       });
     });

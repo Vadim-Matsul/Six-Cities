@@ -40,16 +40,22 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const nearPlug:MutableRefObject<boolean> = useRef(false);
   const reviewPlug:MutableRefObject<boolean> = useRef(false);
 
-  const shouldLoad = nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current
+  // nearPlug & reviewPlug - заглушки от лишних вызовов useEffect в новых rerender компонента
+  // ( заглушки избавляют от actions в Redux DevTools, не приносящих изменения ( states are equal ) )
 
   useEffect(() => {
-    if ( shouldLoad ){
+    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current ){
       nearPlug.current = true;
       reviewPlug.current = true;
       dispatch( fetchNearOffers(numId) );
       dispatch( fetchReviews(numId) );
     }
-  },[numId, offers]);
+  },[numId]);
+
+  if ( nearOffers.data.length && reviews.data.length && nearOffers.id !== numId && reviews.id !== numId ){
+    nearPlug.current = false; reviewPlug.current = false;
+  }
+
 
   const authStatus = useSelector( getAuthStatus );
   const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers.data);
@@ -61,6 +67,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   const images:string[] = offer.images.slice(ImagesSize.START, ImagesSize.END);
   const raiting = getStars( offer.rating );
   const offerType = capitalizeFirstLetter(offer.type);
+  const offersForMap = [...nearOffers.data, offer];
 
   if (nearOffers.loadStatus !== FetchProgress.Fulfilled && reviews.loadStatus !== FetchProgress.Fulfilled){
     return <Loader />;
@@ -162,7 +169,7 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
           { nearOffers.data.length
             ?
             <Map
-              offers={ nearOffers.data }
+              offers={ offersForMap }
               city={ offer.city }
               selectedOffer={ selectedOffer }
               thisClass= 'property__map map'
@@ -190,4 +197,4 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
 }
 
 
-export default PropertyScreen;
+export default React.memo(PropertyScreen);
