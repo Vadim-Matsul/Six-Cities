@@ -1,5 +1,5 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
@@ -24,6 +24,8 @@ const fetchOffers = ():ThunkActionResualt =>
     dispatch( ChangeOffers({data: [], loadStatus: Pending}) );
     await api.get<Offers>(APIRoute.Offers)
       .then(({data}) => {
+        const favorites = data.slice().filter( (offer) => offer.isFavorite );
+        dispatch(ChangeFavorites({data: favorites, loadStatus: Fulfilled}) );
         dispatch(ChangeOffers({data, loadStatus: Fulfilled}));
       })
       .catch((err: Error) => {
@@ -82,17 +84,23 @@ const fetchFavorites = ():ThunkActionResualt =>
 
 const postFavorites = (id: string, status: boolean):ThunkActionResualt =>
   async (dispatch, getState, api) => {
+    toast.dismiss();
     dispatch( ChangeFavorites({...getState().DATA.favorites, loadStatus: Pending }) );
+    toast.loading('Wait...');
     await api.post< Offer >(`${generatePath(APIRoute.PostFavorite, {
       'hotel_id':id,
       'status': status ? FavoritesConfig.add : FavoritesConfig.remove
     })}`)
       .then(({data}) => {
+        toast.dismiss();
         const actualOffersArr = getActualArr(getState().DATA.offers.data, data) ;
         dispatch( ChangeOffers({ data: actualOffersArr, loadStatus: Fulfilled}) ) ;
         dispatch( ChangeFavorites({data: actualOffersArr.filter((offer) => offer.isFavorite), loadStatus: Fulfilled}) ) ;
         const actualNearOffersArr = getActualArr(getState().DATA.nearOffers.data, data);
         dispatch( ChangeNearOffers({...getState().DATA.nearOffers, data: actualNearOffersArr}) );
+        status
+          ? toast.success('Успешно добавлено в избранное')
+          : toast.success('Успешно удалено из избранного');
       })
       .catch((err) => {
         toast.error(err);
@@ -119,18 +127,25 @@ const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
     saveToken(data.token);
     dispatch(RequireAuth(Auth));
     dispatch(SetUser(data));
-    dispatch(RedirectToPath(AppRoute.Main));
   };
 
 const logoutSession = ():ThunkActionResualt =>
   async (dispatch, getState, api) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    const notElectedArr = clearSession(getState().DATA.offers.data);
-    dispatch(ChangeOffers({data: notElectedArr, loadStatus: Fulfilled}) );
-    dispatch(ChangeFavorites({data: [], loadStatus: Idle }) );
-    dispatch(RequireAuth(NoAuth) );
-    dispatch(SetUser(null) );
+    dispatch( SetLogOutProcess(true) );
+    await api.delete(APIRoute.Logout)
+      .then(() => {
+        dropToken();
+        const notElectedArr = clearSession(getState().DATA.offers.data);
+        dispatch(ChangeOffers({data: notElectedArr, loadStatus: Fulfilled}) );
+        dispatch(ChangeFavorites({data: [], loadStatus: Idle }) );
+        dispatch(RequireAuth(NoAuth) );
+        dispatch( RedirectToPath( AppRoute.Auth ) );
+        dispatch(SetUser(null) );
+      })
+      .catch((err) => {
+        dispatch( SetLogoutError( true ) );
+      })
+      .finally(() => dispatch( SetLogOutProcess(false) ));
   };
 
 export {

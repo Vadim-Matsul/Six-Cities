@@ -1,17 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../../const';
 import { UserState } from '../../../types/state';
-import { RequireAuth, SetUser } from '../../actions/actions';
+import { RequireAuth, SetLogoutError, SetLogOutProcess, SetUser } from '../../actions/actions';
 
 export const initialState:UserState = {
   authStatus: AuthorizationStatus.UnKnown,
-  user: null
+  user: null,
+  logoutProcess: false,
+  logoutError: false
 };
 
 const UserReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(RequireAuth, (state, action) => { state.authStatus = action.payload; })
-    .addCase(SetUser, (state, action) => { state.user = action.payload; });
+    .addCase(SetUser, (state, action) => { state.user = action.payload; })
+    .addCase(SetLogoutError, (state, action) => { state.logoutError = action.payload; } )
+    .addCase(SetLogOutProcess, (state, action) => { state.logoutProcess = action.payload; } );
 });
 
 

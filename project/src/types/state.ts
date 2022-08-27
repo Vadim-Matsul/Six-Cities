@@ -29,7 +29,9 @@ type LogicState = {
 
 type UserState = {
   authStatus: AuthorizationStatus,
-  user: AuthUser | null
+  user: AuthUser | null,
+  logoutProcess: boolean,
+  logoutError: boolean
 }
 
 type State = RootReducerState

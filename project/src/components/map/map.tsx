@@ -52,8 +52,7 @@ function Map (props: MapProps):JSX.Element{
       className={ thisClass }
       ref={ mapRef }
       data-testid='Map'
-    >
-    </section>
+    />
   );
 }
 

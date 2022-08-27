@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, RefObject, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import AuthScreenCity from '../../components/auth-screen-city/auth-screen-city';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 import { AuthData, loginSession, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getRandomCity } from '../../utils/utils';
@@ -34,16 +34,7 @@ function AuthScreen ():JSX.Element {
 
   return (
     <div className='page page--gray page--login'>
-      <header className='header'>
-        <div className='container'>
-          <div className='header__wrapper'>
-            <div className='header__left'>
-              <Logo />
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className='page__main page__main--login'>
         <div className='page__login-container container'>
           <section className='login'>

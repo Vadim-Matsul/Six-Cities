@@ -13,6 +13,8 @@ enum ActionsType {
   CurrentSort = 'info/currentSort',
   RequireAuth = 'user/status/auth',
   SetUser = 'user/user_data',
+  SetLogOutProcess = 'user/logout/process',
+  SetLogoutError ='user/error/logout',
   Redirect = 'redirect',
 }
 
@@ -20,6 +22,8 @@ const ChangeCurrentCity = createAction< string >( ActionsType.CurrentCity );
 const ChangeCurrentSort = createAction< string >( ActionsType.CurrentSort );
 const RequireAuth = createAction< AuthorizationStatus >( ActionsType.RequireAuth );
 const SetUser = createAction< AuthUser | null >( ActionsType.SetUser );
+const SetLogOutProcess = createAction< boolean >( ActionsType.SetLogOutProcess );
+const SetLogoutError = createAction< boolean >( ActionsType.SetLogoutError);
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const ChangeOffers = createAction< CombineDataState<Offer> >( ActionsType.OffersList );
 const ChangeFavorites = createAction< CombineDataState<Offer> >( ActionsType.Favorites );
@@ -27,6 +31,8 @@ const ChangeNearOffers = createAction< CombineDataState<Offer> >( ActionsType.Ne
 const ChangeReviews = createAction< CombineDataState<Review> >( ActionsType.Reviews );
 
 export {
+  SetLogoutError,
+  SetLogOutProcess,
   ChangeCurrentCity,
   ChangeOffers,
   ChangeCurrentSort,

@@ -9,6 +9,7 @@ import useHighlighted from '../../hooks/useHighlighted';
 import Header from '../../components/header/header';
 import { getCurrentCity, getCurrentSort, getSortedOffers } from '../../store/reducer/logic-reducer/selectors';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 
 
 function MainScreen ( ):JSX.Element{
@@ -17,6 +18,10 @@ function MainScreen ( ):JSX.Element{
   const currentCity = useSelector( getCurrentCity );
   const currentSort = useSelector( getCurrentSort );
   const offersOfCity = useSelector( getSortedOffers );
+
+  const mainClass = classNames('cities__places-container', 'container', {
+    'cities__places-container--empty' : offersOfCity.length
+  });
 
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);
   const City = GeoCity[currentCity];
@@ -30,7 +35,7 @@ function MainScreen ( ):JSX.Element{
         <LocationList uniqueCity={ currentCity } />
         <div className='cities'>
           <div
-            className={`cities__places-container container ${offersOfCity.length ? '' : 'cities__places-container--empty'}`}
+            className={ mainClass }
             data-testid='MainScreen'
           >
             { offersOfCity.length
