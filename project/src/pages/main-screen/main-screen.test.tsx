@@ -2,23 +2,29 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createMemoryHistory } from 'history';
 import { AuthorizationStatus, FetchProgress, SortTypes } from '../../const';
 import { Offers } from '../../types/offers';
-import { makeFakeOffers } from '../../utils/mock';
+import { makeFakeAuthUser, makeFakeOffers } from '../../utils/mock';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { HistoryRouter } from '../../components/history-router/history-router';
 import MainScreen from './main-screen';
 
 const fakeOffers = makeFakeOffers();
+const fakeUser = makeFakeAuthUser();
 
 const makeLayout = (offers: Offers | []) => ({
   DATA:{
     offers: { data: offers, loadStatus: FetchProgress.Fulfilled },
+    favorites: { data: offers.slice().filter((offer) => offer.isFavorite)}
   },
   LOGIC:{
     currentCity: fakeOffers[0]['city']['name'],
     currentSort: SortTypes.POPULAR
   },
-  USER:{ authStatus: AuthorizationStatus.Auth }
+  USER:{
+    authStatus: AuthorizationStatus.Auth,
+    user: fakeUser,
+    logoutProcess: false,
+    logoutError: false}
 });
 
 const makeFakeStore = configureMockStore();

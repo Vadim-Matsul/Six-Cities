@@ -5,17 +5,23 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { HistoryRouter } from '../../components/history-router/history-router';
 import { AuthorizationStatus, FetchProgress } from '../../const';
-import { makeFakeOffers, makeFakeReviews } from '../../utils/mock';
+import { makeFakeAuthUser, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
 import PropertyScreen from './property-screen';
 
 const fakeOffers = makeFakeOffers();
 const mockId = { id: fakeOffers[0]['id'].toString() };
+const fakeUser = makeFakeAuthUser();
 
 const layout = (authStatus: AuthorizationStatus) => ({
-  USER:{ authStatus: authStatus },
+  USER:{
+    authStatus: authStatus,
+    user: fakeUser,
+    logoutProcess: false,
+    logoutError: false },
   DATA:{
     nearOffers: {id: 1, data: makeFakeOffers().slice(0,3), loadStatus: FetchProgress.Fulfilled },
-    reviews: {id: 1, data: makeFakeReviews(), loadStatus: FetchProgress.Fulfilled }
+    reviews: {id: 1, data: makeFakeReviews(), loadStatus: FetchProgress.Fulfilled },
+    favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)}
   }
 });
 
@@ -57,10 +63,15 @@ describe('Component: PropertyScreen', () => {
 
   it('correctly render when reviews & near-offers are not loaded', () => {
     const store = makeFakeStore({
-      USER:{ authStatus: AuthorizationStatus.Auth },
+      USER:{
+        authStatus: AuthorizationStatus.Auth,
+        user: fakeUser,
+        logoutProcess: false,
+        logoutError: false },
       DATA:{
         nearOffers: {id: Number(mockId), data: [], loadStatus: FetchProgress.Fulfilled },
-        reviews: {id: Number(mockId), data: [], loadStatus: FetchProgress.Fulfilled }
+        reviews: {id: Number(mockId), data: [], loadStatus: FetchProgress.Fulfilled },
+        favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)}
       }
     });
     render(

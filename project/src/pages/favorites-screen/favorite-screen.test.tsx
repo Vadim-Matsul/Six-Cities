@@ -6,14 +6,21 @@ import thunk from 'redux-thunk';
 import { HistoryRouter } from '../../components/history-router/history-router';
 import { AuthorizationStatus, FetchProgress } from '../../const';
 import { Offers } from '../../types/offers';
-import { makeFakeOffers } from '../../utils/mock';
+import { makeFakeAuthUser, makeFakeOffers } from '../../utils/mock';
 import FavoritesScreen from './favorites-screen';
+
+const fakeUser = makeFakeAuthUser();
 
 const makeLayout = (data: Offers | [], loadStatus: FetchProgress) => ({
   DATA:{
     favorites: { data: data, loadStatus: loadStatus },
   },
-  USER:{ authStatus: AuthorizationStatus.Auth }
+  USER:{
+    authStatus: AuthorizationStatus.Auth,
+    user: fakeUser,
+    logoutProcess: false,
+    logoutError: false
+  }
 });
 
 const makeFakeStore = configureMockStore( [thunk] );

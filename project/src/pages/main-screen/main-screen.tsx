@@ -20,7 +20,7 @@ function MainScreen ( ):JSX.Element{
   const offersOfCity = useSelector( getSortedOffers );
 
   const mainClass = classNames('cities__places-container', 'container', {
-    'cities__places-container--empty' : offersOfCity.length
+    'cities__places-container--empty' : !offersOfCity.length
   });
 
   const [selectedOffer, setSelectedOffer] = useHighlighted(offersOfCity);

@@ -5,7 +5,7 @@ import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
-import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetUser } from './actions';
+import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetLogoutError, SetLogOutProcess, SetUser } from './actions';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { generatePath } from 'react-router-dom';
@@ -94,6 +94,8 @@ describe('Middleware: Thunk', () => {
 
     it ('should set offers data & change load-flag when server return 200', async () => {
       const fakeOffers = makeFakeOffers();
+      const favorites = fakeOffers.slice().filter( (offer) => offer.isFavorite );
+
       fakeAPI
         .onGet(APIRoute.Offers)
         .reply(200, fakeOffers);
@@ -101,6 +103,7 @@ describe('Middleware: Thunk', () => {
       await store.dispatch( fetchOffers() );
       expect(store.getActions()).toEqual([
         ChangeOffers({data: [], loadStatus: Pending}),
+        ChangeFavorites({data: favorites, loadStatus: Fulfilled}),
         ChangeOffers({data: fakeOffers, loadStatus: Fulfilled})
       ]);
     });
@@ -201,7 +204,6 @@ describe('Middleware: Thunk', () => {
       expect(store.getActions()).toEqual([
         RequireAuth(Auth),
         SetUser(fakeAuthUser),
-        RedirectToPath(AppRoute.Main)
       ]);
       expect(Storage.prototype.setItem).toBeCalledTimes(1);
       expect(Storage.prototype.setItem).toBeCalledWith('six-cities', fakeAuthUser.token);
@@ -263,13 +265,31 @@ describe('Middleware: Thunk', () => {
       expect(fakeStore.getActions()).toEqual( [] );
       await fakeStore.dispatch( logoutSession() );
       expect(fakeStore.getActions()).toEqual([
+        SetLogOutProcess(true),
         ChangeOffers({data: offersWithoutIsFavoriteTrue, loadStatus: Fulfilled}),
         ChangeFavorites({data: [], loadStatus: Idle}),
         RequireAuth( NoAuth ),
-        SetUser(null)
+        RedirectToPath( AppRoute.Auth ),
+        SetUser(null),
+        SetLogOutProcess(false)
       ]);
       expect(Storage.prototype.removeItem).toBeCalledTimes(1);
       expect(Storage.prototype.removeItem).toBeCalledWith('six-cities');
+    });
+
+    it('should set error & change logoutProcess when server return 4**', async () => {
+      const fakeStore = makeFakeStore();
+      fakeAPI
+        .onDelete(APIRoute.Logout)
+        .reply( 400 );
+
+      expect(fakeStore.getActions()).toEqual( [] );
+      await fakeStore.dispatch( logoutSession() );
+      expect(fakeStore.getActions()).toEqual([
+        SetLogOutProcess(true),
+        SetLogoutError( true ),
+        SetLogOutProcess(false)
+      ]);
     });
 
   });

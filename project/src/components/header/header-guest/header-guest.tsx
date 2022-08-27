@@ -6,6 +6,7 @@ export const HeaderGuest = ():JSX.Element => (
     <Link
       to={AppRoute.Auth}
       className='header__nav-link header__nav-link--profile'
+      data-testid='header-auth'
     >
       <div className='header__avatar-wrapper user__avatar-wrapper'/>
       <span className='header__login'>Sign in</span>

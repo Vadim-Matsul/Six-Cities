@@ -139,7 +139,7 @@ const logoutSession = ():ThunkActionResualt =>
         dispatch(ChangeOffers({data: notElectedArr, loadStatus: Fulfilled}) );
         dispatch(ChangeFavorites({data: [], loadStatus: Idle }) );
         dispatch(RequireAuth(NoAuth) );
-        dispatch( RedirectToPath( AppRoute.Auth ) );
+        dispatch(RedirectToPath( AppRoute.Auth ) );
         dispatch(SetUser(null) );
       })
       .catch((err) => {

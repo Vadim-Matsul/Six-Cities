@@ -61,6 +61,7 @@ export const HeaderUser = ():JSX.Element => {
         <Link
           to={ AppRoute.Favorites }
           className={ navigationWrapper }
+          data-testid='header-favorites'
         >
           <div className='header__avatar-wrapper user__avatar-wrapper'/>
           <span className='header__user-name user__name'>{ user!.name }</span>
@@ -72,6 +73,7 @@ export const HeaderUser = ():JSX.Element => {
           href={ AppRoute.Main }
           onClick={ (evt) => handlerLogOut( evt ) }
           className='header__nav-link header__nav-link--profile'
+          data-testid='header-logout'
         >
           <span
             className={ spanClass }

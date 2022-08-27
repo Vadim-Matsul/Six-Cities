@@ -5,13 +5,21 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { makeFakeAuthUser } from '../../utils/mock';
 import { HistoryRouter } from '../history-router/history-router';
 import Header from './header';
 
+const fakeUser = makeFakeAuthUser();
 
 const makeLayout = (authStatus:AuthorizationStatus) => ({
   USER:{
-    authStatus: authStatus
+    authStatus: authStatus,
+    user: fakeUser,
+    logoutProcess: false,
+    logoutError: false
+  },
+  DATA:{
+    favorites: { data: [] },
   }
 });
 type State = ReturnType<typeof makeLayout>;
@@ -62,31 +70,6 @@ describe('Component: Header', () => {
       expect(screen.queryByText(/Favorites Screen/i)).not.toBeInTheDocument();
       await userEvent.click(screen.getByTestId('header-favorites'));
       expect(screen.getByText(/Favorites Screen/i)).toBeInTheDocument();
-    });
-
-    it('successfully redirect to main screen', async () => {
-      if(isAuth){
-        history.push('/triggeredForHeader');
-        render(
-          <Provider store={ store }>
-            <HistoryRouter history={ history }>
-              <Routes>
-                <Route
-                  path={ AppRoute.Main }
-                  element={ <h1>Main Screen</h1> }
-                />
-                <Route
-                  path='*'
-                  element={ <Header/> }
-                />
-              </Routes>
-            </HistoryRouter>
-          </Provider>
-        ); }
-
-      expect(screen.queryByText(/Main Screen/i)).not.toBeInTheDocument();
-      await userEvent.click(screen.getByTestId('header-main'));
-      expect(screen.getByText(/Main Screen/i)).toBeInTheDocument();
     });
 
   });
