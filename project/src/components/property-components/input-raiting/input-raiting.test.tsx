@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { RaitingInputData } from '../../const';
+import { RaitingInputData } from '../../../const';
 import InputRaiting from './input-raiting';
 
 describe('Component: InputRaiting', () => {

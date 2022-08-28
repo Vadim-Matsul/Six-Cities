@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeOffer } from '../../utils/mock';
+import { makeFakeOffer } from '../../../utils/mock';
 import PropertyGood from './property-good';
 
 

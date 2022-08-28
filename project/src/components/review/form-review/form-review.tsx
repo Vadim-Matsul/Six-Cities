@@ -1,4 +1,4 @@
-import InputRaiting from '../../../components/input-raiting/input-raiting';
+import InputRaiting from '../../property-components/input-raiting/input-raiting';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { ReviewState } from '../../../types/reviews';
 import { useDispatch } from 'react-redux';

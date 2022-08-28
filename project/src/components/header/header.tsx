@@ -1,4 +1,4 @@
-import Logo from '../logo/logo';
+import Logo from './logo/logo';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { HeaderNav } from './header-nav/header-nav';

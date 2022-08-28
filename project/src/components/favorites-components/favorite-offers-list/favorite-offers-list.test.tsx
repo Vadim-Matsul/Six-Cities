@@ -2,9 +2,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { AuthorizationStatus } from '../../const';
-import { makeFakeOffers } from '../../utils/mock';
-import { HistoryRouter } from '../history-router/history-router';
+import { AuthorizationStatus } from '../../../const';
+import { makeFakeOffers } from '../../../utils/mock';
+import { HistoryRouter } from '../../history-router/history-router';
 import FavoriteOffersList from './favorite-offers-list';
 
 const fakeOffers = makeFakeOffers();

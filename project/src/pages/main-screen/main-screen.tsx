@@ -1,4 +1,4 @@
-import OfferList from '../../components/offer-list/offer-list';
+import OfferList from '../../components/offer-components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
 import {CardPageClass, GeoCity} from '../../const';
 import Map from '../../components/map/map';

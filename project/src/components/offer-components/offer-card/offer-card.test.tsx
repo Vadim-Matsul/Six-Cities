@@ -4,9 +4,9 @@ import UserEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, CardPageClass } from '../../const';
-import { makeFakeOffer } from '../../utils/mock';
-import { HistoryRouter } from '../history-router/history-router';
+import { AppRoute, AuthorizationStatus, CardPageClass } from '../../../const';
+import { makeFakeOffer } from '../../../utils/mock';
+import { HistoryRouter } from '../../history-router/history-router';
 import OfferCard from './offer-card';
 
 const fakeSetSelectedOffer = jest.fn();

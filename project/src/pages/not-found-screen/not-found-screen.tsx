@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
+import Logo from '../../components/header/logo/logo';
 
 function NotFoundScreen (){
   return (

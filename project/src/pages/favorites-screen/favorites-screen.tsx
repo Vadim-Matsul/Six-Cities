@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
-import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
+import FavoriteOffersList from '../../components/favorites-components/favorite-offers-list/favorite-offers-list';
 import Header from '../../components/header/header';
 import EmptyFavoritesScreen from '../empty-favorites-screen/empty-favorites-screen';
 import { useSelector, useDispatch } from 'react-redux';

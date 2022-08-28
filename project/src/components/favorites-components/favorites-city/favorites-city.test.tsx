@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { INITIAL_CURRENT_CITY } from '../../const';
-import { HistoryRouter } from '../history-router/history-router';
+import { INITIAL_CURRENT_CITY } from '../../../const';
+import { HistoryRouter } from '../../history-router/history-router';
 import FavoritesCity from './favorites-city';
 
 const makeFakeStore = configureMockStore();

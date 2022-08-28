@@ -1,10 +1,10 @@
 import React from 'react';
-import { Offer } from '../../types/offers';
-import { capitalizeFirstLetter, getStars } from '../../utils/utils';
-import { BookMarkClass, CardPageClass, ImageSize } from '../../const';
+import { Offer } from '../../../types/offers';
+import { capitalizeFirstLetter, getStars } from '../../../utils/utils';
+import { BookMarkClass, CardPageClass, ImageSize } from '../../../const';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import BookMarkButton from '../bookmark-button/bookmark-button';
+import { AppRoute } from '../../../const';
+import BookMarkButton from '../../bookmark-button/bookmark-button';
 
 
 type OfferCardProps = {

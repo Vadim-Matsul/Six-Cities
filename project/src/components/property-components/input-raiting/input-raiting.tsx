@@ -1,4 +1,4 @@
-import { RaitingInputData } from '../../const';
+import { RaitingInputData } from '../../../const';
 import { Fragment, ReactElement } from 'react';
 
 type inputRaitingProps = {
