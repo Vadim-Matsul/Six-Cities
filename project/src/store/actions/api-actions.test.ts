@@ -5,7 +5,7 @@ import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
-import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetLogoutError, SetLogOutProcess, SetUser } from './actions';
+import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetUser } from './actions';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { generatePath } from 'react-router-dom';
@@ -207,6 +207,18 @@ describe('Middleware: Thunk', () => {
       ]);
       expect(Storage.prototype.setItem).toBeCalledTimes(1);
       expect(Storage.prototype.setItem).toBeCalledWith('six-cities', fakeAuthUser.token);
+    });
+
+    it('should set loginError-flag to "true" when server return 4**', async () => {
+      const fakeAuthUser = makeFakeAuthUser();
+      const fakeAuthData:AuthData = { email: fakeAuthUser.email, password: 'juniorFD'};
+      fakeAPI
+        .onPost(APIRoute.Login)
+        .reply( 400 );
+
+      expect(store.getActions()).toEqual([]);
+      await store.dispatch( loginSession( fakeAuthData ) );
+      expect(store.getActions()).toEqual([ SetloginError( true ) ]);
     });
 
   });

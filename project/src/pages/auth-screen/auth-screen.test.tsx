@@ -9,7 +9,7 @@ import { AppRoute } from '../../const';
 import { Route, Routes } from 'react-router-dom';
 
 const makeFakeStore = configureMockStore();
-const store = makeFakeStore({});
+const store = makeFakeStore({USER:{ loginError:false }});
 
 const history = createMemoryHistory();
 

@@ -88,6 +88,7 @@ const AuthScreenRegistrationForm:React.FC = () => {
           type='email'
           placeholder='Email'
           data-testid = 'login'
+          role={'form'}
           {...registerForEmail}
         />
         { errors.email && <MessageError isAuthScreen message={ errors.email.message }/> }
@@ -99,6 +100,7 @@ const AuthScreenRegistrationForm:React.FC = () => {
           type='password'
           placeholder='Password'
           data-testid = 'password'
+          role={'form'}
           {...registerForPassword}
         />
         { errors.password && <MessageError isAuthScreen message={ errors.password.message }/> }
