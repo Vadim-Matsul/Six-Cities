@@ -45,9 +45,10 @@ export const HeaderUser = ():JSX.Element => {
     return () => {
       if (timer.current){
         clearTimeout( timer.current );
+        timer.current = null;
       }
     };
-  },[logoutError]);
+  },[logoutError, dispatch]);
 
   function handlerLogOut (evt: React.MouseEvent< HTMLAnchorElement >) {
     evt.preventDefault();
@@ -64,7 +65,7 @@ export const HeaderUser = ():JSX.Element => {
           data-testid='header-favorites'
         >
           <div className='header__avatar-wrapper user__avatar-wrapper'/>
-          <span className='header__user-name user__name'>{ user!.name }</span>
+          <span className='header__user-name user__name'>{ user?.name }</span>
           <span className='header__favorite-count'>{ data.length }</span>
         </Link>
       </li>

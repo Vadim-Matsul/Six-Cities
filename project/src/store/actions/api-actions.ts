@@ -1,5 +1,5 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
@@ -123,10 +123,16 @@ const checkAuth = ():ThunkActionResualt =>
 
 const loginSession = ({ email, password }:AuthData):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.post<AuthUser>(APIRoute.Login, {email, password});
-    saveToken(data.token);
-    dispatch(RequireAuth(Auth));
-    dispatch(SetUser(data));
+    await api.post<AuthUser>(APIRoute.Login, {email, password})
+      .then( ( {data} ) => {
+        saveToken(data.token);
+        dispatch(RequireAuth(Auth));
+        dispatch(SetUser(data));
+      })
+      .catch((err:Error) => {
+        toast.error(err.message);
+        dispatch( SetloginError(true) );
+      });
   };
 
 const logoutSession = ():ThunkActionResualt =>

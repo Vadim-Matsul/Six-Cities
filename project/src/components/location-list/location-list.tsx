@@ -1,4 +1,4 @@
-import { GeoCity } from '../../const';
+import { AppRoute, GeoCity } from '../../const';
 import { ChangeCurrentCity } from '../../store/actions/actions';
 import { useDispatch } from 'react-redux';
 
@@ -20,7 +20,7 @@ function LocationList ({ uniqueCity }:LocationListProps){
             <li className='locations__item' key={ city } >
               <a
                 className={`locations__item-link tabs__item ${uniqueCity === city ? 'tabs__item--active' : ''}`}
-                href='#'
+                href={ AppRoute.Main }
                 onClick={(ev) => {
                   ev.preventDefault();
                   dispatch( ChangeCurrentCity(city) );

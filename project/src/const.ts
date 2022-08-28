@@ -44,6 +44,18 @@ export enum FetchProgress {
   Idle = 'IDLE'
 }
 
+export enum MessageConfig {
+  required = 'Required field',
+  patternEmail = 'Wrong email format',
+  patternPassword = 'Password must contain Letters and Numbers',
+  minLengthPassword = 'password must be 8 symbols'
+}
+
+export const Pattern = {
+  Email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  Password: /^(?=.*[A-Za-z])(?!.* )(?=.*\d).{1,}$/
+};
+
 export const HTTPConfig = {
   UnAuth: 'Unauthorized',
   BadRequest: 'Bad Request',
