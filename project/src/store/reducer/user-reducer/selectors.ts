@@ -6,4 +6,6 @@ export const getAuthStatus = ( state: State ):AuthorizationStatus => state[Reduc
 export const getUser = (state: State):AuthUser | null => state[ReducerNode.User].user ;
 export const getLogoutError = (state: State):boolean => state[ReducerNode.User].logoutError ;
 export const getLoginError = (state: State):boolean => state[ReducerNode.User].loginError ;
+export const getReviewError = (state: State):boolean => state[ReducerNode.User].reviewError ;
 export const getLogoutProcess = (state: State):boolean => state[ReducerNode.User].logoutProcess ;
+

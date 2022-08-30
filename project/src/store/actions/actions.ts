@@ -16,6 +16,7 @@ enum ActionsType {
   SetLogOutProcess = 'user/logout/process',
   SetLogoutError ='user/error/logout',
   SetLoginError ='user/error/login',
+  SetReviewError ='user/error/review',
   Redirect = 'redirect',
 }
 
@@ -26,6 +27,7 @@ const SetUser = createAction< AuthUser | null >( ActionsType.SetUser );
 const SetLogOutProcess = createAction< boolean >( ActionsType.SetLogOutProcess );
 const SetLogoutError = createAction< boolean >( ActionsType.SetLogoutError);
 const SetloginError = createAction< boolean >( ActionsType.SetLoginError );
+const SetReviewError = createAction< boolean >( ActionsType.SetReviewError );
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const ChangeOffers = createAction< CombineDataState<Offer> >( ActionsType.OffersList );
 const ChangeFavorites = createAction< CombineDataState<Offer> >( ActionsType.Favorites );
@@ -35,6 +37,7 @@ const ChangeReviews = createAction< CombineDataState<Review> >( ActionsType.Revi
 export {
   SetLogoutError,
   SetloginError,
+  SetReviewError,
   SetLogOutProcess,
   ChangeCurrentCity,
   ChangeOffers,

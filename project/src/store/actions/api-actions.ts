@@ -1,5 +1,5 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError, SetReviewError } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
@@ -58,14 +58,20 @@ const fetchReviews = (id: number):ThunkActionResualt =>
       });
   };
 
-const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt =>
-  async (dispatch, _getState, api) => {
-    dispatch(ChangeReviews({id, data:[], loadStatus: Pending}));
-    await api.post< Review[] >( `${generatePath(APIRoute.PostReview, {'hotel_id' : id.toString()})}`,{ comment, rating } )
-      .then( ({data}) => dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) ))
+const postReview = ( { id, comment, rating }:ReviewState ):ThunkActionResualt< Promise<boolean | undefined >> =>
+  async (dispatch, getState, api) => {
+    const reviews = getState().DATA.reviews.data;
+    dispatch(ChangeReviews({id, data:reviews, loadStatus: Pending}));
+    return await api.post< Review[] >( `${generatePath(APIRoute.PostReview, {'hotel_id' : id.toString()})}`,{ comment, rating } )
+      .then( ({data}) => {
+        dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
+        return true ;
+      })
       .catch((err) => {
         toast.error(err);
-        dispatch(ChangeReviews({id:null, data:[], loadStatus: Rejected}));
+        dispatch(ChangeReviews({id:null, data:reviews, loadStatus: Rejected}));
+        dispatch(SetReviewError( true ));
+        return undefined;
       });
   };
 

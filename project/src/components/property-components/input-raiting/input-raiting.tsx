@@ -3,9 +3,10 @@ import { Fragment, ReactElement } from 'react';
 
 type inputRaitingProps = {
   flag: boolean,
+  validate: any
 }
 
-function InputRaiting ( { flag }:inputRaitingProps ):ReactElement{
+function InputRaiting ( { flag, validate }:inputRaitingProps ):ReactElement{
 
   return (
     <>
@@ -13,12 +14,12 @@ function InputRaiting ( { flag }:inputRaitingProps ):ReactElement{
         <Fragment key={option.value} >
           <input
             className = 'form__rating-input visually-hidden'
-            name = 'rating'
             value = {`${option.value}`}
             id = {`${option.value}-stars`}
             type = 'radio'
             key={option.value}
             disabled={ flag }
+            {...validate}
           />
           <label
             className = {`reviews__rating-label ${flag ? '' : 'form__rating-label'}`}

@@ -20,3 +20,5 @@ export type ReviewState = {
   rating: null | number,
   comment: string
 }
+
+export type ReviewFormState = Omit<ReviewState, 'id'>

@@ -3,16 +3,15 @@ import { getLogoutError, getLogoutProcess, getUser } from '../../../store/reduce
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { getFavorites } from '../../../store/reducer/data-reducer/selectors';
-import { useEffect, useRef } from 'react';
 import { logoutSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
 import { SetLogoutError } from '../../../store/actions/actions';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import '../header.css';
+import { useTimeout } from '../../../hooks/useTimeout';
 
 export const HeaderUser = ():JSX.Element => {
 
-  const timer = useRef< null | NodeJS.Timeout >( null );
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const { pathname } = useLocation();
 
@@ -36,19 +35,7 @@ export const HeaderUser = ():JSX.Element => {
     'disable' : thisIsFavoritesScreen
   });
 
-  useEffect(() => {
-    if (!timer.current && logoutError){
-      timer.current = setTimeout(() => {
-        dispatch( SetLogoutError( false ) );
-      }, 3000);
-    }
-    return () => {
-      if (timer.current){
-        clearTimeout( timer.current );
-        timer.current = null;
-      }
-    };
-  },[logoutError, dispatch]);
+  useTimeout(logoutError, SetLogoutError, 3000);
 
   function handlerLogOut (evt: React.MouseEvent< HTMLAnchorElement >) {
     evt.preventDefault();

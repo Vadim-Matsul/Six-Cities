@@ -26,10 +26,18 @@
   }
 
 .review__error__message {
+        position: relative;
+             top: 3px;
            color: white;
       text-align: center;
-         padding: 5px;
-background-color: #ff4a4a;
+         padding: 7px;
+   margin-bottom: 5px;
+background-color: #f40202c6;
+   border-radius: 8px;
+}
+
+.review_sucessfully_submit {
+          border: 2px solid rgb(50, 205, 50);
 }
 
 .login__error__message {

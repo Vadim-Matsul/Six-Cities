@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { MessageConfig, Pattern } from '../../../const';
 import { AuthData, loginSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
@@ -7,6 +7,7 @@ import MessageError from '../../message-error/message-error';
 import { getLoginError } from '../../../store/reducer/user-reducer/selectors';
 import classNames from 'classnames';
 import { SetloginError } from '../../../store/actions/actions';
+import { useTimeout } from '../../../hooks/useTimeout';
 
 type HandleSubmitType = ( data: AuthData ) => void;
 
@@ -14,21 +15,9 @@ type HandleSubmitType = ( data: AuthData ) => void;
 const AuthScreenRegistrationForm:React.FC = () => {
 
   const dispatch = useDispatch() as ThunkDispatchResualt;
-  const timer:MutableRefObject< null | NodeJS.Timeout > = useRef( null );
   const loginError = useSelector( getLoginError );
 
-  useEffect(() => {
-    if (!timer.current && loginError ){
-      timer.current = setTimeout(() => {
-        dispatch( SetloginError(false) );
-      }, 2000);
-    }
-    return () => {
-      if(timer.current){
-        clearTimeout( timer.current );
-        timer.current = null;
-      }};
-  },[loginError, dispatch]);
+  useTimeout(loginError, SetloginError, 3000);
 
   const buttonClass = classNames('login__submit form__submit button', {
     'horizontal-shake login__submit__error' : loginError

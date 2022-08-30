@@ -48,7 +48,9 @@ export enum MessageConfig {
   required = 'Required field',
   patternEmail = 'Wrong email format',
   patternPassword = 'Password must contain Letters and Numbers',
-  minLengthPassword = 'password must be 8 symbols'
+  minLengthPassword = 'password must be 8 symbols',
+  minLengthComment = 'The min length for the comment should be 50 symbols. Thank you)',
+  maxLengthComment = '150 symbols is enought'
 }
 
 export const Pattern = {

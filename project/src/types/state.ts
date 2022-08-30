@@ -32,7 +32,8 @@ type UserState = {
   user: AuthUser | null,
   logoutProcess: boolean,
   logoutError: boolean,
-  loginError: boolean
+  loginError: boolean,
+  reviewError: boolean
 }
 
 type State = RootReducerState
