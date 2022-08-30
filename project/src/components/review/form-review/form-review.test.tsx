@@ -14,7 +14,7 @@ const FAKE_REVIEW_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing eli
 const FAKE_ID = faker.datatype.number(100);
 
 const makeFakeStore = configureMockStore( [thunk] );
-const store = makeFakeStore({});
+const store = makeFakeStore({ USER:{ reviewError: false }});
 
 const history = createMemoryHistory();
 
@@ -46,13 +46,13 @@ describe('Component: FormReview', () => {
 
     const textarea = screen.getByTestId('FormReview-textarea');
     const button = screen.getByRole('button');
-    const input = screen.getAllByRole('radio')[RaitingInputData.length - 1];
+    const input = screen.getAllByRole('radio')[RaitingInputData.length - 2];
 
     expect(screen.queryByDisplayValue(/Lorem ipsum dolor/i)).not.toBeInTheDocument();
     expect(button).toBeDisabled();
 
-    await userEvent.type(textarea, FAKE_REVIEW_TEXT);
     await userEvent.click(input);
+    await userEvent.type(textarea, FAKE_REVIEW_TEXT);
 
     expect(screen.getByDisplayValue(/Lorem ipsum dolor/i)).toBeInTheDocument();
     expect(button).not.toBeDisabled();

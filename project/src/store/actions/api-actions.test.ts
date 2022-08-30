@@ -5,7 +5,7 @@ import { State } from '../../types/state';
 import { Action }from 'redux';
 import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
-import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetUser } from './actions';
+import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetReviewError, SetUser } from './actions';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { generatePath } from 'react-router-dom';
@@ -16,7 +16,7 @@ const api = CreateApi();
 const fakeAPI = new MockAdapter( api );
 
 const makeFakeStore = configureMockStore< State, Action, ThunkDispatchResualt >( [thunk.withExtraArgument(api)] );
-const store = makeFakeStore();
+const store = makeFakeStore({DATA:{reviews:{ data:[] }}});
 
 const { Auth, NoAuth } = AuthorizationStatus;
 const { Fulfilled, Pending, Rejected, Idle } = FetchProgress;
@@ -254,7 +254,8 @@ describe('Middleware: Thunk', () => {
       await store.dispatch( postReview(reviewState) );
       expect(store.getActions()).toEqual([
         ChangeReviews({id: fakeOfferId, data: [], loadStatus: Pending}),
-        ChangeReviews({id: null, data: [], loadStatus: Rejected})
+        ChangeReviews({id: null, data: [], loadStatus: Rejected}),
+        SetReviewError( true )
       ]);
 
     });
