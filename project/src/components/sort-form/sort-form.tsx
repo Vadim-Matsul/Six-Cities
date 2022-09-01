@@ -1,7 +1,10 @@
+import React from 'react';
+
 import { SortTypes } from '../../const';
 import { useEffect, useState } from 'react';
-import { ChangeCurrentSort } from '../../store/actions/actions';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
+import SortFormLi from './sort-form-li/sort-form-li';
 
 type SortFormProps = {
   currentSort: string,
@@ -11,9 +14,15 @@ type SortFormProps = {
 
 function SortForm ({ currentSort, currentCity }:SortFormProps){
   const [show, setShow] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const sortArray = Object.values(SortTypes);
+
+  const showFormClass = classNames('places__options places__options--custom',{
+    'places__options--opened' : show
+  });
+  
   useEffect(() => setShow(false),[currentCity]);
+
+  const handlerShowForm = () => setShow( (prevState) => !prevState );
 
   return (
     <form className='places__sorting' action='#' method='get'>
@@ -25,34 +34,28 @@ function SortForm ({ currentSort, currentCity }:SortFormProps){
       <span
         className='places__sorting-type'
         tabIndex={ 0 }
-        onClick={() => setShow((prevState) => !prevState)}
+        onClick={ handlerShowForm }
         data-testid='SortForm-show'
-      > {currentSort}
+      > { currentSort }
         <svg className='places__sorting-arrow' width='7' height='4' >
           <use xlinkHref='#icon-arrow-select'/>
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${show ? 'places__options--opened' : ''}`}
+        className={ showFormClass }
         data-testid='SortForm-items'
       >
-        {sortArray.map((sort) => (
-          <li
-            className={`places__option ${currentSort === sort ? 'places__option--active' : ''}`}
-            key = { sort }
-            tabIndex={ 0 }
-            onClick={() => {
-              dispatch(ChangeCurrentSort(sort));
-              setShow((prevState) => !prevState);
-            }}
-            data-testid='SortForm-item'
-          >{ sort }
-          </li>
-        ))}
+        {sortArray.map((sort) =>
+          <SortFormLi
+            sort={ sort }
+            currentSort={ currentSort }
+            setShow={ setShow }
+            key={ sort }
+          />)}
       </ul>
     </form>
   );
 }
 
 
-export default SortForm;
+export default React.memo(SortForm);

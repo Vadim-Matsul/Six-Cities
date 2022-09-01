@@ -1,26 +1,28 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import useMap from '../../hooks/useMap';
 import { useEffect, useRef } from 'react';
 import { City, Offer, Offers } from '../../types/offers';
 import { Icon, Marker} from 'leaflet';
-import { AppRoute, IconMarkerSize, IconMarkerUrl } from '../../const';
+import { AppRoute, GeoCity, IconMarkerSize, IconMarkerUrl } from '../../const';
 import 'leaflet/dist/leaflet.css';
 import browserHistory from '../../browser-history';
 
 
 type MapProps = {
   offers: Offers,
-  city: City,
-  selectedOffer: Offer | undefined,
+  currentCity: string,
+  selectedOffer?: Offer | undefined,
   thisClass: string
 }
 
 
 function Map (props: MapProps):JSX.Element{
-  const { offers, city, selectedOffer, thisClass } = props;
+  const { offers,  currentCity, selectedOffer, thisClass } = props;
   const mapRef = useRef(null);
+  const city = useMemo(() => GeoCity[currentCity],[currentCity]) ;
   const map = useMap(mapRef, city);
-
+  
+  
   useEffect(() => {
     const Markers: Marker[] = [];
     if (map){
@@ -57,8 +59,4 @@ function Map (props: MapProps):JSX.Element{
 }
 
 
-export default memo(Map,(prevProps, nextProps) => (
-  prevProps.offers.length === nextProps.offers.length
-  && prevProps.selectedOffer === nextProps.selectedOffer
-  && prevProps.city === nextProps.city
-));
+export default memo(Map);

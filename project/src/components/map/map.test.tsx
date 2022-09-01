@@ -35,7 +35,7 @@ describe('Component: Map', () => {
       <HistoryRouter history={ history }>
         <Map
           offers={ fakeOffers }
-          city={ city }
+          currentCity={ city.name }
           selectedOffer={ selectedOffer }
           thisClass={ thisClass }
         />
@@ -51,7 +51,7 @@ describe('Component: Map', () => {
       <HistoryRouter history={ history }>
         <Map
           offers={ fakeOffers }
-          city={ city }
+          currentCity={ city.name }
           selectedOffer={ selectedOffer }
           thisClass={ thisClass }
         />

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { RaitingInputData } from '../../../const';
 import { HistoryRouter } from '../../history-router/history-router';
-import { FormReview } from './form-review';
+import FormReview from './form-review';
 
 
 const FAKE_REVIEW_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';

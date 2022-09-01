@@ -1,5 +1,5 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError, SetReviewError } from './actions';
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError, SetReviewError, ChangeOffer } from './actions';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
 import { dropToken, saveToken } from '../../service/token/token';
 import { Review, ReviewState } from '../../types/reviews';
@@ -34,10 +34,24 @@ const fetchOffers = ():ThunkActionResualt =>
       });
   };
 
-const fetchNearOffers = (id: number):ThunkActionResualt =>
+  const fetchOffer = ( id:string | undefined ):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
+    dispatch( ChangeOffer({data: null, loadStatus: Pending}) );
+    await api.get<Offer>(APIRoute.Offers + '/' + id)
+      .then(({data}) => {
+        dispatch( ChangeOffer({data: data, loadStatus: Fulfilled}) );
+      })
+      .catch((err: Error) => {
+        toast.error(err.message);
+        dispatch(ChangeOffer({data: null, loadStatus: Rejected}));
+      });
+  };
+
+const fetchNearOffers = (Id: string | undefined):ThunkActionResualt =>
+  async (dispatch, _getState, api) => {
+    const id = Number(Id);
     dispatch(ChangeNearOffers({id, data:[], loadStatus: Pending}));
-    await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': id.toString()})}`)
+    await api.get<Offers>(`${generatePath(APIRoute.GetNearOffers,{'hotel_id': Id})}`)
       .then(({data}) => dispatch( ChangeNearOffers({id, data, loadStatus: Fulfilled}) ))
       .catch((err:Error) => {
         toast.error(err.message);
@@ -45,10 +59,11 @@ const fetchNearOffers = (id: number):ThunkActionResualt =>
       });
   };
 
-const fetchReviews = (id: number):ThunkActionResualt =>
+const fetchReviews = (Id: string | undefined):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
+    const id = Number(Id);
     dispatch(ChangeReviews({id, data:[], loadStatus: Pending}));
-    await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : id.toString()})}`)
+    await api.get<Review[]>(`${generatePath(APIRoute.GetReviews,{'hotel_id' : Id})}`)
       .then(({data}) => {
         dispatch( ChangeReviews({id, data, loadStatus: Fulfilled}) );
       })
@@ -162,6 +177,7 @@ const logoutSession = ():ThunkActionResualt =>
 
 export {
   fetchOffers,
+  fetchOffer,
   postFavorites,
   checkAuth,
   loginSession,

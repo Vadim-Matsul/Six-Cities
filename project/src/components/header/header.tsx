@@ -1,9 +1,12 @@
+import React from 'react';
 import Logo from './logo/logo';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { HeaderNav } from './header-nav/header-nav';
 
 const Header = ():JSX.Element => {
+  console.log('rerender Header');
+  
   const location = useLocation().pathname;
   const shouldHideUserSection = location === AppRoute.Auth;
 
@@ -22,4 +25,4 @@ const Header = ():JSX.Element => {
 };
 
 
-export default Header;
+export default React.memo(Header);

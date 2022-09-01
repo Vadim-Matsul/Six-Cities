@@ -31,10 +31,10 @@ export enum CardPageClass {
   Favorites = 'favorites'
 }
 
-export enum BookMarkClass {
+export enum BlockClass {
   OfferCard = 'place-card',
   Property = 'property',
-
+  Reviews = 'reviews'
 }
 
 export enum FetchProgress {

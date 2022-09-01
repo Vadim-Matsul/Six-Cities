@@ -1,39 +1,34 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import BookMarkButton from '../../components/bookmark-button/bookmark-button';
-import Header from '../../components/header/header';
-import OfferList from '../../components/offer-components/offer-list/offer-list';
-import PropertyGood from '../../components/property-components/property-good/property-good';
-import PropertyImage from '../../components/property-components/property-image/property-image';
-import UserReview from '../../components/review/user-review/user-review';
-import { AuthorizationStatus, BookMarkClass, CardPageClass, FetchProgress, ImagesSize } from '../../const';
-import { Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
-import { capitalizeFirstLetter, getStars } from '../../utils/utils';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchNearOffers, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getNearOffers, getReviews } from '../../store/reducer/data-reducer/selectors';
-import { FormReview } from '../../components/review/form-review/form-review';
+
+import { fetchNearOffers, fetchOffer, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { AuthorizationStatus, BlockClass, CardPageClass, FetchProgress, ImagesSize } from '../../const';
+import { getNearOffers, getOffer, getReviews } from '../../store/reducer/data-reducer/selectors';
+import FormReview from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { Loader } from '../../components/loader/loader';
-import Map from '../../components/map/map';
-import useHighlighted from '../../hooks/useHighlighted';
+import { useDispatch, useSelector } from 'react-redux';
+import { Reviews } from '../../types/reviews';
+import { useParams } from 'react-router-dom';
+
+import Header from '../../components/header/header';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import RaitingBlock from '../../components/raiting-block/raiting-block';
+import UserReview from '../../components/review/user-review/user-review';
+import BookMarkButton from '../../components/bookmark-button/bookmark-button';
+import PropertyGood from '../../components/property-components/property-good/property-good';
+import PropertyImage from '../../components/property-components/property-image/property-image';
+import PropertyFeatures from '../../components/property-components/property-features/property-features';
+import PropertyScreenWithNear from '../../components/property-components/property-screen-with-near/property-screen-with-near';
 
 
-type PropertyScreenProps = {
-  offers: Offers
-}
+function PropertyScreen ():JSX.Element{
 
-function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
-
-  const { id } = useParams();
-  const numId = Number(id);
-  const NanNumId = !numId;
-  const offer = offers.find((item) => item.id === numId);
-  const NanOffer = !offer;
   const dispatch = useDispatch() as ThunkDispatchResualt;
 
+  const { id } = useParams();
+  const Id = Number(id);
+
+  const { data, loadStatus } = useSelector( getOffer );
   const nearOffers = useSelector( getNearOffers );
   const reviews = useSelector( getReviews );
 
@@ -44,109 +39,95 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
   // ( заглушки избавляют от actions в Redux DevTools, не приносящих изменения ( states are equal ) )
 
   useEffect(() => {
-    if ( nearOffers.id !== numId && reviews.id !== numId && !NanOffer && !nearPlug.current && !reviewPlug.current ){
+    dispatch( fetchOffer(id) )
+  },[id]);
+
+  useEffect(() => {
+    if ( nearOffers.id !== Id && reviews.id !== Id && !nearPlug.current && !reviewPlug.current ){
       nearPlug.current = true;
       reviewPlug.current = true;
-      dispatch( fetchNearOffers(numId) );
-      dispatch( fetchReviews(numId) );
+      dispatch( fetchNearOffers( id ) );
+      dispatch( fetchReviews( id ) );
     }
-  },[numId]);
+  },[id]);
 
-  if ( nearOffers.data.length && reviews.data.length && nearOffers.id !== numId && reviews.id !== numId ){
+  if ( nearOffers.data.length && reviews.data.length && nearOffers.id !== Id && reviews.id !== Id ){
     nearPlug.current = false; reviewPlug.current = false;
   }
 
-
   const authStatus = useSelector( getAuthStatus );
-  const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers.data);
+  const { Fulfilled } = FetchProgress;
 
-  if (NanNumId || NanOffer ){
+
+  if (nearOffers.loadStatus !== Fulfilled || reviews.loadStatus !== Fulfilled || loadStatus !== Fulfilled ){
+    return <Loader />;
+  }  
+  
+  if ( data === null ){
     return <NotFoundScreen />;
   }
 
-  const images:string[] = offer.images.slice(ImagesSize.START, ImagesSize.END);
-  const raiting = getStars( offer.rating );
-  const offerType = capitalizeFirstLetter(offer.type);
-  const offersForMap = [...nearOffers.data, offer];
-
-  if (nearOffers.loadStatus !== FetchProgress.Fulfilled && reviews.loadStatus !== FetchProgress.Fulfilled){
-    return <Loader />;
-  }
-
-
+  console.log('property screen rerender');
+  
   return (
     <div className='page'>
       <Header />
       <main className='page__main page__main--property'>
         <section className='property'>
-          <div className='property__gallery-container container'>
-            <div className='property__gallery'>
-              {images.map( (src) => <PropertyImage src={ src } key={ src }/> ) }
-            </div>
-          </div>
+          <PropertyImage Images={ data.images }/>
           <div className='property__container container'>
             <div className='property__wrapper'>
               <div
                 className='property__mark'
-                hidden={!offer.isPremium}
+                hidden={!data.isPremium}
               >
                 <span>Premium</span>
               </div>
               <div className='property__name-wrapper'>
                 <h1 className='property__name'>
-                  { offer.title }
+                  { data.title }
                 </h1>
                 <BookMarkButton
-                  bookmarkClass={ BookMarkClass.Property }
-                  isFavorite = { offer.isFavorite }
-                  id = { offer.id }
+                  bookmarkClass={ BlockClass.Property }
+                  isFavorite = { data.isFavorite }
+                  id = { data.id }
                 />
               </div>
-
-              <div className='property__rating rating'>
-                <div className='property__stars rating__stars'>
-                  <span style={{ width: raiting }}></span>
-                  <span className='visually-hidden'>Rating</span>
-                </div>
-                <span className='property__rating-value rating__value'>{offer.rating}</span>
-              </div>
-              <ul className='property__features'>
-                <li className='property__feature property__feature--entire'>
-                  {offerType}
-                </li>
-                <li className='property__feature property__feature--bedrooms'>
-                  {offer.bedrooms} Bedrooms
-                </li>
-                <li className='property__feature property__feature--adults'>
-                  Max {offer.maxAdults} adults
-                </li>
-              </ul>
+              <RaitingBlock
+                Raiting={ data.rating }
+                Raiting_class={ BlockClass.Property }
+              />
+              <PropertyFeatures
+                type={ data.type }
+                bedrooms={ data.bedrooms }
+                adults={ data.maxAdults }
+              />
               <div className='property__price'>
-                <b className='property__price-value'>&euro;{offer.price}</b>
+                <b className='property__price-value'>&euro;{data.price}</b>
                 <span className='property__price-text'>&nbsp;night</span>
               </div>
-              <PropertyGood goods={offer.goods}/>
+              <PropertyGood goods={data.goods}/>
               <div className='property__host'>
                 <h2 className='property__host-title'>Meet the host</h2>
                 <div className='property__host-user user'>
                   <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
-                    <img className='property__avatar user__avatar' src={offer.host.avatarUrl} width='74' height='74'
+                    <img className='property__avatar user__avatar' src={data.host.avatarUrl} width='74' height='74'
                       alt='Host avatar'
                     />
                   </div>
                   <span className='property__user-name'>
-                    {offer.host.name}
+                    {data.host.name}
                   </span>
                   <span
                     className='property__user-status'
-                    hidden={!offer.host.isPro}
+                    hidden={!data.host.isPro}
                   >
                     Pro
                   </span>
                 </div>
                 <div className='property__description'>
                   <p className='property__text'>
-                    {offer.description}
+                    {data.description}
                   </p>
                 </div>
               </div>
@@ -161,40 +142,23 @@ function PropertyScreen ( { offers }:PropertyScreenProps ):JSX.Element{
                   </>
                   : null }
                 { authStatus === AuthorizationStatus.Auth && reviews.data.length
-                  ? <FormReview id={ numId }/>
+                  ? <FormReview id={ Id }/>
                   : null }
               </section>
             </div>
           </div>
+          </section>
           { nearOffers.data.length
-            ?
-            <Map
-              offers={ offersForMap }
-              city={ offer.city }
-              selectedOffer={ selectedOffer }
-              thisClass= 'property__map map'
+            ? 
+            <PropertyScreenWithNear
+              nearOffers={ nearOffers.data }
+              data={ data }
             />
             : null }
-        </section>
-        { nearOffers.data.length
-          ?
-          <div className='container'>
-            <section className='near-places places'>
-              <h2 className='near-places__title'>Other places in the neighbourhood</h2>
-              <div className='near-places__list places__list'>
-                <OfferList
-                  cardClass={ CardPageClass.Property }
-                  offers = {nearOffers.data}
-                  setSelectedOffer={ setSelectedOffer }
-                />
-              </div>
-            </section>
-          </div>
-          : null }
       </main>
     </div>
   );
 }
 
 
-export default React.memo(PropertyScreen);
+export default PropertyScreen;

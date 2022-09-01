@@ -1,10 +1,11 @@
 import React from 'react';
 import { Offer } from '../../../types/offers';
 import { capitalizeFirstLetter, getStars } from '../../../utils/utils';
-import { BookMarkClass, CardPageClass, ImageSize } from '../../../const';
+import { BlockClass, CardPageClass, ImageSize } from '../../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import BookMarkButton from '../../bookmark-button/bookmark-button';
+import RaitingBlock from '../../raiting-block/raiting-block';
 
 
 type OfferCardProps = {
@@ -16,7 +17,7 @@ type OfferCardProps = {
 
 function OfferCard ( props: OfferCardProps ):JSX.Element {
   const { offer, cardClass, setSelectedOffer } = props;
-
+  console.log('OfferCard');
   const rating = getStars ( offer.rating );
   const offerType = capitalizeFirstLetter (offer.type);
 
@@ -58,21 +59,15 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
           <BookMarkButton
-            bookmarkClass = { BookMarkClass.OfferCard }
+            bookmarkClass = { BlockClass.OfferCard }
             isFavorite = { offer.isFavorite }
             id = { offer.id }
           />
         </div>
-        <div className='place-card__rating rating'>
-          <div className='place-card__stars rating__stars'>
-            <span style={{width: rating}}></span>
-            <span
-              className='visually-hidden'
-              data-testid='OfferCard-rating'
-            >Rating {offer.rating}
-            </span>
-          </div>
-        </div>
+        <RaitingBlock
+          Raiting={ offer.rating }
+          Raiting_class={ BlockClass.OfferCard }
+        />
         <h2 className='place-card__name'>
           <Link
             to = {`${AppRoute.Property}/${offer.id}`}
@@ -88,4 +83,4 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
 }
 
 
-export default React.memo(OfferCard, (prev, next) => prev.offer === next.offer) ;
+export default OfferCard ;

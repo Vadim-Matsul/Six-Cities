@@ -1,10 +1,13 @@
+import React from 'react';
+
 
 type PropertyGoodProps = {
   goods: string[]
 }
 
 function PropertyGood ({goods}:PropertyGoodProps):JSX.Element{
-
+  console.log('PropertyGood reredner');
+  
   return (
     <div className='property__inside'>
       <h2 className='property__inside-title'>What&apos;s inside</h2>
@@ -23,4 +26,4 @@ function PropertyGood ({goods}:PropertyGoodProps):JSX.Element{
 }
 
 
-export default PropertyGood;
+export default React.memo(PropertyGood);

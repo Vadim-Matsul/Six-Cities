@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { HistoryRouter } from '../../history-router/history-router';
 import thunk from 'redux-thunk';
 import { Route, Routes } from 'react-router-dom';
-import { HeaderUser } from './header-user';
+import HeaderUser from './header-user';
 
 
 const fakeUser = makeFakeAuthUser();

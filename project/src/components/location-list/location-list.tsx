@@ -1,6 +1,6 @@
-import { AppRoute, GeoCity } from '../../const';
-import { ChangeCurrentCity } from '../../store/actions/actions';
-import { useDispatch } from 'react-redux';
+import React, { useMemo } from 'react';
+import { GeoCity } from '../../const';
+import LocationListLi from './location-list-li/location-list-li';
 
 type LocationListProps = {
   uniqueCity: string,
@@ -8,27 +8,18 @@ type LocationListProps = {
 
 
 function LocationList ({ uniqueCity }:LocationListProps){
-  const Sities = Object.keys(GeoCity);
-  const dispatch = useDispatch();
-
+  const Sities = useMemo(() => Object.keys(GeoCity),[GeoCity]);
 
   return (
     <div className='tabs'>
       <section className='locations container'>
         <ul className='locations__list tabs__list'>
-          { Sities.map((city) => (
-            <li className='locations__item' key={ city } >
-              <a
-                className={`locations__item-link tabs__item ${uniqueCity === city ? 'tabs__item--active' : ''}`}
-                href={ AppRoute.Main }
-                onClick={(ev) => {
-                  ev.preventDefault();
-                  dispatch( ChangeCurrentCity(city) );
-                }}
-              >
-                <span>{city}</span>
-              </a>
-            </li>)
+          { Sities.map((city) =>
+            <LocationListLi
+              city={ city }
+              uniqueCity={ uniqueCity }
+              key={ city }  
+            />
           )}
         </ul>
       </section>
@@ -37,4 +28,4 @@ function LocationList ({ uniqueCity }:LocationListProps){
 }
 
 
-export default LocationList;
+export default React.memo(LocationList);

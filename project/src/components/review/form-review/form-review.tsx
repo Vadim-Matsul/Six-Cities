@@ -9,8 +9,9 @@ import classNames from 'classnames';
 import { getReviewError } from '../../../store/reducer/user-reducer/selectors';
 import { useTimeout } from '../../../hooks/useTimeout';
 import { SetReviewError } from '../../../store/actions/actions';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import React from 'react';
 
 
 type FormReviewProps = {
@@ -18,20 +19,24 @@ type FormReviewProps = {
 }
 
 
-export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
+const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const reviewError = useSelector( getReviewError );
   const submitFlag = useRef<undefined | boolean>( undefined );
-
+  console.log('FormReview rerender');
+  
   useTimeout(reviewError, SetReviewError, 3000);
-
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    setError,
+    
     formState:{ errors, isValid, isSubmitting }
   } = useForm< ReviewFormState >({mode:'onChange'});
 
+  
   const textareaClass = classNames('reviews__textarea form__textarea',{
     'disable' : submitFlag.current
   });
@@ -49,7 +54,7 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
   const buttonText = submitFlag.current ? 'Successfully' : 'Submit' ;
   const buttonSubmit = isSubmitting ? 'Pending...' : buttonText ;
   const actualTextForButton = reviewError ? 'Error, try again' : buttonSubmit ;
-
+  
   const flagForSubmit = actualTextForButton === 'Successfully';
 
   async function HandlerSubmit ( review:ReviewFormState ) {
@@ -62,6 +67,7 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
 
   const registerForTextArea = {
     ...register('comment', {
+      required: MessageConfig.required,
       minLength:{
         value: 50,
         message: MessageConfig.minLengthComment
@@ -74,9 +80,9 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
 
   const registerForInput = {
     ...register('rating', {
-      required: MessageConfig.required
-    })};
+      required: MessageConfig.required,
 
+    })};
 
   return (
     <form
@@ -97,6 +103,7 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
       <textarea
         className={ textareaClass }
         id='review'
+        maxLength={ 150 }
         placeholder='Tell how was your stay, what you like and what can be improved'
         disabled={ flagForSubmit }
         data-testid='FormReview-textarea'
@@ -118,3 +125,6 @@ export const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
     </form>
   );
 };
+
+
+export default React.memo( FormReview );

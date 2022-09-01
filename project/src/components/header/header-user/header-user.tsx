@@ -9,8 +9,10 @@ import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import '../header.css';
 import { useTimeout } from '../../../hooks/useTimeout';
+import React from 'react';
+import HeaderUserInfo from './header-user-info/header-user-info';
 
-export const HeaderUser = ():JSX.Element => {
+const HeaderUser = ():JSX.Element => {
 
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const { pathname } = useLocation();
@@ -19,8 +21,6 @@ export const HeaderUser = ():JSX.Element => {
 
   const logoutError = useSelector( getLogoutError );
   const logoutProcess = useSelector( getLogoutProcess );
-  const user = useSelector( getUser );
-  const { data } = useSelector( getFavorites );
 
   const logOutText = logoutProcess ? 'Expect...' : 'Sign out';
 
@@ -51,9 +51,7 @@ export const HeaderUser = ():JSX.Element => {
           className={ navigationWrapper }
           data-testid='header-favorites'
         >
-          <div className='header__avatar-wrapper user__avatar-wrapper'/>
-          <span className='header__user-name user__name'>{ user?.name }</span>
-          <span className='header__favorite-count'>{ data.length }</span>
+          <HeaderUserInfo/>
         </Link>
       </li>
       <li className={ liClass }>
@@ -72,3 +70,5 @@ export const HeaderUser = ():JSX.Element => {
     </>
   );
 };
+
+export default React.memo(HeaderUser);

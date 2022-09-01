@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeString } from '../../../utils/mock';
+import { makeFakeOffer, makeFakeString } from '../../../utils/mock';
 import PropertyImage from './property-image';
 
 describe('Component: PropertyImage', () => {
 
   it('correctly render', () => {
-    const fakeString = makeFakeString();
-    render( <PropertyImage src={ fakeString }/> );
-    expect( screen.getByAltText(/Property Image/i) ).toBeInTheDocument();
+    const fakeOffer = makeFakeOffer();
+    render( <PropertyImage Images={ fakeOffer.images }/> );
+    expect( screen.getAllByAltText(/Property Image/i).length ).toBe(fakeOffer.images.length);
   });
 
 });

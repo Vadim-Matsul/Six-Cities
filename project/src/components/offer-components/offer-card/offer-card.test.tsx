@@ -26,7 +26,7 @@ describe('Component: OfferCard', () => {
     expect(screen.getByAltText(fO.title)).toBeInTheDocument();
     expect(screen.getByTestId('OfferCard-title').textContent).toBe(fO.title);
     expect(screen.getByTestId('OfferCard-price').textContent).toBe(`€${fO.price}`);
-    expect(screen.getByTestId('OfferCard-rating').textContent).toBe(`Rating ${fO.rating}`);
+    expect(screen.getByTestId('Rating-block').textContent).toBe(`Rating ${fO.rating}`);
   };
 
   it('successfully render', () => {

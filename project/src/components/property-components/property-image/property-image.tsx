@@ -1,18 +1,23 @@
+import React from 'react';
+import { ImagesSize } from "../../../const";
+import PropertyImg from "./property-img/property-img";
+
 type PropertyImageProps = {
-  src: string
+  Images: string[]
 }
 
-function PropertyImage ({src}:PropertyImageProps):JSX.Element {
+const PropertyImage: React.FC< PropertyImageProps > = ({Images}) => {
+  const images = Images.slice( ImagesSize.START, ImagesSize.END );
+  console.log('PropertyImage rerender');
+    
   return (
-    <div className='property__image-wrapper'>
-      <img
-        className='property__image'
-        src= { src }
-        alt='Property Image'
-      />
+    <div className='property__gallery-container container'>
+    <div className='property__gallery'>
+      {images.map( (src) => <PropertyImg src={ src } key={ src }/> ) }
     </div>
+  </div>
   );
 }
 
 
-export default PropertyImage;
+export default React.memo(PropertyImage);

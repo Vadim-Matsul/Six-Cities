@@ -19,7 +19,7 @@ export const makeFakeOffer = ():Offer => ({
   id: datatype.number(1000),
   city: makeFakeCity(),
   previewImage: image.imageUrl(),
-  images: new Array(7).fill(null).map(() => makeFakeString()),
+  images: new Array(6).fill(null).map(() => makeFakeString()),
   title: name.title(),
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),

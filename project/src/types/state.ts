@@ -15,8 +15,14 @@ type CombineDataState<Type> = {
   loadStatus: FetchProgress
 }
 
+type CurrentOffer = {
+  data: Offer | null,
+  loadStatus: FetchProgress
+}
+
 type DataState = {
   offers: CombineDataState<Offer>,
+  offer: CurrentOffer,
   favorites: CombineDataState<Offer>,
   nearOffers: CombineDataState<Offer>,
   reviews: CombineDataState<Review>,
@@ -38,4 +44,4 @@ type UserState = {
 
 type State = RootReducerState
 
-export type { State, DataState, LogicState, UserState, CombineDataState, AuthUser };
+export type { State, DataState, LogicState, UserState, CombineDataState, CurrentOffer,AuthUser };

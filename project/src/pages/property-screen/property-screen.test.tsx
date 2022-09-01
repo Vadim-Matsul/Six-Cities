@@ -21,7 +21,8 @@ const layout = (authStatus: AuthorizationStatus) => ({
   DATA:{
     nearOffers: {id: 1, data: makeFakeOffers().slice(0,3), loadStatus: FetchProgress.Fulfilled },
     reviews: {id: 1, data: makeFakeReviews(), loadStatus: FetchProgress.Fulfilled },
-    favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)}
+    favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)},
+    offer: { data: fakeOffers[0], loadStatus: FetchProgress.Fulfilled }
   }
 });
 
@@ -42,7 +43,7 @@ describe('Component: PropertyScreen', () => {
     render(
       <Provider store={ store }>
         <HistoryRouter history={ history }>
-          <PropertyScreen offers={ fakeOffers }/>
+          <PropertyScreen />
         </HistoryRouter>
       </Provider>
     );
@@ -54,7 +55,7 @@ describe('Component: PropertyScreen', () => {
     render(
       <Provider store={ store }>
         <HistoryRouter history={ history }>
-          <PropertyScreen offers={ fakeOffers }/>
+          <PropertyScreen />
         </HistoryRouter>
       </Provider>
     );
@@ -71,13 +72,14 @@ describe('Component: PropertyScreen', () => {
       DATA:{
         nearOffers: {id: Number(mockId), data: [], loadStatus: FetchProgress.Fulfilled },
         reviews: {id: Number(mockId), data: [], loadStatus: FetchProgress.Fulfilled },
-        favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)}
+        favorites: { data: fakeOffers.slice().filter((offer) => offer.isFavorite)},
+        offer: { data: fakeOffers[0], loadStatus: FetchProgress.Fulfilled }
       }
     });
     render(
       <Provider store={ store }>
         <HistoryRouter history={ history }>
-          <PropertyScreen offers={ fakeOffers }/>
+          <PropertyScreen />
         </HistoryRouter>
       </Provider>
     );

@@ -9,21 +9,19 @@ type OfferListProps = {
   cardClass: CardPageClass
   setSelectedOffer?: (id: number | null) => void
 }
+console.log('OfferList rerender');
 
-function OfferList ( {offers, cardClass, setSelectedOffer}:OfferListProps ):JSX.Element{
-
-  return (
-    <Fragment>
-      { offers.map( (offer) => (
-        <OfferCard
-          offer = {offer}
-          key={offer.id}
-          cardClass = {cardClass}
-          setSelectedOffer = { setSelectedOffer }
-        />))}
-    </Fragment>
-  );
-}
+const OfferList:React.FC< OfferListProps > = ( {offers, cardClass, setSelectedOffer} ) => (
+  <Fragment>
+    { offers.map( (offer) => (
+      <OfferCard
+        offer = {offer}
+        key={offer.id}
+        cardClass = {cardClass}
+        setSelectedOffer = { setSelectedOffer }
+      />))}
+  </Fragment>
+);
 
 
-export default React.memo(OfferList,(prevProps, nextProps) => prevProps.offers === nextProps.offers);
+export default React.memo(OfferList);

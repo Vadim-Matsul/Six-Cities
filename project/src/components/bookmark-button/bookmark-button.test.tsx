@@ -1,7 +1,7 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { AuthorizationStatus, BookMarkClass } from '../../const';
+import { AuthorizationStatus, BlockClass } from '../../const';
 import BookMarkButton from './bookmark-button';
 
 const makaFakeStore = configureMockStore();
@@ -21,7 +21,7 @@ describe('Component: BookMarkButton', () => {
       <Provider store={ store }>
         <BookMarkButton
           isFavorite={ isFavorites }
-          bookmarkClass={ BookMarkClass.Property }
+          bookmarkClass={ BlockClass.Property }
           id={ Number(isFavorites) }
         />
       </Provider>

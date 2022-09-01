@@ -1,13 +1,17 @@
+import React from 'react';
 import { Fragment } from 'react';
+import { BlockClass } from '../../../const';
 import { Reviews } from '../../../types/reviews';
 import { getFormateDate, getStars } from '../../../utils/utils';
+import RaitingBlock from '../../raiting-block/raiting-block';
 
 type UserReviewProps = {
   reviews: Reviews
 }
 
 function UserReview ( {reviews}:UserReviewProps ):JSX.Element{
-
+  console.log('UserReview rerender');
+  
   return (
     <Fragment>
       { reviews.map( (review) => {
@@ -34,12 +38,10 @@ function UserReview ( {reviews}:UserReviewProps ):JSX.Element{
               </span>
             </div>
             <div className='reviews__info'>
-              <div className='reviews__rating rating'>
-                <div className='reviews__stars rating__stars'>
-                  <span style={{ width: raiting }}></span>
-                  <span className='visually-hidden'>Rating</span>
-                </div>
-              </div>
+              <RaitingBlock
+                Raiting={ review.rating }
+                Raiting_class={ BlockClass.Reviews }
+              />
               <p className='reviews__text'>
                 {review.comment}
               </p>
@@ -53,4 +55,4 @@ function UserReview ( {reviews}:UserReviewProps ):JSX.Element{
 }
 
 
-export default UserReview;
+export default React.memo(UserReview);
