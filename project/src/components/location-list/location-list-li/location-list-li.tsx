@@ -29,7 +29,10 @@ const LocationListLi:React.FC<LocationListLiProps> = ({ city, uniqueCity }) => {
         href={ AppRoute.Main }
         onClick={(ev) => handlerClick(ev)}
       >
-        <span>{city}</span>
+        <span
+          data-testid='LocationListLi_span'
+        >{ city }
+        </span>
       </a>
     </li>
   );

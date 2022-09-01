@@ -25,4 +25,4 @@ const Header = ():JSX.Element => {
 };
 
 
-export default React.memo(Header);
+export default Header;

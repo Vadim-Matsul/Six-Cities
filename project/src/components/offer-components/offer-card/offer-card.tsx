@@ -18,7 +18,6 @@ type OfferCardProps = {
 function OfferCard ( props: OfferCardProps ):JSX.Element {
   const { offer, cardClass, setSelectedOffer } = props;
   console.log('OfferCard');
-  const rating = getStars ( offer.rating );
   const offerType = capitalizeFirstLetter (offer.type);
 
   const classWrapper:boolean = cardClass === CardPageClass.Favorites;

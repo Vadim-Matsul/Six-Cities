@@ -18,7 +18,12 @@ const RaitingBlock: React.FC< RaitingBlockProps > = ({ Raiting, Raiting_class })
         <span style={{ width: raiting }}></span>
         <span className='visually-hidden' data-testid='Rating-block'>Rating {Raiting}</span>
       </div>
-      { shouldShow && <span className='property__rating-value rating__value'>{ Raiting }</span>}
+      { shouldShow && 
+        <span
+          className='property__rating-value rating__value'
+          data-testid='RaitingBlock_forProperty'
+        >{ Raiting }
+      </span> }
     </div>
   );
 };

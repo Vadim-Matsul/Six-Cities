@@ -59,7 +59,7 @@ function PropertyScreen ():JSX.Element{
   const { Fulfilled } = FetchProgress;
 
 
-  if (nearOffers.loadStatus !== Fulfilled || reviews.loadStatus !== Fulfilled || loadStatus !== Fulfilled ){
+  if (nearOffers.loadStatus !== Fulfilled && reviews.loadStatus !== Fulfilled || loadStatus !== Fulfilled ){
     return <Loader />;
   }  
   

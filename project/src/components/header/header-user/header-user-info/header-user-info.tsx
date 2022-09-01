@@ -18,4 +18,4 @@ const HeaderUserInfo:React.FC = () => {
   );
 };
 
-export default  React.memo(HeaderUserInfo);
+export default React.memo(HeaderUserInfo);
