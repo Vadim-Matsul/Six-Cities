@@ -19,7 +19,7 @@ function FavoritesScreen ():JSX.Element{
       plug.current = true;
       dispatch( fetchFavorites() );
     }
-  },[]);
+  },[dispatch]);
 
   if (favorites.loadStatus !== FetchProgress.Fulfilled && !favorites.data.length ){
     return <Loader />;
@@ -57,4 +57,4 @@ function FavoritesScreen ():JSX.Element{
 }
 
 
-export default React.memo(FavoritesScreen, (prev, props) => prev === props);
+export default FavoritesScreen;

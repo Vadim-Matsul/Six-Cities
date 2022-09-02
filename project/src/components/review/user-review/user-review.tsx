@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import { BlockClass } from '../../../const';
 import { Reviews } from '../../../types/reviews';
-import { getFormateDate, getStars } from '../../../utils/utils';
+import { getFormateDate } from '../../../utils/utils';
 import RaitingBlock from '../../raiting-block/raiting-block';
 
 type UserReviewProps = {
@@ -10,13 +10,11 @@ type UserReviewProps = {
 }
 
 function UserReview ( {reviews}:UserReviewProps ):JSX.Element{
-  console.log('UserReview rerender');
-  
+
   return (
     <Fragment>
       { reviews.map( (review) => {
         const date = getFormateDate(review.date);
-        const raiting = getStars(review.rating);
 
         return(
           <li
@@ -40,7 +38,7 @@ function UserReview ( {reviews}:UserReviewProps ):JSX.Element{
             <div className='reviews__info'>
               <RaitingBlock
                 Raiting={ review.rating }
-                Raiting_class={ BlockClass.Reviews }
+                RaitingClass={ BlockClass.Reviews }
               />
               <p className='reviews__text'>
                 {review.comment}

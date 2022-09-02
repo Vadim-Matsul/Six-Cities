@@ -14,8 +14,7 @@ type PropertyScreenWithNearProps = {
 const PropertyScreenWithNear: React.FC<PropertyScreenWithNearProps> = ({nearOffers, data}) => {
   const [selectedOffer, setSelectedOffer] = useHighlighted(nearOffers);
   const offersForMap = [...nearOffers, data];
-  console.log('rerender PropertyScreenWithNear');
-  
+
   return(
     <>
       <Map

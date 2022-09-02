@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { getLogoutError, getLogoutProcess, getUser } from '../../../store/reducer/user-reducer/selectors';
+import { getLogoutError, getLogoutProcess } from '../../../store/reducer/user-reducer/selectors';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import { getFavorites } from '../../../store/reducer/data-reducer/selectors';
 import { logoutSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
 import { SetLogoutError } from '../../../store/actions/actions';
 import { toast } from 'react-toastify';

@@ -17,13 +17,12 @@ function BookMarkButton ({bookmarkClass, isFavorite, id}:BookMarkButtonProps):JS
 
   const dispatch = useDispatch() as ThunkDispatchResualt ;
 
-  const [ booleanFavorite, setBooleanFavorite ] = useState( isFavorite )
+  const [ booleanFavorite, setBooleanFavorite ] = useState( isFavorite );
   const authStatus = useSelector( getAuthStatus );
   const svgSize = bookmarkClass === BlockClass.OfferCard ? PropertySize.Small : PropertySize.Big;
   const shouldtPost = authStatus === AuthorizationStatus.NoAuth;
 
-  console.log('BookMarkButton rerender');
-  
+
   function handlerClick () {
     if (shouldtPost) {
       dispatch(RedirectToPath( AppRoute.Auth ));

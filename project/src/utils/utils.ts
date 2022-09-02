@@ -50,7 +50,7 @@ export const clearSession = (offers: Offers):Offers => {
 export const getActualArr = (offers: Offers, data: Offer):Offers | []=> {
   if (offers.length){
     const index = offers.findIndex((offer) => offer.id === data.id) ;
-    if (index === -1){return offers }
+    if (index === -1){return offers; }
     const actualArr = [...offers.slice(0, index), data, ...offers.slice(index + 1)] ;
     return actualArr;
   }

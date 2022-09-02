@@ -16,8 +16,7 @@ function MainScreen ( ):JSX.Element{
   const mainClass = classNames('cities__places-container container', {
     'cities__places-container--empty' : !offersOfCity.length
   });
-  console.log('rerender MainScreen');
-  
+
 
   return (
     <div className='page page--gray page--main'>
@@ -30,10 +29,9 @@ function MainScreen ( ):JSX.Element{
             className={ mainClass }
             data-testid='MainScreen'
           >
-          { offersOfCity.length
-            ? <MainOffers offersOfCity={ offersOfCity } currentCity={ currentCity }/>
-            : <NoPlacesScreen city={ currentCity }/>
-          }
+            { offersOfCity.length
+              ? <MainOffers offersOfCity={ offersOfCity } currentCity={ currentCity }/>
+              : <NoPlacesScreen city={ currentCity }/> }
           </div>
         </div>
       </main>

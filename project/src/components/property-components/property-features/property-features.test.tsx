@@ -1,7 +1,7 @@
-import { makeFakeOffer } from "../../../utils/mock";
+import { makeFakeOffer } from '../../../utils/mock';
 import { render, screen } from '@testing-library/react';
-import { capitalizeFirstLetter } from "../../../utils/utils";
-import PropertyFeatures from "./property-features";
+import { capitalizeFirstLetter } from '../../../utils/utils';
+import PropertyFeatures from './property-features';
 
 const fakeOffer = makeFakeOffer();
 const capitalizeType = capitalizeFirstLetter( fakeOffer.type );

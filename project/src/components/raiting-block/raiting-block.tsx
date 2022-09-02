@@ -2,28 +2,27 @@ import React from 'react';
 import { BlockClass } from '../../const';
 import { getStars } from '../../utils/utils';
 
-type  RaitingBlockProps = {
+type RaitingBlockProps = {
   Raiting: number
-  Raiting_class: BlockClass
+  RaitingClass: BlockClass
 }
 
-const RaitingBlock: React.FC< RaitingBlockProps > = ({ Raiting, Raiting_class }) => {
+const RaitingBlock: React.FC< RaitingBlockProps > = ({ Raiting, RaitingClass }) => {
   const raiting = getStars(Raiting);
-  const shouldShow = Raiting_class === BlockClass.Property
-  console.log('RaitingBlock rerender');
-  
+  const shouldShow = RaitingClass === BlockClass.Property;
+
   return (
-    <div className={`${Raiting_class}__rating rating`}>
-      <div className={`${Raiting_class}__stars rating__stars`}>
+    <div className={`${RaitingClass}__rating rating`}>
+      <div className={`${RaitingClass}__stars rating__stars`}>
         <span style={{ width: raiting }}></span>
         <span className='visually-hidden' data-testid='Rating-block'>Rating {Raiting}</span>
       </div>
-      { shouldShow && 
+      { shouldShow &&
         <span
           className='property__rating-value rating__value'
           data-testid='RaitingBlock_forProperty'
         >{ Raiting }
-      </span> }
+        </span> }
     </div>
   );
 };

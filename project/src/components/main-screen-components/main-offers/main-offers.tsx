@@ -19,8 +19,7 @@ type MainOffersProps = {
 const MainOffers:React.FC<MainOffersProps> = ({ offersOfCity, currentCity }) => {
   const [selectedOffer, setSelectedOffer] = useHighlighted( offersOfCity );
   const currentSort = useSelector( getCurrentSort );
-  console.log('rerender MainOffers');
-  
+
   return (
     <>
       <section className='cities__places places'>
@@ -44,7 +43,7 @@ const MainOffers:React.FC<MainOffersProps> = ({ offersOfCity, currentCity }) => 
           currentCity={ currentCity }
           thisClass = 'cities__map map'
         />
-      </div>  
+      </div>
     </>
   );
 };

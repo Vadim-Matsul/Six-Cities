@@ -8,19 +8,19 @@ type LocationListProps = {
 
 
 function LocationList ({ uniqueCity }:LocationListProps){
-  const Sities = useMemo(() => Object.keys(GeoCity),[GeoCity]);
+  const Sities = useMemo(() => Object.keys(GeoCity),[]);
 
   return (
     <div className='tabs'>
       <section className='locations container'>
         <ul className='locations__list tabs__list'>
-          { Sities.map((city) =>
+          { Sities.map((city) => (
             <LocationListLi
               city={ city }
               uniqueCity={ uniqueCity }
-              key={ city }  
+              key={ city }
             />
-          )}
+          ))}
         </ul>
       </section>
     </div>

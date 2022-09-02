@@ -34,10 +34,10 @@ const fetchOffers = ():ThunkActionResualt =>
       });
   };
 
-  const fetchOffer = ( id:string | undefined ):ThunkActionResualt =>
+const fetchOffer = ( id:string | undefined ):ThunkActionResualt =>
   async (dispatch, _getState, api) => {
     dispatch( ChangeOffer({data: null, loadStatus: Pending}) );
-    await api.get<Offer>(APIRoute.Offers + '/' + id)
+    await api.get<Offer>( `${AppRoute.Property}/${id}` )
       .then(({data}) => {
         dispatch( ChangeOffer({data: data, loadStatus: Fulfilled}) );
       })

@@ -3,6 +3,7 @@ import { Fragment, ReactElement } from 'react';
 
 type inputRaitingProps = {
   flag: boolean,
+  // eslint-disable-next-line
   validate: any
 }
 

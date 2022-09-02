@@ -1,6 +1,6 @@
 import React from 'react';
 import { Offer } from '../../../types/offers';
-import { capitalizeFirstLetter, getStars } from '../../../utils/utils';
+import { capitalizeFirstLetter } from '../../../utils/utils';
 import { BlockClass, CardPageClass, ImageSize } from '../../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
@@ -17,7 +17,6 @@ type OfferCardProps = {
 
 function OfferCard ( props: OfferCardProps ):JSX.Element {
   const { offer, cardClass, setSelectedOffer } = props;
-  console.log('OfferCard');
   const offerType = capitalizeFirstLetter (offer.type);
 
   const classWrapper:boolean = cardClass === CardPageClass.Favorites;

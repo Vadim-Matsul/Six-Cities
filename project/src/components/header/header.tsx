@@ -5,8 +5,7 @@ import { AppRoute } from '../../const';
 import { HeaderNav } from './header-nav/header-nav';
 
 const Header = ():JSX.Element => {
-  console.log('rerender Header');
-  
+
   const location = useLocation().pathname;
   const shouldHideUserSection = location === AppRoute.Auth;
 

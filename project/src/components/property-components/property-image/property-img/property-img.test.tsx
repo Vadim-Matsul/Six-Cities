@@ -9,7 +9,7 @@ describe('Component: PropertyImg', () => {
         src='https://fakeSrc.img'
       />
     );
-    expect( screen.getByAltText(/Property Image/i) ).toBeInTheDocument();
+    expect( screen.getByAltText(/A Great Offer/i) ).toBeInTheDocument();
   });
 
 });

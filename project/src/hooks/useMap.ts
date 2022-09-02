@@ -11,7 +11,7 @@ export default function useMap ( mapRef:MutableRefObject<HTMLElement | null>, ci
   useEffect(() => {
     if ( mapRef.current !== null && !mapRendering.current){
 
-      const localMap = L.map( mapRef.current! ).setView([city.location.latitude, city.location.longitude],city.location.zoom);
+      const localMap = L.map( mapRef.current ).setView([city.location.latitude, city.location.longitude],city.location.zoom);
       const mapEnable = () => localMap.scrollWheelZoom.enable();
       const mapDisable = () => localMap.scrollWheelZoom.disable();
 

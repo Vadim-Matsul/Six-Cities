@@ -11,7 +11,7 @@ describe('Component: RaitingBlock', () => {
     render(
       <RaitingBlock
         Raiting={ fakeOffer.rating }
-        Raiting_class={ BlockClass.OfferCard }
+        RaitingClass={ BlockClass.OfferCard }
       />
     );
     expect( screen.getByText(`Rating ${fakeOffer.rating}`) ).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('Component: RaitingBlock', () => {
     render(
       <RaitingBlock
         Raiting={ fakeOffer.rating }
-        Raiting_class={ BlockClass.Property }
+        RaitingClass={ BlockClass.Property }
       />
     );
     expect( screen.getByText(`Rating ${fakeOffer.rating}`) ).toBeInTheDocument();

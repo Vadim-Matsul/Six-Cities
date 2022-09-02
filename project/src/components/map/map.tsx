@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import useMap from '../../hooks/useMap';
 import { useEffect, useRef } from 'react';
-import { City, Offer, Offers } from '../../types/offers';
+import { Offer, Offers } from '../../types/offers';
 import { Icon, Marker} from 'leaflet';
 import { AppRoute, GeoCity, IconMarkerSize, IconMarkerUrl } from '../../const';
 import 'leaflet/dist/leaflet.css';
@@ -17,16 +17,16 @@ type MapProps = {
 
 
 function Map (props: MapProps):JSX.Element{
-  const { offers,  currentCity, selectedOffer, thisClass } = props;
+  const { offers, currentCity, selectedOffer, thisClass } = props;
   const mapRef = useRef(null);
   const city = useMemo(() => GeoCity[currentCity],[currentCity]) ;
   const map = useMap(mapRef, city);
-  
-  
+
+
   useEffect(() => {
     const Markers: Marker[] = [];
     if (map){
-      { offers.forEach( (offer) => {
+      offers.forEach( (offer) => {
         const marker = new Marker( [offer.location.latitude, offer.location.longitude] ).bindPopup(`${offer.title}`);
         const icon = new Icon({
           iconUrl: selectedOffer && selectedOffer.id === offer.id
@@ -38,7 +38,7 @@ function Map (props: MapProps):JSX.Element{
         marker.on('click', () => browserHistory.push(`${AppRoute.Property}/${offer.id}`));
         marker.setIcon(icon).addTo(map);
         Markers.push(marker);
-      });}
+      });
     }
     return () => Markers.forEach((marker) => marker.remove());
   },[offers, map, selectedOffer]);
@@ -47,7 +47,7 @@ function Map (props: MapProps):JSX.Element{
     if (map){
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  },[city]);
+  },[city, map]);
 
   return (
     <section

@@ -1,8 +1,8 @@
-import { configureMockStore } from "@jedmao/redux-mock-store";
-import { makeFakeCity, makeFakeString } from "../../../utils/mock";
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { makeFakeCity, makeFakeString } from '../../../utils/mock';
 import { render, screen } from '@testing-library/react';
-import { Provider } from "react-redux";
-import LocationListLi from "./location-list-li";
+import { Provider } from 'react-redux';
+import LocationListLi from './location-list-li';
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({});

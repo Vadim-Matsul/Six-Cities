@@ -9,8 +9,7 @@ type PropertyFeaturesProps< T, N > = {
 
 const PropertyFeatures: React.FC< PropertyFeaturesProps<string, number> > = ({ type, bedrooms, adults }) => {
   const offerType = capitalizeFirstLetter( type );
-  console.log('PropertyFeatures rerender');
-  
+
   return (
     <ul className='property__features'>
       <li className='property__feature property__feature--entire'>
@@ -22,9 +21,9 @@ const PropertyFeatures: React.FC< PropertyFeaturesProps<string, number> > = ({ t
       <li className='property__feature property__feature--adults'>
         Max {adults} adults
       </li>
-  </ul>
-  )
-}
+    </ul>
+  );
+};
 
 
 export default React.memo(PropertyFeatures);

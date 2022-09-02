@@ -1,6 +1,6 @@
 import React from 'react';
-import { ImagesSize } from "../../../const";
-import PropertyImg from "./property-img/property-img";
+import { ImagesSize } from '../../../const';
+import PropertyImg from './property-img/property-img';
 
 type PropertyImageProps = {
   Images: string[]
@@ -8,16 +8,15 @@ type PropertyImageProps = {
 
 const PropertyImage: React.FC< PropertyImageProps > = ({Images}) => {
   const images = Images.slice( ImagesSize.START, ImagesSize.END );
-  console.log('PropertyImage rerender');
-    
+
   return (
     <div className='property__gallery-container container'>
-    <div className='property__gallery'>
-      {images.map( (src) => <PropertyImg src={ src } key={ src }/> ) }
+      <div className='property__gallery'>
+        {images.map( (src) => <PropertyImg src={ src } key={ src }/> ) }
+      </div>
     </div>
-  </div>
   );
-}
+};
 
 
 export default React.memo(PropertyImage);

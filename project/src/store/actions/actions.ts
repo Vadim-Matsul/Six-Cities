@@ -7,7 +7,7 @@ import { Review } from '../../types/reviews';
 enum ActionsType {
   CurrentCity = 'info/currentCity',
   OffersList = 'data/offers',
-  Offer = 'data/offer',
+  OfferCurrent = 'data/offer',
   Favorites = 'data/favorites',
   NearOffers = 'data/nearOffers',
   Reviews = 'data/reviews',
@@ -31,7 +31,7 @@ const SetloginError = createAction< boolean >( ActionsType.SetLoginError );
 const SetReviewError = createAction< boolean >( ActionsType.SetReviewError );
 const RedirectToPath = createAction< AppRoute >( ActionsType.Redirect );
 const ChangeOffers = createAction< CombineDataState<Offer> >( ActionsType.OffersList );
-const ChangeOffer = createAction< CurrentOffer >( ActionsType.Offer );
+const ChangeOffer = createAction< CurrentOffer >( ActionsType.OfferCurrent );
 const ChangeFavorites = createAction< CombineDataState<Offer> >( ActionsType.Favorites );
 const ChangeNearOffers = createAction< CombineDataState<Offer> >( ActionsType.NearOffers );
 const ChangeReviews = createAction< CombineDataState<Review> >( ActionsType.Reviews );

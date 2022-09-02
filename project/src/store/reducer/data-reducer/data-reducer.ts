@@ -18,7 +18,7 @@ const DataReducer = createReducer( initialState, (builder) => {
 
     .addCase(ChangeOffer, (s, a) => {
       s.offer = { data: a.payload.data, loadStatus: a.payload.loadStatus}; })
-      
+
     .addCase(ChangeFavorites, (s, a) => {
       s.favorites = { data: a.payload.data, loadStatus: a.payload.loadStatus}; })
 

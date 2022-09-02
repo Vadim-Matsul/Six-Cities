@@ -2,7 +2,6 @@ import React from 'react';
 
 import { SortTypes } from '../../const';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import SortFormLi from './sort-form-li/sort-form-li';
 
@@ -19,7 +18,7 @@ function SortForm ({ currentSort, currentCity }:SortFormProps){
   const showFormClass = classNames('places__options places__options--custom',{
     'places__options--opened' : show
   });
-  
+
   useEffect(() => setShow(false),[currentCity]);
 
   const handlerShowForm = () => setShow( (prevState) => !prevState );
@@ -45,13 +44,13 @@ function SortForm ({ currentSort, currentCity }:SortFormProps){
         className={ showFormClass }
         data-testid='SortForm-items'
       >
-        {sortArray.map((sort) =>
+        {sortArray.map((sort) => (
           <SortFormLi
             sort={ sort }
             currentSort={ currentSort }
             setShow={ setShow }
             key={ sort }
-          />)}
+          />))}
       </ul>
     </form>
   );

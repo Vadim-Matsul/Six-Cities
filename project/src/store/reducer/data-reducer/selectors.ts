@@ -1,4 +1,3 @@
-import { createSelector } from 'reselect';
 import { Offer } from '../../../types/offers';
 import { Review } from '../../../types/reviews';
 import { CombineDataState, CurrentOffer, State } from '../../../types/state';

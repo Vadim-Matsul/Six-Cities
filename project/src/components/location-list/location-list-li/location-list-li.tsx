@@ -20,7 +20,7 @@ const LocationListLi:React.FC<LocationListLiProps> = ({ city, uniqueCity }) => {
   function handlerClick (ev: MouseEvent< HTMLAnchorElement > ) {
     ev.preventDefault();
     dispatch( ChangeCurrentCity(city) );
-  };
+  }
 
   return(
     <li className='locations__item'>

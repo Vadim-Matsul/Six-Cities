@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
 
 import { fetchNearOffers, fetchOffer, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { AuthorizationStatus, BlockClass, CardPageClass, FetchProgress, ImagesSize } from '../../const';
+import { AuthorizationStatus, BlockClass, FetchProgress } from '../../const';
 import { getNearOffers, getOffer, getReviews } from '../../store/reducer/data-reducer/selectors';
 import FormReview from '../../components/review/form-review/form-review';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
@@ -39,8 +39,8 @@ function PropertyScreen ():JSX.Element{
   // ( заглушки избавляют от actions в Redux DevTools, не приносящих изменения ( states are equal ) )
 
   useEffect(() => {
-    dispatch( fetchOffer(id) )
-  },[id]);
+    dispatch( fetchOffer(id) );
+  },[id, dispatch]);
 
   useEffect(() => {
     if ( nearOffers.id !== Id && reviews.id !== Id && !nearPlug.current && !reviewPlug.current ){
@@ -49,6 +49,7 @@ function PropertyScreen ():JSX.Element{
       dispatch( fetchNearOffers( id ) );
       dispatch( fetchReviews( id ) );
     }
+    // eslint-disable-next-line
   },[id]);
 
   if ( nearOffers.data.length && reviews.data.length && nearOffers.id !== Id && reviews.id !== Id ){
@@ -59,18 +60,20 @@ function PropertyScreen ():JSX.Element{
   const { Fulfilled } = FetchProgress;
 
 
-  if (nearOffers.loadStatus !== Fulfilled && reviews.loadStatus !== Fulfilled || loadStatus !== Fulfilled ){
+  if ( (nearOffers.loadStatus !== Fulfilled && reviews.loadStatus !== Fulfilled) || loadStatus !== Fulfilled ){
     return <Loader />;
-  }  
-  
+  }
+
   if ( data === null ){
     return <NotFoundScreen />;
   }
 
-  console.log('property screen rerender');
-  
+
   return (
-    <div className='page'>
+    <div
+      className='page'
+      data-testid='PropertyScreen'
+    >
       <Header />
       <main className='page__main page__main--property'>
         <section className='property'>
@@ -95,7 +98,7 @@ function PropertyScreen ():JSX.Element{
               </div>
               <RaitingBlock
                 Raiting={ data.rating }
-                Raiting_class={ BlockClass.Property }
+                RaitingClass={ BlockClass.Property }
               />
               <PropertyFeatures
                 type={ data.type }
@@ -147,14 +150,14 @@ function PropertyScreen ():JSX.Element{
               </section>
             </div>
           </div>
-          </section>
-          { nearOffers.data.length
-            ? 
-            <PropertyScreenWithNear
-              nearOffers={ nearOffers.data }
-              data={ data }
-            />
-            : null }
+        </section>
+        { nearOffers.data.length
+          ?
+          <PropertyScreenWithNear
+            nearOffers={ nearOffers.data }
+            data={ data }
+          />
+          : null }
       </main>
     </div>
   );

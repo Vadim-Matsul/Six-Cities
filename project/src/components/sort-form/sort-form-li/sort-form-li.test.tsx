@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
@@ -6,7 +6,7 @@ import SortFormLi from './sort-form-li';
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({});
-const setMock = jest.fn()
+const setMock = jest.fn();
 
 
 describe('Component: SortFormLi', () => {

@@ -9,14 +9,13 @@ type OfferListProps = {
   cardClass: CardPageClass
   setSelectedOffer?: (id: number | null) => void
 }
-console.log('OfferList rerender');
 
 const OfferList:React.FC< OfferListProps > = ( {offers, cardClass, setSelectedOffer} ) => (
   <Fragment>
     { offers.map( (offer) => (
       <OfferCard
         offer = {offer}
-        key={offer.id}
+        key={`${offer.id} ${offer.price}`}
         cardClass = {cardClass}
         setSelectedOffer = { setSelectedOffer }
       />))}

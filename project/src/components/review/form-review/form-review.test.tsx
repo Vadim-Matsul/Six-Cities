@@ -17,6 +17,7 @@ const makeFakeStore = configureMockStore( [thunk] );
 const store = makeFakeStore({ USER:{ reviewError: false }});
 
 const history = createMemoryHistory();
+jest.setTimeout( 40000 )
 
 describe('Component: FormReview', () => {
 

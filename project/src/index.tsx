@@ -10,6 +10,8 @@ import thunk from 'redux-thunk';
 import { checkAuth, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import { redirect } from './store/middlewares/redirect';
+import { HistoryRouter } from './components/history-router/history-router';
+import browserHistory from './browser-history';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -28,8 +30,10 @@ const store = configureStore({
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
-      <App/>
+      <ToastContainer/>
+      <HistoryRouter history={ browserHistory }>
+        <App/>
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>,
 );

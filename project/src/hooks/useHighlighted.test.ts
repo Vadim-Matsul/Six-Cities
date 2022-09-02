@@ -20,7 +20,8 @@ describe('Hook: useHighlighted', () => {
 
   it('The callback from the hook is correctly working', () => {
     const { result } = renderHook( () => useHighlighted( fakeOffers ) );
-    let [ offer, findOffer ] = result.current;
+    let offer = result.current[0];
+    const findOffer = result.current[1];
 
     expect( offer ).toBe( undefined );
 

@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { getReviewError } from '../../../store/reducer/user-reducer/selectors';
 import { useTimeout } from '../../../hooks/useTimeout';
 import { SetReviewError } from '../../../store/actions/actions';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import React from 'react';
 
@@ -23,20 +23,16 @@ const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
   const dispatch = useDispatch() as ThunkDispatchResualt;
   const reviewError = useSelector( getReviewError );
   const submitFlag = useRef<undefined | boolean>( undefined );
-  console.log('FormReview rerender');
-  
+
   useTimeout(reviewError, SetReviewError, 3000);
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
-    setError,
-    
     formState:{ errors, isValid, isSubmitting }
   } = useForm< ReviewFormState >({mode:'onChange'});
 
-  
+
   const textareaClass = classNames('reviews__textarea form__textarea',{
     'disable' : submitFlag.current
   });
@@ -54,7 +50,7 @@ const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
   const buttonText = submitFlag.current ? 'Successfully' : 'Submit' ;
   const buttonSubmit = isSubmitting ? 'Pending...' : buttonText ;
   const actualTextForButton = reviewError ? 'Error, try again' : buttonSubmit ;
-  
+
   const flagForSubmit = actualTextForButton === 'Successfully';
 
   async function HandlerSubmit ( review:ReviewFormState ) {
@@ -81,8 +77,8 @@ const FormReview = ( { id }:FormReviewProps ):JSX.Element => {
   const registerForInput = {
     ...register('rating', {
       required: MessageConfig.required,
-
     })};
+
 
   return (
     <form

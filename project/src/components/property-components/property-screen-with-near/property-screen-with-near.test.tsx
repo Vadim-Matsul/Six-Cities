@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({
   USER:{ authStatus: AuthorizationStatus.Auth }
-})
+});
 
 
 describe('Component: PropertyScreenWithNear', () => {
@@ -32,6 +32,6 @@ describe('Component: PropertyScreenWithNear', () => {
     );
     expect( screen.getByTestId('Map') ).toBeInTheDocument();
     expect( screen.getByText(/Other places in the neighbourhood/i) ).toBeInTheDocument();
-  });    
+  });
 
 });

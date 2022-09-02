@@ -23,5 +23,5 @@ export const useTimeout:useTimeoutProps = ( error, action, delay ) => {
         timer.current = null;
       }
     };
-  },[error, dispatch]);
+  },[error, action, delay, dispatch]);
 };
