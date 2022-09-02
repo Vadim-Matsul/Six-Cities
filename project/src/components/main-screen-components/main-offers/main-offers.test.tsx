@@ -1,11 +1,13 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { Provider } from 'react-redux';
-import { makeFakeOffers } from '../../../utils/mock';
-import MainOffers from './main-offers';
 import { render, screen } from '@testing-library/react';
-import { AuthorizationStatus } from '../../../const';
-import { HistoryRouter } from '../../history-router/history-router';
 import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+
+import { AuthorizationStatus } from '../../../const';
+import { makeFakeOffers } from '../../../utils/mock';
+
+import MainOffers from './main-offers';
+import { HistoryRouter } from '../../history-router/history-router';
 
 const fakeOffers = makeFakeOffers();
 const city = fakeOffers[0]['city']['name'];

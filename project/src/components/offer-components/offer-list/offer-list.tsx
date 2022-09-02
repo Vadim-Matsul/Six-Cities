@@ -1,8 +1,10 @@
-import React from 'react';
 import { Fragment } from 'react';
-import { Offers } from '../../../types/offers';
+import React from 'react';
+
 import OfferCard from '../offer-card/offer-card';
+import { Offers } from '../../../types/offers';
 import { CardPageClass } from '../../../const';
+
 
 type OfferListProps = {
   offers: Offers

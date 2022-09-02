@@ -1,11 +1,14 @@
 import { useDispatch } from 'react-redux';
+
+import { ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { ChangeCurrentCity } from '../../store/actions/actions';
+import { getRandomCity } from '../../utils/utils';
+
+import Header from '../../components/header/header';
 import AuthScreenCity from '../../components/auth-screen-components/auth-screen-city/auth-screen-city';
 import AuthScreenRegistrationForm from '../../components/auth-screen-components/auth-screen-registration-form/auth-screen-registration-form';
-import Header from '../../components/header/header';
-import { ChangeCurrentCity } from '../../store/actions/actions';
-import { ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { getRandomCity } from '../../utils/utils';
 import './auth-screen.css';
+
 
 function AuthScreen ():JSX.Element {
   const dispatch = useDispatch() as ThunkDispatchResualt;

@@ -1,13 +1,13 @@
+import { useSelector } from 'react-redux';
 import React from 'react';
 
 import { getCurrentSort } from '../../../store/reducer/logic-reducer/selectors';
+import useHighlighted from '../../../hooks/useHighlighted';
 import { CardPageClass } from '../../../const';
 import { Offers } from '../../../types/offers';
-import { useSelector } from 'react-redux';
 
 import Map from '../../map/map';
 import SortForm from '../../sort-form/sort-form';
-import useHighlighted from '../../../hooks/useHighlighted';
 import OfferList from '../../offer-components/offer-list/offer-list';
 
 

@@ -1,12 +1,15 @@
+import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { HistoryRouter } from '../../components/history-router/history-router';
+import { Route, Routes } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import AuthScreen from './auth-screen';
+
 import { AppRoute } from '../../const';
-import { Route, Routes } from 'react-router-dom';
+
+import AuthScreen from './auth-screen';
+import { HistoryRouter } from '../../components/history-router/history-router';
+
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({USER:{ loginError:false }});

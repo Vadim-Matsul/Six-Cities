@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { AppRoute, AuthorizationStatus, BlockClass, PropertySize } from '../../const';
 import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import classNames from 'classnames';
+
+import { AppRoute, AuthorizationStatus, BlockClass, PropertySize } from '../../const';
 import { postFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
 import { RedirectToPath } from '../../store/actions/actions';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
+
 
 type BookMarkButtonProps = {
   bookmarkClass: BlockClass

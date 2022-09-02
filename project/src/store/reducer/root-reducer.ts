@@ -1,7 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { DataReducer } from './data-reducer/data-reducer';
+
 import { LogicReducer } from './logic-reducer/logic-reducer';
 import { UserReducer } from './user-reducer/user-reducer';
+import { DataReducer } from './data-reducer/data-reducer';
 
 export enum ReducerNode {
   Data = 'DATA',

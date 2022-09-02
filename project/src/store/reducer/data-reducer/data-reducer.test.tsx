@@ -1,8 +1,9 @@
-import { FetchProgress } from '../../../const';
-import { makeFakeOffers, makeFakeReviews } from '../../../utils/mock';
 import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews } from '../../actions/actions';
+import { makeFakeOffers, makeFakeReviews } from '../../../utils/mock';
 import { initialState } from '../data-reducer/data-reducer';
+import { FetchProgress } from '../../../const';
 import { DataReducer } from './data-reducer';
+
 
 const fakeOffers = makeFakeOffers();
 const fakeReviews = makeFakeReviews();

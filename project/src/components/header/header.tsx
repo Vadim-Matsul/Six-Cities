@@ -1,8 +1,11 @@
-import React from 'react';
-import Logo from './logo/logo';
 import { useLocation } from 'react-router-dom';
+import React from 'react';
+
 import { AppRoute } from '../../const';
+
+import Logo from './logo/logo';
 import { HeaderNav } from './header-nav/header-nav';
+
 
 const Header = ():JSX.Element => {
 
@@ -24,4 +27,4 @@ const Header = ():JSX.Element => {
 };
 
 
-export default Header;
+export default React.memo(Header);

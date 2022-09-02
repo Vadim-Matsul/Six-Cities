@@ -1,6 +1,8 @@
 import React from 'react';
-import { BlockClass } from '../../const';
+
 import { getStars } from '../../utils/utils';
+import { BlockClass } from '../../const';
+
 
 type RaitingBlockProps = {
   Raiting: number

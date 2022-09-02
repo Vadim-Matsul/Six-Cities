@@ -1,13 +1,16 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import UserEvent from '@testing-library/user-event';
+import { Route, Routes } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+
 import { AppRoute, AuthorizationStatus, CardPageClass } from '../../../const';
-import { makeFakeOffer } from '../../../utils/mock';
 import { HistoryRouter } from '../../history-router/history-router';
+import { makeFakeOffer } from '../../../utils/mock';
+
 import OfferCard from './offer-card';
+
 
 const fakeSetSelectedOffer = jest.fn();
 

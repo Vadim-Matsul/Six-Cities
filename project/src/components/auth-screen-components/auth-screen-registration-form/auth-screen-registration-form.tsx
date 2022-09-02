@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { MessageConfig, Pattern } from '../../../const';
-import { AuthData, loginSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import MessageError from '../../message-error/message-error';
-import { getLoginError } from '../../../store/reducer/user-reducer/selectors';
 import classNames from 'classnames';
+import { useEffect } from 'react';
+
+import { AuthData, loginSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
+import { getLoginError } from '../../../store/reducer/user-reducer/selectors';
 import { SetloginError } from '../../../store/actions/actions';
+import { MessageConfig, Pattern } from '../../../const';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTimeout } from '../../../hooks/useTimeout';
+
+import MessageError from '../../message-error/message-error';
+
 
 type HandleSubmitType = ( data: AuthData ) => void;
 

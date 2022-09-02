@@ -3,7 +3,7 @@ import { City } from './types/offers';
 export enum AppRoute {
   Main = '/',
   Auth = '/login',
-  Property = '/offer',
+  Property = '/hotels',
   Favorites = '/favorites',
   Error = '*'
 }
@@ -61,6 +61,7 @@ export const Pattern = {
 export const HTTPConfig = {
   UnAuth: 'Unauthorized',
   BadRequest: 'Bad Request',
+  NotFound: 'Not Found'
 };
 
 export const FavoritesConfig = {

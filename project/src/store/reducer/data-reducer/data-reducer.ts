@@ -1,7 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { FetchProgress } from '../../../const';
-import { DataState } from '../../../types/state';
+
 import { ChangeOffers, ChangeNearOffers, ChangeReviews, ChangeFavorites, ChangeOffer } from '../../actions/actions';
+import { DataState } from '../../../types/state';
+import { FetchProgress } from '../../../const';
+
 
 export const initialState:DataState = {
   offers: { data: [], loadStatus: FetchProgress.Idle },

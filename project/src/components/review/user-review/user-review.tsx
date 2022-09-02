@@ -1,9 +1,12 @@
-import React from 'react';
 import { Fragment } from 'react';
-import { BlockClass } from '../../../const';
-import { Reviews } from '../../../types/reviews';
+import React from 'react';
+
 import { getFormateDate } from '../../../utils/utils';
+import { Reviews } from '../../../types/reviews';
+import { BlockClass } from '../../../const';
+
 import RaitingBlock from '../../raiting-block/raiting-block';
+
 
 type UserReviewProps = {
   reviews: Reviews

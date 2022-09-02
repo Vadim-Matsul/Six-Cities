@@ -1,10 +1,12 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
+
 import { getToken } from '../token/token';
 import { HTTPConfig } from '../../const';
 
+
 const BASE_URL = 'https://10.react.pages.academy/six-cities';
-const REQUEST_TIMEOUT = 5000;
+const REQUEST_TIMEOUT = 7000;
 
 const HTTP = {
   [HTTPConfig.UnAuth]: {
@@ -14,6 +16,10 @@ const HTTP = {
   [HTTPConfig.BadRequest]: {
     status: 400,
     message: 'Ошибка в заполнении данных'
+  },
+  [HTTPConfig.NotFound]: {
+    status: 404,
+    message: 'Страница не найдена'
   },
 };
 

@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { ThunkDispatchResualt } from '../../../store/actions/api-actions';
 import { ChangeCurrentCity } from '../../../store/actions/actions';
+
 
 type FavoritesCityProps = {
   city: string

@@ -1,8 +1,11 @@
+import UserEvent from '@testing-library/user-event';
+
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
-import UserEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
+
 import AuthScreenRegistrationForm from './auth-screen-registration-form';
+
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({ USER:{ loginError: false }});

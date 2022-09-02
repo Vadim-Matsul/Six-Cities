@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
+
 import NoPlacesScreen from './no-places-screen';
+
 
 describe('Component: NoPlacesScreen', () => {
 

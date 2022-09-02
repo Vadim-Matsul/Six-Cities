@@ -1,7 +1,9 @@
-import React from 'react';
-import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
+import React from 'react';
+
 import { ChangeCurrentSort } from '../../../store/actions/actions';
+
 
 type SortFormLiProps<T> = {
   sort: T,

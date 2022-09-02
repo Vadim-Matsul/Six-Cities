@@ -1,15 +1,18 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { getLogoutError, getLogoutProcess } from '../../../store/reducer/user-reducer/selectors';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../../const';
-import { logoutSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
-import { SetLogoutError } from '../../../store/actions/actions';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
-import '../header.css';
-import { useTimeout } from '../../../hooks/useTimeout';
 import React from 'react';
+
+import { logoutSession, ThunkDispatchResualt } from '../../../store/actions/api-actions';
+import { SetLogoutError } from '../../../store/actions/actions';
+import { useTimeout } from '../../../hooks/useTimeout';
+import { AppRoute } from '../../../const';
+
 import HeaderUserInfo from './header-user-info/header-user-info';
+import '../header.css';
+
 
 const HeaderUser = ():JSX.Element => {
 

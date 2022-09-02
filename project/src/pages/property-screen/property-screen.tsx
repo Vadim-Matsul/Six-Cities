@@ -1,18 +1,18 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
-
-import { fetchNearOffers, fetchOffer, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
-import { AuthorizationStatus, BlockClass, FetchProgress } from '../../const';
-import { getNearOffers, getOffer, getReviews } from '../../store/reducer/data-reducer/selectors';
-import FormReview from '../../components/review/form-review/form-review';
-import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
-import { Loader } from '../../components/loader/loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { Reviews } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 
+import { fetchNearOffers, fetchOffer, fetchReviews, ThunkDispatchResualt } from '../../store/actions/api-actions';
+import { getNearOffers, getOffer, getReviews } from '../../store/reducer/data-reducer/selectors';
+import { AuthorizationStatus, BlockClass, FetchProgress } from '../../const';
+import { getAuthStatus } from '../../store/reducer/user-reducer/selectors';
+import { Reviews } from '../../types/reviews';
+
 import Header from '../../components/header/header';
+import { Loader } from '../../components/loader/loader';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import RaitingBlock from '../../components/raiting-block/raiting-block';
+import FormReview from '../../components/review/form-review/form-review';
 import UserReview from '../../components/review/user-review/user-review';
 import BookMarkButton from '../../components/bookmark-button/bookmark-button';
 import PropertyGood from '../../components/property-components/property-good/property-good';
@@ -28,7 +28,10 @@ function PropertyScreen ():JSX.Element{
   const { id } = useParams();
   const Id = Number(id);
 
+  const { Fulfilled } = FetchProgress;
+
   const { data, loadStatus } = useSelector( getOffer );
+  const authStatus = useSelector( getAuthStatus );
   const nearOffers = useSelector( getNearOffers );
   const reviews = useSelector( getReviews );
 
@@ -55,10 +58,6 @@ function PropertyScreen ():JSX.Element{
   if ( nearOffers.data.length && reviews.data.length && nearOffers.id !== Id && reviews.id !== Id ){
     nearPlug.current = false; reviewPlug.current = false;
   }
-
-  const authStatus = useSelector( getAuthStatus );
-  const { Fulfilled } = FetchProgress;
-
 
   if ( (nearOffers.loadStatus !== Fulfilled && reviews.loadStatus !== Fulfilled) || loadStatus !== Fulfilled ){
     return <Loader />;

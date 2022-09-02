@@ -1,10 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import UserEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { createMemoryHistory } from 'history';
+
 import { HistoryRouter } from '../../history-router/history-router';
+import { AppRoute } from '../../../const';
+
 import { HeaderGuest } from './header-guest';
+
 
 const history = createMemoryHistory();
 

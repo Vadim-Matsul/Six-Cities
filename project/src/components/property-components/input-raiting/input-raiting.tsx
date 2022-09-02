@@ -1,10 +1,12 @@
-import { RaitingInputData } from '../../../const';
 import { Fragment, ReactElement } from 'react';
+
+import { RaitingInputData } from '../../../const';
+
 
 type inputRaitingProps = {
   flag: boolean,
   // eslint-disable-next-line
-  validate: any
+  validate?: any
 }
 
 function InputRaiting ( { flag, validate }:inputRaitingProps ):ReactElement{

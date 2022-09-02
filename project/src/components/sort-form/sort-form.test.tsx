@@ -4,9 +4,12 @@ import UserEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { INITIAL_CURRENT_CITY, SortTypes } from '../../const';
+
 import { HistoryRouter } from '../history-router/history-router';
+import { INITIAL_CURRENT_CITY, SortTypes } from '../../const';
+
 import SortForm from './sort-form';
+
 
 const makefakeStore = configureMockStore( [thunk] );
 const store = makefakeStore({});

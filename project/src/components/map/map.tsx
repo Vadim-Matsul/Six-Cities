@@ -1,11 +1,13 @@
-import { memo, useMemo } from 'react';
-import useMap from '../../hooks/useMap';
 import { useEffect, useRef } from 'react';
-import { Offer, Offers } from '../../types/offers';
 import { Icon, Marker} from 'leaflet';
+import { memo, useMemo } from 'react';
+
 import { AppRoute, GeoCity, IconMarkerSize, IconMarkerUrl } from '../../const';
-import 'leaflet/dist/leaflet.css';
 import browserHistory from '../../browser-history';
+import { Offer, Offers } from '../../types/offers';
+import useMap from '../../hooks/useMap';
+
+import 'leaflet/dist/leaflet.css';
 
 
 type MapProps = {
@@ -36,6 +38,7 @@ function Map (props: MapProps):JSX.Element{
           iconAnchor: [IconMarkerSize.Anchor.x, IconMarkerSize.Anchor.y]
         });
         marker.on('click', () => browserHistory.push(`${AppRoute.Property}/${offer.id}`));
+
         marker.setIcon(icon).addTo(map);
         Markers.push(marker);
       });

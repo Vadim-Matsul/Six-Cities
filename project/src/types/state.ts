@@ -1,8 +1,8 @@
-import { AuthorizationStatus } from '../const';
 import { RootReducerState } from '../store/reducer/root-reducer';
-import { Offer } from './offers';
+import { AuthorizationStatus } from '../const';
 import { Review, User } from './reviews';
 import { FetchProgress } from '../const';
+import { Offer } from './offers';
 
 type AuthUser = User & {
   email: string,

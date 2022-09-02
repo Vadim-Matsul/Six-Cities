@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { BlockClass } from '../../const';
+
 import { makeFakeOffer } from '../../utils/mock';
+import { BlockClass } from '../../const';
+
 import RaitingBlock from './raiting-block';
+
 
 const fakeOffer = makeFakeOffer();
 

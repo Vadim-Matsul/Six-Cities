@@ -1,7 +1,8 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../../../const';
-import { UserState } from '../../../types/state';
 import { RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetReviewError, SetUser } from '../../actions/actions';
+import { AuthorizationStatus } from '../../../const';
+import { createReducer } from '@reduxjs/toolkit';
+import { UserState } from '../../../types/state';
+
 
 export const initialState:UserState = {
   authStatus: AuthorizationStatus.UnKnown,

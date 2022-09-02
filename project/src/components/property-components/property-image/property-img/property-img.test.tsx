@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
+
 import PropertyImg from './property-img';
+
 
 describe('Component: PropertyImg', () => {
 

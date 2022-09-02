@@ -1,9 +1,11 @@
+import classNames from 'classnames';
 import React from 'react';
 
-import { SortTypes } from '../../const';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
+import { SortTypes } from '../../const';
+
 import SortFormLi from './sort-form-li/sort-form-li';
+
 
 type SortFormProps = {
   currentSort: string,

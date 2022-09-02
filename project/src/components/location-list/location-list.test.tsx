@@ -1,10 +1,13 @@
-import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { HistoryRouter } from '../history-router/history-router';
-import LocationList from './location-list';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
+
 import { GeoCity, INITIAL_CURRENT_CITY } from '../../const';
+
+import LocationList from './location-list';
+import { HistoryRouter } from '../history-router/history-router';
+
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore( {} );

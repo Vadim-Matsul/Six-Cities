@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
+
 import { Offer } from '../types/offers';
+
 
 const useHighlighted = (offers: Offer[]): [Offer | undefined, (id: number | null) => void] => {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);

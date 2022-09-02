@@ -1,11 +1,13 @@
-import React from 'react';
-import { Offer } from '../../../types/offers';
-import { capitalizeFirstLetter } from '../../../utils/utils';
-import { BlockClass, CardPageClass, ImageSize } from '../../../const';
 import { Link } from 'react-router-dom';
+import React from 'react';
+
+import { BlockClass, CardPageClass, ImageSize } from '../../../const';
+import { capitalizeFirstLetter } from '../../../utils/utils';
+import { Offer } from '../../../types/offers';
 import { AppRoute } from '../../../const';
-import BookMarkButton from '../../bookmark-button/bookmark-button';
+
 import RaitingBlock from '../../raiting-block/raiting-block';
+import BookMarkButton from '../../bookmark-button/bookmark-button';
 
 
 type OfferCardProps = {
@@ -64,7 +66,7 @@ function OfferCard ( props: OfferCardProps ):JSX.Element {
         </div>
         <RaitingBlock
           Raiting={ offer.rating }
-          Raiting_class={ BlockClass.OfferCard }
+          RaitingClass={ BlockClass.OfferCard }
         />
         <h2 className='place-card__name'>
           <Link

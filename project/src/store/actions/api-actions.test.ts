@@ -1,16 +1,18 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { CreateApi } from '../../service/api/api';
-import { AuthData, checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, fetchReviews, loginSession, logoutSession, postFavorites, postReview, ThunkDispatchResualt } from './api-actions';
-import { State } from '../../types/state';
-import { Action }from 'redux';
-import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
-import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
-import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetReviewError, SetUser } from './actions';
+import { generatePath } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
-import { generatePath } from 'react-router-dom';
-import { ReviewState } from '../../types/reviews';
+import { Action } from 'redux';
+
+import { AuthData, checkAuth, fetchFavorites, fetchNearOffers, fetchOffers, fetchReviews, loginSession, logoutSession, postFavorites, postReview, ThunkDispatchResualt } from './api-actions';
+import { ChangeFavorites, ChangeNearOffers, ChangeOffers, ChangeReviews, RedirectToPath, RequireAuth, SetloginError, SetLogoutError, SetLogOutProcess, SetReviewError, SetUser } from './actions';
+import { makeFakeOffers, makeFakeAuthUser,makeFakeReviews } from '../../utils/mock';
+import { APIRoute, AppRoute, AuthorizationStatus, FetchProgress } from '../../const';
 import { clearSession, getActualArr } from '../../utils/utils';
+import { ReviewState } from '../../types/reviews';
+import { CreateApi } from '../../service/api/api';
+import { State } from '../../types/state';
+
 
 const api = CreateApi();
 const fakeAPI = new MockAdapter( api );
@@ -132,7 +134,7 @@ describe('Middleware: Thunk', () => {
         .onGet(actualFakeUrl)
         .reply(200, fakeNearOffers);
       expect(store.getActions()).toEqual([]);
-      await store.dispatch( fetchNearOffers(actualFakeId) );
+      await store.dispatch( fetchNearOffers(actualFakeId.toString()) );
       expect(store.getActions()).toEqual([
         ChangeNearOffers({id: actualFakeId, data: [], loadStatus: Pending}),
         ChangeNearOffers({id: actualFakeId, data: fakeNearOffers, loadStatus: Fulfilled})
@@ -146,7 +148,7 @@ describe('Middleware: Thunk', () => {
         .onGet(actualFakeUrl)
         .reply( 400 );
       expect(store.getActions()).toEqual([]);
-      await store.dispatch( fetchNearOffers( actualFakeId ) );
+      await store.dispatch( fetchNearOffers( actualFakeId.toString() ) );
       expect(store.getActions()).toEqual([
         ChangeNearOffers({id: actualFakeId, data:[], loadStatus: Pending}),
         ChangeNearOffers({id: null, data:[], loadStatus: Rejected}),
@@ -165,7 +167,7 @@ describe('Middleware: Thunk', () => {
         .onGet(actualFakeUrl)
         .reply(200, fakeReviews);
       expect(store.getActions()).toEqual( [] );
-      await store.dispatch( fetchReviews(actualFakeId) );
+      await store.dispatch( fetchReviews(actualFakeId.toString()) );
       expect(store.getActions()).toEqual( [
         ChangeReviews({id: actualFakeId, data:[], loadStatus: Pending}),
         ChangeReviews({id: actualFakeId, data:fakeReviews, loadStatus: Fulfilled})
@@ -180,7 +182,7 @@ describe('Middleware: Thunk', () => {
         .reply( 400 );
 
       expect(store.getActions()).toEqual([]);
-      await store.dispatch( fetchReviews(actualFakeId) );
+      await store.dispatch( fetchReviews(actualFakeId.toString()) );
       expect(store.getActions()).toEqual([
         ChangeReviews({id: actualFakeId, data:[], loadStatus: Pending}),
         ChangeReviews({id: null, data:[], loadStatus: Rejected})

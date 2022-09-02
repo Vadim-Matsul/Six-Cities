@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { HistoryRouter } from '../../components/history-router/history-router';
-import { createMemoryHistory } from 'history';
-import NotFoundScreen from './not-found-screen';
 import { Route, Routes } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+
+import { HistoryRouter } from '../../components/history-router/history-router';
+
+import NotFoundScreen from './not-found-screen';
+
 
 const history = createMemoryHistory();
 

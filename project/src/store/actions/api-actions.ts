@@ -1,15 +1,17 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError, SetReviewError, ChangeOffer } from './actions';
-import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
-import { dropToken, saveToken } from '../../service/token/token';
-import { Review, ReviewState } from '../../types/reviews';
-import { Offer, Offers } from '../../types/offers';
-import { clearSession, getActualArr } from '../../utils/utils';
-import { State, AuthUser } from '../../types/state';
 import { generatePath } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AxiosInstance } from 'axios';
 import { Action } from 'redux';
+
+import { ChangeOffers, ChangeReviews, ChangeNearOffers, RedirectToPath, RequireAuth, ChangeFavorites, SetUser, SetLogoutError, SetLogOutProcess, SetloginError, SetReviewError, ChangeOffer } from './actions';
+import { APIRoute, AppRoute, AuthorizationStatus, FavoritesConfig, FetchProgress } from '../../const';
+import { dropToken, saveToken } from '../../service/token/token';
+import { clearSession, getActualArr } from '../../utils/utils';
+import { Review, ReviewState } from '../../types/reviews';
+import { State, AuthUser } from '../../types/state';
+import { Offer, Offers } from '../../types/offers';
+
 
 export type ThunkActionResualt<R = Promise<void>> = ThunkAction< R, State, AxiosInstance, Action>
 export type ThunkDispatchResualt = ThunkDispatch< State, AxiosInstance, Action >

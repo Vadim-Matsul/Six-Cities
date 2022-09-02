@@ -1,9 +1,12 @@
 import React from 'react';
-import { CardPageClass } from '../../../const';
+
 import useHighlighted from '../../../hooks/useHighlighted';
 import { Offer, Offers } from '../../../types/offers';
+import { CardPageClass } from '../../../const';
+
 import Map from '../../map/map';
 import OfferList from '../../offer-components/offer-list/offer-list';
+
 
 type PropertyScreenWithNearProps = {
   nearOffers: Offers,

@@ -1,7 +1,8 @@
-import { Offer } from '../../../types/offers';
-import { Review } from '../../../types/reviews';
 import { CombineDataState, CurrentOffer, State } from '../../../types/state';
+import { Review } from '../../../types/reviews';
+import { Offer } from '../../../types/offers';
 import { ReducerNode } from '../root-reducer';
+
 
 export const getOffers = (state: State):CombineDataState< Offer > => state[ReducerNode.Data].offers ;
 export const getOffer = (state: State):CurrentOffer => state[ReducerNode.Data].offer ;

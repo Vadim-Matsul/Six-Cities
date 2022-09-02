@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
+
 import { GeoCity } from '../../const';
+
 import LocationListLi from './location-list-li/location-list-li';
+
 
 type LocationListProps = {
   uniqueCity: string,

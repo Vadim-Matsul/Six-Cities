@@ -1,12 +1,14 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
-import FavoriteOffersList from '../../components/favorites-components/favorite-offers-list/favorite-offers-list';
-import Header from '../../components/header/header';
-import EmptyFavoritesScreen from '../empty-favorites-screen/empty-favorites-screen';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { fetchFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
 import { getFavorites } from '../../store/reducer/data-reducer/selectors';
 import { FetchProgress } from '../../const';
-import { fetchFavorites, ThunkDispatchResualt } from '../../store/actions/api-actions';
+
+import Header from '../../components/header/header';
 import { Loader } from '../../components/loader/loader';
+import EmptyFavoritesScreen from '../empty-favorites-screen/empty-favorites-screen';
+import FavoriteOffersList from '../../components/favorites-components/favorite-offers-list/favorite-offers-list';
 
 
 function FavoritesScreen ():JSX.Element{

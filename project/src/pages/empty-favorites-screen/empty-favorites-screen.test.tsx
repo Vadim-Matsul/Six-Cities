@@ -1,7 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import EmptyFavoritesScreen from './empty-favorites-screen';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render, screen } from '@testing-library/react';
+
 import { makeFakeOffer } from '../../utils/mock';
+
+import EmptyFavoritesScreen from './empty-favorites-screen';
 
 
 const makeFakeStore = configureMockStore();

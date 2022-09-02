@@ -1,8 +1,10 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { AppRoute } from '../../const';
-import { State } from '../../types/state';
+
 import { RedirectToPath } from '../actions/actions';
+import { State } from '../../types/state';
+import { AppRoute } from '../../const';
 import { redirect } from './redirect';
+
 
 const fakeBrowserHistory = {
   location:{ path: '' },

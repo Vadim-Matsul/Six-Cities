@@ -3,11 +3,14 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+
 import { HistoryRouter } from '../../components/history-router/history-router';
+import { makeFakeAuthUser, makeFakeOffers } from '../../utils/mock';
 import { AuthorizationStatus, FetchProgress } from '../../const';
 import { Offers } from '../../types/offers';
-import { makeFakeAuthUser, makeFakeOffers } from '../../utils/mock';
+
 import FavoritesScreen from './favorites-screen';
+
 
 const fakeUser = makeFakeAuthUser();
 

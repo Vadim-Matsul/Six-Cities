@@ -1,8 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+
 import SortFormLi from './sort-form-li';
+
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({});

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { capitalizeFirstLetter } from '../../../utils/utils';
+
 
 type PropertyFeaturesProps< T, N > = {
   type: T,

@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
+
 import { makeFakeOffers } from '../utils/mock';
 import useHighlighted from './useHighlighted';
+
 
 const fakeOffers = makeFakeOffers();
 const fakeOffer = fakeOffers[0];

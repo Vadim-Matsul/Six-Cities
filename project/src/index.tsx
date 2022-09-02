@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import { RootReducer } from './store/reducer/root-reducer';
 import { ToastContainer } from 'react-toastify';
-import { CreateApi } from './service/api/api';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import React from 'react';
+
 import { checkAuth, fetchOffers, ThunkDispatchResualt } from './store/actions/api-actions';
-import 'react-toastify/dist/ReactToastify.css';
+import { RootReducer } from './store/reducer/root-reducer';
 import { redirect } from './store/middlewares/redirect';
-import { HistoryRouter } from './components/history-router/history-router';
+import { CreateApi } from './service/api/api';
+
+import App from './components/app/app';
 import browserHistory from './browser-history';
+import { HistoryRouter } from './components/history-router/history-router';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -26,7 +29,6 @@ const store = configureStore({
 (store.dispatch as ThunkDispatchResualt)( checkAuth() );
 (store.dispatch as ThunkDispatchResualt)( fetchOffers() );
 
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -37,5 +39,3 @@ root.render(
     </Provider>
   </React.StrictMode>,
 );
-
-

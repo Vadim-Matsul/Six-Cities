@@ -1,12 +1,14 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as faker from 'faker';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { RaitingInputData } from '../../../const';
+import * as faker from 'faker';
+
 import { HistoryRouter } from '../../history-router/history-router';
+import { RaitingInputData } from '../../../const';
+
 import FormReview from './form-review';
 
 
@@ -17,7 +19,7 @@ const makeFakeStore = configureMockStore( [thunk] );
 const store = makeFakeStore({ USER:{ reviewError: false }});
 
 const history = createMemoryHistory();
-jest.setTimeout( 40000 )
+jest.setTimeout( 40000 );
 
 describe('Component: FormReview', () => {
 

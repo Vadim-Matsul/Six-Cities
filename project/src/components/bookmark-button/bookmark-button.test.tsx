@@ -1,8 +1,11 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+
 import { AuthorizationStatus, BlockClass } from '../../const';
+
 import BookMarkButton from './bookmark-button';
+
 
 const makaFakeStore = configureMockStore();
 const layout = {

@@ -1,8 +1,11 @@
 import { Middleware } from '@reduxjs/toolkit';
-import browserHistory from '../../browser-history';
-import { State } from '../../types/state';
-import { ActionsType } from '../actions/actions';
 import { Dispatch } from 'redux';
+
+import { ActionsType } from '../actions/actions';
+import { State } from '../../types/state';
+
+import browserHistory from '../../browser-history';
+
 
 export const redirect:Middleware<unknown, State, Dispatch> =
   ( _state) => (dispatch) => (action) => {

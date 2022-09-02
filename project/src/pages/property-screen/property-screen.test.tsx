@@ -3,10 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { HistoryRouter } from '../../components/history-router/history-router';
-import { AuthorizationStatus, FetchProgress } from '../../const';
+
 import { makeFakeAuthUser, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
+import { AuthorizationStatus, FetchProgress } from '../../const';
+
 import PropertyScreen from './property-screen';
+import { HistoryRouter } from '../../components/history-router/history-router';
+
 
 const fakeOffers = makeFakeOffers();
 const mockId = { id: fakeOffers[0]['id'].toString() };

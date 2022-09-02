@@ -1,17 +1,19 @@
-import InputRaiting from '../../property-components/input-raiting/input-raiting';
-import { ReviewFormState, ReviewState } from '../../../types/reviews';
 import { useDispatch, useSelector } from 'react-redux';
-import { postReview, ThunkDispatchResualt } from '../../../store/actions/api-actions';
 import { useForm } from 'react-hook-form';
-import { MessageConfig } from '../../../const';
-import MessageError from '../../message-error/message-error';
-import classNames from 'classnames';
-import { getReviewError } from '../../../store/reducer/user-reducer/selectors';
-import { useTimeout } from '../../../hooks/useTimeout';
-import { SetReviewError } from '../../../store/actions/actions';
-import { useRef } from 'react';
 import { toast } from 'react-toastify';
+import classNames from 'classnames';
+import { useRef } from 'react';
 import React from 'react';
+
+import { postReview, ThunkDispatchResualt } from '../../../store/actions/api-actions';
+import { getReviewError } from '../../../store/reducer/user-reducer/selectors';
+import { ReviewFormState, ReviewState } from '../../../types/reviews';
+import { SetReviewError } from '../../../store/actions/actions';
+import { useTimeout } from '../../../hooks/useTimeout';
+import { MessageConfig } from '../../../const';
+
+import MessageError from '../../message-error/message-error';
+import InputRaiting from '../../property-components/input-raiting/input-raiting';
 
 
 type FormReviewProps = {

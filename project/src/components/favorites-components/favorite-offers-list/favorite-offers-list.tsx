@@ -1,9 +1,12 @@
 import { Fragment } from 'react';
-import { Offer, Offers } from '../../../types/offers';
+
 import { getSortedOffersCities } from '../../../utils/utils';
+import { Offer, Offers } from '../../../types/offers';
 import { CardPageClass } from '../../../const';
+
 import FavoritesCity from '../favorites-city/favorites-city';
 import OfferList from '../../offer-components/offer-list/offer-list';
+
 
 type FavoriteOffersListProps = {
   offers: Offers

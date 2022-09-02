@@ -1,7 +1,8 @@
-import { getCurrentCity, getSortedOffers } from '../../store/reducer/logic-reducer/selectors';
 import { useSelector } from 'react-redux';
-
 import classNames from 'classnames';
+
+import { getCurrentCity, getSortedOffers } from '../../store/reducer/logic-reducer/selectors';
+
 import Header from '../../components/header/header';
 import NoPlacesScreen from '../no-places-screen/no-places-screen';
 import LocationList from '../../components/location-list/location-list';

@@ -1,12 +1,15 @@
+import * as RTL from '@testing-library/react';
+import thunk from 'redux-thunk';
+
+import { AppRoute, AuthorizationStatus, FetchProgress, SortTypes } from '../../const';
+import { makeFakeAuthUser, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
+import { HistoryRouter } from '../history-router/history-router';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { AppRoute, AuthorizationStatus, FetchProgress, SortTypes } from '../../const';
-import { makeFakeAuthUser, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
-import * as RTL from '@testing-library/react';
-import { HistoryRouter } from '../history-router/history-router';
+
 import App from './app';
-import thunk from 'redux-thunk';
+
 
 type BundleType = ( placesToPush: string, ShouldDoUnAuthStatus?: boolean ) => void;
 

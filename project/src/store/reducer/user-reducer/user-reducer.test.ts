@@ -1,7 +1,8 @@
-import { AuthorizationStatus } from '../../../const';
-import { makeFakeAuthUser } from '../../../utils/mock';
 import { RequireAuth, SetLogoutError, SetLogOutProcess, SetUser } from '../../actions/actions';
 import { UserReducer, initialState } from './user-reducer';
+import { makeFakeAuthUser } from '../../../utils/mock';
+import { AuthorizationStatus } from '../../../const';
+
 
 describe('Reducer: UserReducer', () => {
 
@@ -27,7 +28,9 @@ describe('Reducer: UserReducer', () => {
       authStatus: authStatus,
       user: fakeUser,
       logoutProcess: logoutProcess,
-      logoutError: logoutError
+      logoutError: logoutError,
+      loginError: false,
+      reviewError: false
     });
 
     it('the user field should be cleared',() => {

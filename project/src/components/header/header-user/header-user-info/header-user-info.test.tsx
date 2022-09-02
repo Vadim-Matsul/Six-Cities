@@ -1,8 +1,11 @@
-import { makeFakeAuthUser, makeFakeOffers } from '../../../../utils/mock';
-import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+
+import { makeFakeAuthUser, makeFakeOffers } from '../../../../utils/mock';
+
 import HeaderUserInfo from './header-user-info';
+
 
 const FakeAuthUser = makeFakeAuthUser();
 const fakeOffers = makeFakeOffers();

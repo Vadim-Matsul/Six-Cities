@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { createMemoryHistory } from 'history';
+
 import { HistoryRouter } from '../history-router/history-router';
+import { AppRoute, AuthorizationStatus } from '../../const';
+
 import PrivateRoute from './Private-Route';
+
 
 const history = createMemoryHistory();
 

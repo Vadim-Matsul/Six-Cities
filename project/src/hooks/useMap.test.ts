@@ -1,6 +1,9 @@
 import { renderHook } from '@testing-library/react';
+
 import { makeFakeCity } from '../utils/mock';
+
 import useMap from './useMap';
+
 
 const fakeCity = makeFakeCity();
 const makeFakeMutableRefObject = (body: null | HTMLElement) => ({ current: body });

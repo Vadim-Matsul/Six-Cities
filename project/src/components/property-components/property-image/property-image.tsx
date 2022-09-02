@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { ImagesSize } from '../../../const';
+
 import PropertyImg from './property-img/property-img';
+
 
 type PropertyImageProps = {
   Images: string[]

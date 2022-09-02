@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
+
 import { makeFakeOffers } from '../../utils/mock';
-import { HistoryRouter } from '../history-router/history-router';
+
 import Map from './map';
+import { HistoryRouter } from '../history-router/history-router';
+
 
 const fakeOffers = makeFakeOffers();
 const fakeId = fakeOffers[0]['id'];
@@ -60,7 +63,7 @@ describe('Component: Map', () => {
     expect( fakeBrowserHistory.location.path ).toBe( '' );
     const Marker = screen.getAllByAltText(/Marker/i)[0];
     await userEvent.click( Marker );
-    expect( fakeBrowserHistory.location.path ).toBe( `/offer/${fakeId}` );
+    expect( fakeBrowserHistory.location.path ).toBe( `/hotels/${fakeId}` );
   });
 
 });

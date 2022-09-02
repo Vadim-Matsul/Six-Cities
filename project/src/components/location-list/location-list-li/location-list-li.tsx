@@ -1,9 +1,11 @@
-import classNames from 'classnames';
 import React, { MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppRoute } from '../../../const';
-import { ChangeCurrentCity } from '../../../store/actions/actions';
+import classNames from 'classnames';
+
 import { ThunkDispatchResualt } from '../../../store/actions/api-actions';
+import { ChangeCurrentCity } from '../../../store/actions/actions';
+import { AppRoute } from '../../../const';
+
 
 type LocationListLiProps = {
     city: string,

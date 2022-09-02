@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
+
 import { makeFakeReviews } from '../../../utils/mock';
+
 import UserReview from './user-review';
+
 
 const fakeReviews = makeFakeReviews();
 

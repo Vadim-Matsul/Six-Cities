@@ -1,5 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
+import React from 'react';
+
 import { getFavorites } from '../../../../store/reducer/data-reducer/selectors';
 import { getUser } from '../../../../store/reducer/user-reducer/selectors';
 

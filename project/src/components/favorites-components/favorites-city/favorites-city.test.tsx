@@ -1,12 +1,15 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Route, Routes } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
-import { INITIAL_CURRENT_CITY } from '../../../const';
+
 import { HistoryRouter } from '../../history-router/history-router';
+import { INITIAL_CURRENT_CITY } from '../../../const';
+
 import FavoritesCity from './favorites-city';
+
 
 const makeFakeStore = configureMockStore();
 const store = makeFakeStore({});

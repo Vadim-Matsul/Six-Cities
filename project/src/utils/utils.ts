@@ -1,5 +1,6 @@
-import { Offer, Offers } from '../types/offers';
 import { GeoCity, Months, SortTypes } from '../const';
+import { Offer, Offers } from '../types/offers';
+
 
 const RAITING_COUNT = 20;
 const FIRST_LETTER = 0;
