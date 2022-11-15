@@ -27,10 +27,3 @@ ___
 * `classnames` улучшает читабельность классов, применяемых к HTML-тегам
 * `Leaflet` для создания карты и отображения предложений на `OpenStreetMap`
 * Тестирование  компонентов / хуков <br/> на основе платформы тестирования `Jest` и библиотеки `React Testing Library`
-
-___
-### @ Что можно улучшить в следующих проектах?
-:chart_with_upwards_trend: Структуру проекта строить из большего кол-ва компонентов
-<br/>:chart_with_upwards_trend: Выносить функции из HTML-разметки
-<br/>:chart_with_upwards_trend: Применить `createAsyncThunk` и `createSlice` из __RTK__
-<br/>:chart_with_upwards_trend: Чаще создавать переиспользуемые блоки кода ( также в тестах )
